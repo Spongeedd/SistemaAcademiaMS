@@ -11,9 +11,7 @@
 <p>- Iasmin de Almeida Furtado</p>
 <p>- Israel Davi Resende</p>
 <p>- Luan Pablo Soares Xavier</p>
-<!DOCTYPE html>
-<html lang="en">
-<body>
+
     <h1>Ferramentas usadas</h1>
     <p>Discord: Como meio de comunicação</p>
 
