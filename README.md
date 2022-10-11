@@ -55,5 +55,3 @@
 
     <p>Para garantir a segurança permitindo que apenas o usuário devidamente cadastrado e com pagamento em dia seja liberado a entrar.</p>
 
-</body>
-</html>
