@@ -25,7 +25,7 @@ public class Controller {
         String senha = senhaInput.getText();
         String login = funcionarioInput.getText();
 
-        System.out.println(login + " " + senha);
+        System.out.println(login + " - " + senha);
         
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(App.class.getResource("InterfaceCadastrar.fxml"));

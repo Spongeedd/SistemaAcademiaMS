@@ -46,6 +46,11 @@
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
+                  <Label layoutX="81.0" layoutY="274.0" text="Pagamento">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="460.0" prefWidth="449.0">
