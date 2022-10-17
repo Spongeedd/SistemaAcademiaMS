@@ -28,9 +28,9 @@ public class Controller {
         System.out.println(login + " " + senha);
         
         Stage stage = new Stage();
-        Parent root = FXMLLoader.load(App.class.getResource("InterfaceCadastrar.fxml"));
+        Parent root = FXMLLoader.load(App.class.getResource("InterfaceCadastrarFuncionario.fxml"));
         stage.setScene(new Scene(root));
-        stage.setTitle("Cadastrar");
+        stage.setTitle("Cadastrar Funcionario");
         stage.setResizable(false);
         stage.show();
         stage = (Stage) btnEntrar.getScene().getWindow();
