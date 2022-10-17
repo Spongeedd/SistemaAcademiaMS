@@ -17,16 +17,16 @@
    <children>
       <SplitPane dividerPositions="0.30520732883317253" prefHeight="550.0" prefWidth="602.0">
         <items>
-            <ScrollPane prefHeight="678.0" prefWidth="250.0">
+            <ScrollPane prefHeight="626.0" prefWidth="250.0">
                <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="550.0" prefWidth="238.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="681.0" prefWidth="238.0">
                      <children>
                         <Label layoutX="59.0" layoutY="4.0" text="Cadastro Funcionario">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <Button layoutX="133.0" layoutY="404.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="78.0" text="Remover">
+                        <Button layoutX="133.0" layoutY="571.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="78.0" text="Remover">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -49,19 +49,19 @@
                            </font>
                         </Label>
                         <DatePicker layoutX="29.0" layoutY="166.0" prefHeight="26.0" prefWidth="189.0" />
-                        <Separator layoutY="276.0" prefHeight="0.0" prefWidth="243.0" />
+                        <Separator layoutY="356.0" prefHeight="0.0" prefWidth="243.0" />
                         <TextField layoutX="29.0" layoutY="224.0" prefHeight="26.0" prefWidth="189.0" />
                         <Label layoutX="87.0" layoutY="204.0" text="Endereço">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <Button layoutX="31.0" layoutY="404.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="78.0" text="Cadastar">
+                        <Button layoutX="31.0" layoutY="571.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="78.0" text="Cadastar">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Button>
-                        <Button layoutX="83.0" layoutY="450.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="78.0" text="Atualizar">
+                        <Button layoutX="82.0" layoutY="615.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="78.0" text="Atualizar">
                            <font>
                               <Font size="14.0" />
                            </font>
