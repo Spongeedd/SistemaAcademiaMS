@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox prefHeight="550.0" prefWidth="831.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="500.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <SplitPane dividerPositions="0.29794933655006034" prefHeight="550.0" prefWidth="831.0">
+      <SplitPane dividerPositions="0.23157051282051277" prefHeight="550.0" prefWidth="831.0">
         <items>
-            <ScrollPane prefHeight="200.0" prefWidth="200.0">
+            <ScrollPane prefHeight="499.0" prefWidth="273.0">
                <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="678.0" prefWidth="241.0">
                      <children>
@@ -20,7 +26,7 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="36.0" layoutY="59.0" />
+                        <TextField fx:id="nomeID" layoutX="36.0" layoutY="59.0" />
                         <Label layoutX="101.0" layoutY="36.0" text="Nome">
                            <font>
                               <Font name="System Bold" size="13.0" />
@@ -31,14 +37,14 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="36.0" layoutY="113.0" />
+                        <TextField fx:id="cpfID" layoutX="36.0" layoutY="113.0" />
                         <Label layoutX="48.0" layoutY="146.0" text="Data de Nascimento">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <DatePicker layoutX="23.0" layoutY="170.0" />
-                        <TextField layoutX="35.0" layoutY="233.0" />
+                        <DatePicker fx:id="dataID" layoutX="23.0" layoutY="170.0" />
+                        <TextField fx:id="enderecoID" layoutX="35.0" layoutY="233.0" />
                         <Label layoutX="86.0" layoutY="211.0" text="Endereço">
                            <font>
                               <Font name="System Bold" size="13.0" />
@@ -49,9 +55,9 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="37.0" layoutY="290.0" />
+                        <TextField fx:id="telefoneID" layoutX="37.0" layoutY="290.0" />
                         <Separator layoutX="8.0" layoutY="392.0" prefHeight="2.0" prefWidth="228.0" />
-                        <TextField layoutX="37.0" layoutY="344.0" />
+                        <TextField fx:id="emailID" layoutX="37.0" layoutY="344.0" />
                         <Label layoutX="100.0" layoutY="326.0" text="Email">
                            <font>
                               <Font name="System Bold" size="13.0" />
@@ -72,25 +78,35 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="38.0" layoutY="455.0" />
-                        <TextField layoutX="38.0" layoutY="518.0" />
-                        <Button layoutX="83.0" layoutY="639.0" mnemonicParsing="false" text="Atualizar" />
-                        <Button layoutX="82.0" layoutY="605.0" mnemonicParsing="false" text="Remover" />
-                        <Button layoutX="81.0" layoutY="568.0" mnemonicParsing="false" text="Adicionar" />
+                        <TextField fx:id="jornadaID" layoutX="38.0" layoutY="455.0" />
+                        <TextField fx:id="horaID" layoutX="38.0" layoutY="518.0" />
+                        <Button fx:id="atualizaarBTN" layoutX="83.0" layoutY="639.0" mnemonicParsing="false" text="Atualizar" />
+                        <Button fx:id="removerBTN" layoutX="82.0" layoutY="605.0" mnemonicParsing="false" text="Remover" />
+                        <Button fx:id="adicionarBTN" layoutX="81.0" layoutY="568.0" mnemonicParsing="false" text="Adicionar" />
                      </children>
                   </AnchorPane>
                </content>
             </ScrollPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="460.0" prefWidth="449.0">
-               <children>
-                  <TableView prefHeight="548.0" prefWidth="578.0">
-                    <columns>
-                      <TableColumn prefWidth="75.0" text="C1" />
-                      <TableColumn prefWidth="75.0" text="C2" />
-                    </columns>
-                  </TableView>
-               </children>
-            </AnchorPane>
+            <ScrollPane prefHeight="552.0" prefWidth="582.0">
+               <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="499.0" prefWidth="765.0">
+                     <children>
+                        <TableView prefHeight="502.0" prefWidth="765.0">
+                          <columns>
+                            <TableColumn prefWidth="68.79997557401657" text="Nome" />
+                            <TableColumn minWidth="0.0" prefWidth="65.60003662109375" text="CPF" />
+                              <TableColumn prefWidth="84.0" text="D.Nascimento" />
+                              <TableColumn prefWidth="84.0" text="Endereço" />
+                              <TableColumn prefWidth="84.0" text="Telefone" />
+                              <TableColumn prefWidth="84.0" text="Email" />
+                              <TableColumn prefWidth="84.0" text="Jornada" />
+                              <TableColumn prefWidth="84.0" text="P/Hora" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
         </items>
       </SplitPane>
    </children>
