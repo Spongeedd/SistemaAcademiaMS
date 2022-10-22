@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Controller {
@@ -25,16 +26,28 @@ public class Controller {
         String senha = senhaInput.getText();
         String login = funcionarioInput.getText();
 
-        System.out.println(login + " " + senha);
-        
-        Stage stage = new Stage();
-        Parent root = FXMLLoader.load(App.class.getResource("InterfaceCadastrarFuncionario.fxml"));
-        stage.setScene(new Scene(root));
-        stage.setTitle("Cadastrar Funcionario");
-        stage.setResizable(false);
-        stage.show();
-        stage = (Stage) btnEntrar.getScene().getWindow();
-        stage.close();
+        if (login.equals("admin") && senha.equals("123")) {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(App.class.getResource("InterfaceCadastrarFuncionario.fxml"));
+            stage.setScene(new Scene(root));
+            stage.setTitle("Cadastrar Funcionario");
+            stage.setResizable(false);
+            stage.getIcons().add(new Image(App.class.getResourceAsStream("icone.png")));
+            stage.show();
+            stage = (Stage) btnEntrar.getScene().getWindow();
+            stage.close();
+        }
+        else {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(App.class.getResource("InterfaceMatricula.fxml"));
+            stage.setScene(new Scene(root));
+            stage.setTitle("Cadastrar Matrícula");
+            stage.setResizable(false);
+            stage.getIcons().add(new Image(App.class.getResourceAsStream("icone.png")));
+            stage.show();
+            stage = (Stage) btnEntrar.getScene().getWindow();
+            stage.close();
+        }
     }
 
 }

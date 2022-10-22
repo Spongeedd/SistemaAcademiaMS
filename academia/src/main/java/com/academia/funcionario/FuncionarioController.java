@@ -2,11 +2,14 @@ package com.academia.funcionario;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -14,11 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class FuncionarioController {
 
-    @FXML
-    private Button adicionarBTN;
-
-    @FXML
-    private Button atualizaarBTN;
+    // Inputs
 
     @FXML
     private TextField cpfID;
@@ -41,62 +40,126 @@ public class FuncionarioController {
     @FXML
     private TextField nomeID;
 
-    @FXML
-    private Button removerBTN;
 
     @FXML
     private TextField telefoneID;
 
-    Alert a;
+    // Botões
+
     @FXML
-    private void cadastrarBTN() throws IOException {
+    private Button adicionarBTN;
+
+    @FXML
+    private Button atualizaarBTN;
+
+    @FXML
+    private Button removerBTN;
+
+    // Tabela
+
+    @FXML
+    private TableView<FuncionariosDTO> tabela;
+
+    @FXML
+    private TableColumn<FuncionariosDTO, String> tabelaCPF;
+
+    @FXML
+    private TableColumn<FuncionariosDTO, String> tabelaData;
+
+    @FXML
+    private TableColumn<FuncionariosDTO, String> tabelaEmail;
+
+    @FXML
+    private TableColumn<FuncionariosDTO, String> tabelaEndereco;
+
+    @FXML
+    private TableColumn<FuncionariosDTO, String> tabelaHora;
+
+    @FXML
+    private TableColumn<FuncionariosDTO, String> tabelaJornada;
+
+    @FXML
+    private TableColumn<FuncionariosDTO, String> tabelaNome;
+
+    @FXML
+    private TableColumn<FuncionariosDTO, Integer> tabelaID;
+
+    @FXML
+    private TableColumn<FuncionariosDTO, String> tabelaTelefone;
+
+
+    Alert a = new Alert(AlertType.NONE);
+    @FXML
+    private void adicionarBTN() throws IOException {
         
         try {
             String nome = nomeID.getText();
             String numero = telefoneID.getText();
             String endereco = enderecoID.getText();
             String email = emailID.getText();
-            LocalDate data = dataID.getValue();
-            String jornada = jornadaID.getText();
-            String phora = horaID.getText();
-            String cpf = cpfID.getText();
+            LocalDate dataaux = dataID.getValue();
+            String jornadaaux = jornadaID.getText();
+            String phoraaux = horaID.getText();
+            String cpfaux = cpfID.getText();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String data = dataaux.format(formatter);
+            System.out.println(data);
 
             Long telefone = Long.parseLong(numero);
+            Long cpf = Long.parseLong(cpfaux);
+            Integer jornada = Integer.parseInt(jornadaaux);
+            Integer phora = Integer.parseInt(phoraaux);
             
-            if (nome.isEmpty() || telefone==null) {
+            if (nome.isEmpty() || numero.isEmpty() || endereco.isEmpty() || email.isEmpty() || jornadaaux.isEmpty() || phoraaux.isEmpty() || cpfaux.isEmpty()) {
                 a.setAlertType(AlertType.WARNING);
-                a.setContentText("Campos Nome/Número não podem estar vazio");
+                a.setContentText("Nenhum campo pode estar vazio");
                 a.show();
             }
-            else if (FuncionariosDAO.consultaPorNome(nome) != null) {
+            else if (FuncionariosDAO.consultaPorCPF(cpf) != null) {
                 a.setAlertType(AlertType.WARNING);
-                a.setContentText("Contato ja cadastrado");
+                a.setContentText("Funcionario ja cadastrado");
                 a.show();
             }
             else {
-                Service.adicionarContato(nome, endereco, email, cpf, telefone, data, jornada, phora);
+                FuncionariosService.adicionarFuncionario(nome, cpf, data, endereco, telefone, email, jornada, phora);
                 carregarTabela();
                 limpaInputs();
             }
         } catch (Exception e) {
             a.setAlertType(AlertType.WARNING);
-            a.setContentText("Número não pode conter letras");
+            a.setContentText("Telefone/CPF/Jornada/PHora não podem conter letras");
             a.show();
         }
     }
 
-
     public void carregarTabela() {
-        .setCellValueFactory(new PropertyValueFactory<>("codigo"));
-        .setCellValueFactory(new PropertyValueFactory<>("nome"));
-        .setCellValueFactory(new PropertyValueFactory<>("telefone"));
-        .setCellValueFactory(new PropertyValueFactory<>("tipo"));
-        .setCellValueFactory(new PropertyValueFactory<>("email"));
-        .setCellValueFactory(new PropertyValueFactory<>("rua"));
-        .setCellValueFactory(new PropertyValueFactory<>("bairro"));
-        .setCellValueFactory(new PropertyValueFactory<>("grupo"));
+        tabelaID.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+        tabelaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        tabelaCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+        tabelaData.setCellValueFactory(new PropertyValueFactory<>("datanascismento"));
+        tabelaEndereco.setCellValueFactory(new PropertyValueFactory<>("endereco"));
+        tabelaTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
+        tabelaEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        tabelaJornada.setCellValueFactory(new PropertyValueFactory<>("jornada"));
+        tabelaHora.setCellValueFactory(new PropertyValueFactory<>("phora"));
 
-        contatosTabela.setItems(FuncionariosDAO.getObservableListClientes());
+        tabela.setItems(FuncionariosDAO.getObservableListFuncionarios());
+    }
+
+    public void limpaInputs(){
+        nomeID.setText("");
+        telefoneID.setText("");
+        enderecoID.setText("");
+        emailID.setText("");
+        dataID.setValue(null);
+        jornadaID.setText("");
+        horaID.setText("");
+        cpfID.setText("");
+    }
+    Integer codigo;
+    public Integer getRow() {
+        FuncionariosDTO dto = tabela.getSelectionModel().getSelectedItem();
+        return codigo = dto.getCodigo();
     }
 }
 

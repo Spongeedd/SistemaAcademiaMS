@@ -1,18 +1,14 @@
 package com.academia.funcionario;
 
-import java.util.Date;
-
 public class FuncionariosDTO {
-    private String nome, endereco, email;
+    private String nome, endereco, email, datanascismento;
     private Long  cpf, telefone;
-    private Date datanascismento;
     private Integer codigo, jornada, phora;
 
-    public FuncionariosDTO(String nome, String endereco, String email, Long cpf, Long telefone, Date datanascismento, Integer jornada, Integer phora) {
+    public FuncionariosDTO(Integer codigo, String nome, String endereco, String email, Long cpf, Long telefone, String datanascismento, Integer jornada, Integer phora) {
         this.codigo = codigo;
         this.nome = nome;
         this.telefone = telefone;
-        this.codigo = codigo;
         this.cpf = cpf;
         this.datanascismento = datanascismento;
         this.email = email;
@@ -32,7 +28,7 @@ public class FuncionariosDTO {
     public void setCpf(Long cpf) {
         this.cpf = cpf;
     }
-    public void setDatanascismento(Date datanascismento) {
+    public void setDatanascismento(String datanascismento) {
         this.datanascismento = datanascismento;
     }
     public void setEmail(String email) {
@@ -63,7 +59,7 @@ public class FuncionariosDTO {
     public Long getCpf() {
         return cpf;
     }
-    public Date getDatasnacismento() {
+    public String getDatasnacismento() {
         return datanascismento;
     }
     public String getEmail() {

@@ -1,14 +1,15 @@
 package com.academia.funcionario;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class FuncionariosDAO {
-    private static ObservableList<FuncionariosDTO> observableListClientes;
+    private static ObservableList<FuncionariosDTO> observableListFuncionarios;
     private static List<FuncionariosDTO> funcionarioLista;
     private static Integer codigo;
     static {
@@ -16,16 +17,17 @@ public class FuncionariosDAO {
         codigo = 1;
     }
 
-    public static FuncionariosDTO inserirFuncionarios(String nome, Long cpf, Date datanascimento, String endereco, Long telefone, String email, Integer jornada, Integer phora) {
+    public static FuncionariosDTO inserirFuncionarios(String nome, Long cpf, String datanascimento, String endereco, Long telefone, String email, Integer jornada, Integer phora) {
         while (consultaPorID(codigo)!= null) {
             codigo++;
         }
-        FuncionariosDTO funcionario = new FuncionariosDTO(nome, endereco, email, cpf, telefone, datanascimento, jornada, phora);
+        FuncionariosDTO funcionario = new FuncionariosDTO(codigo, nome, endereco, email, cpf, telefone, datanascimento, jornada, phora);
         funcionarioLista.add(funcionario);
         codigo++;
-        observableListClientes = FXCollections.observableArrayList(funcionarioLista);
+        observableListFuncionarios = FXCollections.observableArrayList(funcionarioLista);
         return funcionario;
     }
+
     static List<FuncionariosDTO> toRemove = new ArrayList();
     public static void removeFuncionario(Integer cdg) {
         for (FuncionariosDTO c: funcionarioLista){
@@ -35,10 +37,10 @@ public class FuncionariosDAO {
             }
         }
         funcionarioLista.removeAll(toRemove);
-        observableListClientes = FXCollections.observableArrayList(funcionarioLista);
+        observableListFuncionarios = FXCollections.observableArrayList(funcionarioLista);
     }
 
-    public static void atualizaFuncionario(Integer codigo, String nome, Long cpf, Date datanascimento, String endereco, Long telefone, String email, Integer jornada, Integer phora) {
+    public static void atualizaFuncionario(Integer codigo, String nome, Long cpf, LocalDate datanascimento, String endereco, Long telefone, String email, Integer jornada, Integer phora) {
         for (FuncionariosDTO c: funcionarioLista){
             if (c.getCodigo().equals(codigo)){
                 c.setNome(nome);
@@ -47,7 +49,7 @@ public class FuncionariosDAO {
                 c.setCpf(telefone);
             }
         }
-        observableListClientes = FXCollections.observableArrayList(funcionarioLista);
+        observableListFuncionarios = FXCollections.observableArrayList(funcionarioLista);
     }
 
     public static FuncionariosDTO consultaPorNome(String nome) {
@@ -68,6 +70,15 @@ public class FuncionariosDAO {
         return null;
     }
 
+    public static FuncionariosDTO consultaPorCPF(long CPF) {
+        for (FuncionariosDTO c: funcionarioLista){
+            if (c.getCpf().equals(CPF)){
+                return c;
+            }
+        }
+        return null;
+    }
+
     public static FuncionariosDTO consultaPorNumero(Long telefone) {
         for (FuncionariosDTO c: funcionarioLista){
             if (c.getTelefone().equals(telefone)){
@@ -81,8 +92,8 @@ public class FuncionariosDAO {
         return codigo;
     }
 
-    public static ObservableList<FuncionariosDTO> getObservableListClientes() {
-        return observableListClientes;
+    public static ObservableList<FuncionariosDTO> getObservableListFuncionarios() {
+        return observableListFuncionarios;
     }
 }
 
