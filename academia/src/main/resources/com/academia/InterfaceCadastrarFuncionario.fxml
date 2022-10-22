@@ -17,9 +17,9 @@
    <children>
       <SplitPane dividerPositions="0.23157051282051277" prefHeight="550.0" prefWidth="831.0">
         <items>
-            <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="499.0" prefWidth="225.0" vbarPolicy="ALWAYS" vvalue="1.0">
+            <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="499.0" prefWidth="236.0" vbarPolicy="ALWAYS" vvalue="1.0">
                <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="678.0" prefWidth="241.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="615.0" prefWidth="236.0">
                      <children>
                         <Label layoutX="43.0" layoutY="6.0" text="Cadastro Funcionario">
                            <font>
@@ -80,34 +80,48 @@
                         </Label>
                         <TextField fx:id="jornadaID" layoutX="38.0" layoutY="455.0" />
                         <TextField fx:id="horaID" layoutX="38.0" layoutY="518.0" />
-                        <Button fx:id="atualizaarBTN" layoutX="83.0" layoutY="639.0" mnemonicParsing="false" text="Atualizar" />
-                        <Button fx:id="removerBTN" layoutX="82.0" layoutY="605.0" mnemonicParsing="false" onAction="#removerBTN" text="Remover" />
-                        <Button fx:id="adicionarBTN" layoutX="81.0" layoutY="568.0" mnemonicParsing="false" onAction="#adicionarBTN" text="Adicionar" />
+                        <Button fx:id="atualizaarBTN" layoutX="152.0" layoutY="568.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="66.0" text="Atualizar" />
+                        <Button fx:id="removerBTN" layoutX="80.0" layoutY="568.0" mnemonicParsing="false" onAction="#removerBTN" text="Remover" />
+                        <Button fx:id="adicionarBTN" layoutX="5.0" layoutY="568.0" mnemonicParsing="false" onAction="#adicionarBTN" text="Adicionar" />
                      </children>
                   </AnchorPane>
                </content>
             </ScrollPane>
-            <ScrollPane prefHeight="552.0" prefWidth="582.0">
-               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="499.0" prefWidth="765.0">
+            <SplitPane dividerPositions="0.08817635270541083" orientation="VERTICAL" prefHeight="487.0" prefWidth="767.0">
+              <items>
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="767.0">
                      <children>
-                        <TableView fx:id="tabela" layoutY="14.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="502.0" prefWidth="765.0">
-                          <columns>
-                              <TableColumn fx:id="tabelaID" prefWidth="32.0" text="ID" />
-                            <TableColumn fx:id="tabelaNome" prefWidth="101.0" text="Nome" />
-                            <TableColumn fx:id="tabelaCPF" minWidth="0.0" prefWidth="83.0" text="CPF" />
-                              <TableColumn fx:id="tabelaData" prefWidth="91.0" text="D.Nascimento" />
-                              <TableColumn fx:id="tabelaEndereco" prefWidth="121.0" text="Endereço" />
-                              <TableColumn fx:id="tabelaTelefone" prefWidth="74.0" text="Telefone" />
-                              <TableColumn fx:id="tabelaEmail" prefWidth="151.0" text="Email" />
-                              <TableColumn fx:id="tabelaJornada" prefWidth="57.0" text="Jornada" />
-                              <TableColumn fx:id="tabelaHora" prefWidth="53.0" text="P/Hora" />
-                          </columns>
-                        </TableView>
+                        <Label layoutX="14.0" layoutY="7.0" text="Buscar: ">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="80.0" layoutY="8.0" prefHeight="25.0" prefWidth="639.0" />
                      </children>
                   </AnchorPane>
-               </content>
-            </ScrollPane>
+                  <ScrollPane prefHeight="439.0" prefWidth="767.0">
+                     <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="452.0" prefWidth="757.0">
+                           <children>
+                              <TableView fx:id="tabela" layoutX="-2.0" layoutY="-2.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="478.0" prefWidth="777.0">
+                                <columns>
+                                    <TableColumn fx:id="tabelaID" prefWidth="32.0" text="ID" />
+                                  <TableColumn fx:id="tabelaNome" prefWidth="101.0" text="Nome" />
+                                  <TableColumn fx:id="tabelaCPF" minWidth="0.0" prefWidth="83.0" text="CPF" />
+                                    <TableColumn fx:id="tabelaData" prefWidth="91.0" text="D.Nascimento" />
+                                    <TableColumn fx:id="tabelaEndereco" prefWidth="121.0" text="Endereço" />
+                                    <TableColumn fx:id="tabelaTelefone" prefWidth="74.0" text="Telefone" />
+                                    <TableColumn fx:id="tabelaEmail" prefWidth="126.0" text="Email" />
+                                    <TableColumn fx:id="tabelaJornada" prefWidth="63.0" text="Jornada" />
+                                    <TableColumn fx:id="tabelaHora" prefWidth="75.0" text="P/Hora" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </ScrollPane>
+              </items>
+            </SplitPane>
         </items>
       </SplitPane>
    </children>
