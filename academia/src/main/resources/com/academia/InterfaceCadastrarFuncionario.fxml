@@ -81,7 +81,7 @@
                         <TextField fx:id="jornadaID" layoutX="38.0" layoutY="455.0" />
                         <TextField fx:id="horaID" layoutX="38.0" layoutY="518.0" />
                         <Button fx:id="atualizaarBTN" layoutX="83.0" layoutY="639.0" mnemonicParsing="false" text="Atualizar" />
-                        <Button fx:id="removerBTN" layoutX="82.0" layoutY="605.0" mnemonicParsing="false" text="Remover" />
+                        <Button fx:id="removerBTN" layoutX="82.0" layoutY="605.0" mnemonicParsing="false" onAction="#removerBTN" text="Remover" />
                         <Button fx:id="adicionarBTN" layoutX="81.0" layoutY="568.0" mnemonicParsing="false" onAction="#adicionarBTN" text="Adicionar" />
                      </children>
                   </AnchorPane>
@@ -93,15 +93,15 @@
                      <children>
                         <TableView fx:id="tabela" layoutY="14.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="502.0" prefWidth="765.0">
                           <columns>
-                              <TableColumn fx:id="tabelaID" prefWidth="68.79997557401657" text="ID" />
-                            <TableColumn fx:id="tabelaNome" prefWidth="68.79997557401657" text="Nome" />
-                            <TableColumn fx:id="tabelaCPF" minWidth="0.0" prefWidth="78.0" text="CPF" />
-                              <TableColumn fx:id="tabelaData" prefWidth="72.0" text="D.Nascimento" />
-                              <TableColumn fx:id="tabelaEndereco" prefWidth="84.0" text="Endereço" />
-                              <TableColumn fx:id="tabelaTelefone" prefWidth="84.0" text="Telefone" />
-                              <TableColumn fx:id="tabelaEmail" prefWidth="149.0" text="Email" />
-                              <TableColumn fx:id="tabelaJornada" prefWidth="63.0" text="Jornada" />
-                              <TableColumn fx:id="tabelaHora" prefWidth="83.0" text="P/Hora" />
+                              <TableColumn fx:id="tabelaID" prefWidth="32.0" text="ID" />
+                            <TableColumn fx:id="tabelaNome" prefWidth="101.0" text="Nome" />
+                            <TableColumn fx:id="tabelaCPF" minWidth="0.0" prefWidth="83.0" text="CPF" />
+                              <TableColumn fx:id="tabelaData" prefWidth="91.0" text="D.Nascimento" />
+                              <TableColumn fx:id="tabelaEndereco" prefWidth="121.0" text="Endereço" />
+                              <TableColumn fx:id="tabelaTelefone" prefWidth="74.0" text="Telefone" />
+                              <TableColumn fx:id="tabelaEmail" prefWidth="151.0" text="Email" />
+                              <TableColumn fx:id="tabelaJornada" prefWidth="57.0" text="Jornada" />
+                              <TableColumn fx:id="tabelaHora" prefWidth="53.0" text="P/Hora" />
                           </columns>
                         </TableView>
                      </children>

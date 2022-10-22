@@ -1,6 +1,5 @@
 package com.academia.funcionario;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -40,13 +39,15 @@ public class FuncionariosDAO {
         observableListFuncionarios = FXCollections.observableArrayList(funcionarioLista);
     }
 
-    public static void atualizaFuncionario(Integer codigo, String nome, Long cpf, LocalDate datanascimento, String endereco, Long telefone, String email, Integer jornada, Integer phora) {
+    public static void atualizaFuncionario(Integer codigo, String nome, Long cpf, String datanascimento, String endereco, Long telefone, String email, Integer jornada, Integer phora) {
         for (FuncionariosDTO c: funcionarioLista){
             if (c.getCodigo().equals(codigo)){
                 c.setNome(nome);
                 c.setTelefone(telefone);
                 c.setEmail(email);
                 c.setCpf(telefone);
+                c.setEndereco(endereco);
+                c.setDatanascimento(datanascimento);
             }
         }
         observableListFuncionarios = FXCollections.observableArrayList(funcionarioLista);

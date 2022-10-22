@@ -1,16 +1,16 @@
 package com.academia.funcionario;
 
 public class FuncionariosDTO {
-    private String nome, endereco, email, datanascismento;
+    private String nome, endereco, email, datanascimento;
     private Long  cpf, telefone;
     private Integer codigo, jornada, phora;
 
-    public FuncionariosDTO(Integer codigo, String nome, String endereco, String email, Long cpf, Long telefone, String datanascismento, Integer jornada, Integer phora) {
+    public FuncionariosDTO(Integer codigo, String nome, String endereco, String email, Long cpf, Long telefone, String datanascimento, Integer jornada, Integer phora) {
         this.codigo = codigo;
         this.nome = nome;
         this.telefone = telefone;
         this.cpf = cpf;
-        this.datanascismento = datanascismento;
+        this.datanascimento = datanascimento;
         this.email = email;
         this.endereco = email;
         this.jornada = jornada;
@@ -28,8 +28,8 @@ public class FuncionariosDTO {
     public void setCpf(Long cpf) {
         this.cpf = cpf;
     }
-    public void setDatanascismento(String datanascismento) {
-        this.datanascismento = datanascismento;
+    public void setDatanascimento(String datanascimento) {
+        this.datanascimento = datanascimento;
     }
     public void setEmail(String email) {
         this.email = email;
@@ -59,8 +59,8 @@ public class FuncionariosDTO {
     public Long getCpf() {
         return cpf;
     }
-    public String getDatasnacismento() {
-        return datanascismento;
+    public String getDatanascimento() {
+        return datanascimento;
     }
     public String getEmail() {
         return email;

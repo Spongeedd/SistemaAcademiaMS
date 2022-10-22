@@ -6,12 +6,12 @@ import java.time.format.DateTimeFormatter;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 
@@ -91,19 +91,20 @@ public class FuncionarioController {
     Alert a = new Alert(AlertType.NONE);
     @FXML
     private void adicionarBTN() throws IOException {
-        
         try {
             String nome = nomeID.getText();
             String numero = telefoneID.getText();
             String endereco = enderecoID.getText();
             String email = emailID.getText();
+
             LocalDate dataaux = dataID.getValue();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String data = dataaux.format(formatter);
+            
             String jornadaaux = jornadaID.getText();
             String phoraaux = horaID.getText();
             String cpfaux = cpfID.getText();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String data = dataaux.format(formatter);
-            System.out.println(data);
+
 
             Long telefone = Long.parseLong(numero);
             Long cpf = Long.parseLong(cpfaux);
@@ -132,11 +133,23 @@ public class FuncionarioController {
         }
     }
 
+    @FXML
+    private void removerBTN() throws IOException {
+        try {
+            FuncionariosService.removerFuncionario(getRow());
+            carregarTabela();
+        } catch (Exception e) {
+            a.setAlertType(AlertType.WARNING);
+            a.setContentText("Nenhum funcionário selecionado");
+            a.show();
+        }
+    }
+
     public void carregarTabela() {
         tabelaID.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         tabelaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tabelaCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
-        tabelaData.setCellValueFactory(new PropertyValueFactory<>("datanascismento"));
+        tabelaData.setCellValueFactory(new PropertyValueFactory<>("datanascimento"));
         tabelaEndereco.setCellValueFactory(new PropertyValueFactory<>("endereco"));
         tabelaTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
         tabelaEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
