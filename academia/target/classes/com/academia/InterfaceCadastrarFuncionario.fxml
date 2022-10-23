@@ -80,7 +80,7 @@
                         </Label>
                         <TextField fx:id="jornadaID" layoutX="38.0" layoutY="455.0" />
                         <TextField fx:id="horaID" layoutX="38.0" layoutY="518.0" />
-                        <Button fx:id="atualizaarBTN" layoutX="152.0" layoutY="568.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="66.0" text="Atualizar" />
+                        <Button fx:id="atualizarBTN" layoutX="152.0" layoutY="568.0" mnemonicParsing="false" onAction="#atualizarBTN" prefHeight="25.0" prefWidth="66.0" text="Atualizar" />
                         <Button fx:id="removerBTN" layoutX="80.0" layoutY="568.0" mnemonicParsing="false" onAction="#removerBTN" text="Remover" />
                         <Button fx:id="adicionarBTN" layoutX="5.0" layoutY="568.0" mnemonicParsing="false" onAction="#adicionarBTN" text="Adicionar" />
                      </children>
@@ -96,7 +96,7 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="80.0" layoutY="8.0" prefHeight="25.0" prefWidth="639.0" />
+                        <TextField fx:id="buscarID" layoutX="80.0" layoutY="8.0" prefHeight="25.0" prefWidth="639.0" />
                      </children>
                   </AnchorPane>
                   <ScrollPane prefHeight="439.0" prefWidth="767.0">

@@ -12,7 +12,7 @@ public class FuncionariosDTO {
         this.cpf = cpf;
         this.datanascimento = datanascimento;
         this.email = email;
-        this.endereco = email;
+        this.endereco = endereco;
         this.jornada = jornada;
         this.phora = phora;
     }

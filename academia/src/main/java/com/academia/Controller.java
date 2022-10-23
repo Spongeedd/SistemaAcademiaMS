@@ -5,8 +5,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -25,7 +27,8 @@ public class Controller {
     private void exibeInfo() throws IOException {
         String senha = senhaInput.getText();
         String login = funcionarioInput.getText();
-
+        
+        Alert a = new Alert(AlertType.NONE);
         if (login.equals("admin") && senha.equals("123")) {
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(App.class.getResource("InterfaceCadastrarFuncionario.fxml"));
@@ -37,7 +40,7 @@ public class Controller {
             stage = (Stage) btnEntrar.getScene().getWindow();
             stage.close();
         }
-        else {
+        else if (login.equals("1") && senha.equals("123")) {
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(App.class.getResource("InterfaceMatricula.fxml"));
             stage.setScene(new Scene(root));
@@ -47,6 +50,12 @@ public class Controller {
             stage.show();
             stage = (Stage) btnEntrar.getScene().getWindow();
             stage.close();
+            
+        }
+        else {
+            a.setAlertType(AlertType.WARNING);
+            a.setContentText("Login não encontrado");
+            a.show();
         }
     }
 

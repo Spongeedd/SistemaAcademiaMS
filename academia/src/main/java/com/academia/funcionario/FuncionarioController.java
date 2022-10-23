@@ -1,10 +1,15 @@
 package com.academia.funcionario;
 
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
 
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -40,6 +45,8 @@ public class FuncionarioController {
     @FXML
     private TextField nomeID;
 
+    @FXML
+    private TextField buscarID;
 
     @FXML
     private TextField telefoneID;
@@ -50,7 +57,7 @@ public class FuncionarioController {
     private Button adicionarBTN;
 
     @FXML
-    private Button atualizaarBTN;
+    private Button atualizarBTN;
 
     @FXML
     private Button removerBTN;
@@ -88,9 +95,43 @@ public class FuncionarioController {
     private TableColumn<FuncionariosDTO, String> tabelaTelefone;
 
 
+    /* 
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        FilteredList<FuncionariosDTO> listaAux = new FilteredList<>(FuncionariosDAO.getObservableListFuncionarios(), e -> true);
+
+            buscarID.textProperty().addListener((observable, oldvalue, newValue) -> {
+                listaAux.setPredicate(FuncionariosDTO -> {
+    
+                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+                        return true;
+                    }
+                    String procuraString = newValue.toLowerCase();
+    
+                    if (FuncionariosDTO.getNome().toLowerCase().indexOf(procuraString) > -1) {
+                        return true;
+                    }
+                    else if (FuncionariosDTO.getEndereco().toLowerCase().indexOf(procuraString) > -1) {
+                        return true;
+                    }
+                    else if (FuncionariosDTO.getEmail().toLowerCase().indexOf(procuraString) > -1) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                });
+            });
+
+        
+        SortedList<FuncionariosDTO> listaFiltrada = new SortedList<>(listaAux);
+        listaFiltrada.comparatorProperty().bind(tabela.comparatorProperty());
+        tabela.setItems(listaFiltrada);
+    }
+    */
     Alert a = new Alert(AlertType.NONE);
     @FXML
-    private void adicionarBTN() throws IOException {
+    private void adicionarBTN() throws IOException  {
         try {
             String nome = nomeID.getText();
             String numero = telefoneID.getText();
@@ -145,6 +186,50 @@ public class FuncionarioController {
         }
     }
 
+    @FXML
+    private void atualizarBTN() throws IOException {
+        try {
+            String nome = nomeID.getText();
+            String numero = telefoneID.getText();
+            String endereco = enderecoID.getText();
+            String email = emailID.getText();
+
+            LocalDate dataaux = dataID.getValue();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String data = dataaux.format(formatter);
+            
+            String jornadaaux = jornadaID.getText();
+            String phoraaux = horaID.getText();
+            String cpfaux = cpfID.getText();
+
+
+            Long telefone = Long.parseLong(numero);
+            Long cpf = Long.parseLong(cpfaux);
+            Integer jornada = Integer.parseInt(jornadaaux);
+            Integer phora = Integer.parseInt(phoraaux);
+            
+            if (nome.isEmpty() || numero.isEmpty() || endereco.isEmpty() || email.isEmpty() || jornadaaux.isEmpty() || phoraaux.isEmpty() || cpfaux.isEmpty()) {
+                a.setAlertType(AlertType.WARNING);
+                a.setContentText("Nenhum campo pode estar vazio");
+                a.show();
+            }
+            else if (FuncionariosDAO.consultaPorCPF(cpf) != null) {
+                a.setAlertType(AlertType.WARNING);
+                a.setContentText("Funcionario ja cadastrado");
+                a.show();
+            }
+            else {
+                FuncionariosService.editarFuncionario(getRow(), nome, cpf, data, endereco, telefone, email, jornada, phora);
+                carregarTabela();
+                limpaInputs();
+            }
+        } catch (Exception e) {
+            a.setAlertType(AlertType.WARNING);
+            a.setContentText("Nenhum funcionário selecionado");
+            a.show();
+        }
+    }
+
     public void carregarTabela() {
         tabelaID.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         tabelaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -174,6 +259,7 @@ public class FuncionarioController {
         FuncionariosDTO dto = tabela.getSelectionModel().getSelectedItem();
         return codigo = dto.getCodigo();
     }
+
 }
 
 

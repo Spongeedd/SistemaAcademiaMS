@@ -9,7 +9,7 @@ public class FuncionariosService {
         FuncionariosDAO.removeFuncionario(codigo);
     }
 
-    public static void editarFuncionario(String nome, Long cpf, String datanascimento, String endereco, Long telefone, String email, Integer jornada, Integer phora) {
-        
+    public static void editarFuncionario(Integer codigo,  String nome, Long cpf, String datanascimento, String endereco, Long telefone, String email, Integer jornada, Integer phora) {
+        FuncionariosDAO.atualizaFuncionario(codigo ,nome, cpf, datanascimento, endereco, telefone, email, jornada, phora);
     }
 }
