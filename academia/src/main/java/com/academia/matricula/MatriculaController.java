@@ -166,7 +166,6 @@ public class MatriculaController implements Initializable{
             String email = emailID.getText();
             String pacote = pacoteID.getValue();
             String plano = planoID.getValue();
-            String datanascimento = nascimentoID.getValue();
 
             LocalDate dataaux = nascimentoID.getValue();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -189,7 +188,7 @@ public class MatriculaController implements Initializable{
                 a.show();
             }
             else {
-                MatriculaService.editarMatricula(getRow(), nome, cpf, datanascimento, endereco, telefone, email, plano, pacote);
+                MatriculaService.editarMatricula(getRow(), nome, cpf, data, endereco, telefone, email, plano, pacote);
                 carregarTabela();
                 limpaInputs();
             }
