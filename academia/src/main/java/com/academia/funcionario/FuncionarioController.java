@@ -254,6 +254,90 @@ public class FuncionarioController {
         FuncionariosDTO dto = tabela.getSelectionModel().getSelectedItem();
         return codigo = dto.getCodigo();
     }
+    
+    @FXML
+    private void buscarBTN() throws IOException {
+        try {
+        String buscaInput = buscarInput.getText();
+        String buscaSelect = buscarSelect.getValue();
+        DTO consulta;
+        if (buscaInput.isEmpty()) {
+            a.setAlertType(AlertType.WARNING);
+            a.setContentText("Campo não pode estar vazio");
+            a.show();
+        }
+        else {
+            switch (buscaSelect) {
+                case "ID":
+                        Integer id = Integer.parseInt(buscaInput);
+                        consulta = Service.consultaPorID(id);
+                        if (consulta == null) {
+                            a.setAlertType(AlertType.WARNING);
+                            a.setContentText("ID não encontrado");
+                            a.show();
+                        }
+                        else {
+                            a.setAlertType(AlertType.INFORMATION);
+                            a.setContentText(textoConsulta(consulta));
+                            a.show();
+                        }
+                    break;
+                case "Nome":
+                    consulta = Service.consultaPorNome(buscaInput);
+                    if (consulta == null) {
+                        a.setAlertType(AlertType.WARNING);
+                        a.setContentText("Nome não encontrado");
+                        a.show();
+                    }
+                    else {
+                        a.setAlertType(AlertType.INFORMATION);
+                        a.setContentText(textoConsulta(consulta));
+                        a.show();
+                    }
+                    break;
+                case "Número":
+                    try {
+                        Long telefone = Long.parseLong(buscaInput);
+                        consulta = Service.consultaPorTelefone(telefone);
+                        if (consulta == null) {
+                            a.setAlertType(AlertType.WARNING);
+                            a.setContentText("Telefone não encontrado");
+                            a.show();
+                        }
+                        else {
+                            a.setAlertType(AlertType.INFORMATION);
+                            a.setContentText(textoConsulta(consulta));
+                            a.show();
+                        }
+                    } catch (Exception e) {
+                        a.setAlertType(AlertType.WARNING);
+                        a.setContentText("Telefone deve ser um número");
+                        a.show();
+                    }
+                    break;
+                }
+            }
+           
+        }catch (Exception e) {
+            a.setAlertType(AlertType.WARNING);
+            a.setContentText("ID deve ser um número");
+            a.show();
+        }
+    }
+
+    private String textoConsulta (DTO consulta) {
+        String nome, tipo, grupo, email;
+        Integer ID;
+        Long numero;
+        ID = FuncionariosDTO.getCodigo();
+        nome = FuncionariosDTO.getNome();
+        numero = FuncionariosDTO.getTelefone();
+        email = FuncionariosDTO.getEmail();
+        tipo = FuncionariosDTO.getJornada();
+        grupo = FuncionariosDTO.getPHora();
+        String textoconsultaString = "ID: " + ID + "\nNome: " + nome + "\nNúmero: " + numero + "\nEmail: " + email+ "\nTipo: " + tipo + "\nGrupo: " + grupo;
+        return textoconsultaString;
+    }
 
 }
 
