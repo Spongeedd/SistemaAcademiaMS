@@ -7,7 +7,7 @@ public class MatriculaService {
     }
 
     public static void removerMatricula(Integer codigo) {
-        MatriculaDAO.removeMatricula(codigo);
+        MatriculaDAO.removerMatricula(codigo);
     }
 
     public static void editarMatricula(Integer codigo,String nome, Long cpf, String datanascimento, String endereco, Long telefone, String email, String plano, String pacote) {
