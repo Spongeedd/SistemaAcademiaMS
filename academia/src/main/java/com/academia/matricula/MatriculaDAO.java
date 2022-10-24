@@ -26,7 +26,7 @@ public class MatriculaDAO {
     }
 // Deleta
     static List<MatriculaDTO> toRemove = new ArrayList();
-    public static void removerMatricula(Integer codg) {
+    public static void delMatr(Integer codg) {
         for (MatriculaDTO c: matriculasLista){
             if (c.getCodigo().equals(codg)){
                 toRemove.add(c);
@@ -38,7 +38,7 @@ public class MatriculaDAO {
     }
 // Edita
     public static void atualizaMatricula(Integer codigo, String nome, Long cpf, String datanascimento, String endereco, Long telefone, String email, String plano, String pacote) {
-        removerMatricula(codigo);
+        delMatr(codigo);
         inserirMatricula(nome, cpf, datanascimento, endereco, telefone, email, plano, pacote);
     }
 // Pesquisa

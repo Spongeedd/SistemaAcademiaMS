@@ -145,6 +145,61 @@ public class MatriculaController implements Initializable{
         }
     }
     
+    @FXML
+    private void removerBTN() throws IOException {
+        try {
+            MatriculaService.delMatr(getRow());
+            carregarTabela();
+        } catch (Exception e) {
+            a.setAlertType(AlertType.WARNING);
+            a.setContentText("Nenhuma matrícula selecionado");
+            a.show();
+        }
+    }
+
+    @FXML
+    private void atualizarBTN() throws IOException {
+        try {
+            String nome = nomeID.getText();
+            String numero = telefoneID.getText();
+            String endereco = enderecoID.getText();
+            String email = emailID.getText();
+            String pacote = pacoteID.getValue();
+            String plano = planoID.getValue();
+            String datanascimento = nascimentoID.getValue();
+
+            LocalDate dataaux = nascimentoID.getValue();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String data = dataaux.format(formatter);
+            
+            String cpfaux = cpfID.getText();
+
+
+            Long telefone = Long.parseLong(numero);
+            Long cpf = Long.parseLong(cpfaux);
+            
+            if (nome.isEmpty() || numero.isEmpty() || endereco.isEmpty() || email.isEmpty() || cpfaux.isEmpty()) {
+                a.setAlertType(AlertType.WARNING);
+                a.setContentText("Nenhum campo pode estar vazio");
+                a.show();
+            }
+            else if (MatriculaDAO.consultaPorCPF(cpf) != null) {
+                a.setAlertType(AlertType.WARNING);
+                a.setContentText("Matrícula existente");
+                a.show();
+            }
+            else {
+                MatriculaService.editarMatricula(getRow(), nome, cpf, datanascimento, endereco, telefone, email, plano, pacote);
+                carregarTabela();
+                limpaInputs();
+            }
+        } catch (Exception e) {
+            a.setAlertType(AlertType.WARNING);
+            a.setContentText("Nenhuma matrícula selecionado");
+            a.show();
+        }
+    }
+    
     public void carregarTabela() {
         tabelaID.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         tabelaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
