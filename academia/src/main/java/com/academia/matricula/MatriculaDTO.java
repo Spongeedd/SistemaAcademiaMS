@@ -2,7 +2,7 @@ package com.academia.matricula;
 
 public class MatriculaDTO {
     private String nome, endereco, email, datanascimento, plano, pacote;
-    private Long  cpf, telefone;
+    private Long cpf, telefone;
     private Integer codigo;
 
     public MatriculaDTO () {}
@@ -30,7 +30,7 @@ public class MatriculaDTO {
       return codigo;
     }
 
-    public void setnome(String nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
@@ -42,7 +42,7 @@ public class MatriculaDTO {
         this.email = email;
     }
 
-    public void setcpf(Long cpf) {
+    public void setCpf(Long cpf) {
         this.cpf = cpf;
     }
     
@@ -50,7 +50,7 @@ public class MatriculaDTO {
         this.endereco = endereco;
     }
 
-    public void setdatanascimento(String datanascimento) {
+    public void setDatanascimento(String datanascimento) {
         this.datanascimento = datanascimento;
     }
 
@@ -65,7 +65,7 @@ public class MatriculaDTO {
     ////////////////////////////////////////////////////
     // Getters
 
-    public String getnome() {
+    public String getNome() {
         return nome;
     }
 
@@ -77,11 +77,11 @@ public class MatriculaDTO {
         return email;
     }
 
-    public Long getcpf() {
+    public Long getCpf() {
         return cpf;
     }
 
-    public String getdatanascimento() {
+    public String getDatanascimento() {
         return datanascimento;
     }
 

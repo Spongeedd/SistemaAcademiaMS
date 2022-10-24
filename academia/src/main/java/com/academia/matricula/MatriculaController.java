@@ -135,8 +135,8 @@ public class MatriculaController implements Initializable{
             }
             else {
                 MatriculaService.adicionarMatricula(nome, cpf, data, endereco, telefone, email, plano, pacote);
-
                 carregarTabela();
+                limpaInputs();
             }
         } catch (Exception e) {
             a.setAlertType(AlertType.WARNING);

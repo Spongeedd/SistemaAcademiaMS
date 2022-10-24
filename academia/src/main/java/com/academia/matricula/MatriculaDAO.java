@@ -45,7 +45,7 @@ public class MatriculaDAO {
 
     public static MatriculaDTO consultaPorNome(String nome) {
         for (MatriculaDTO c: matriculasLista){
-            if (c.getnome().equals(nome)){
+            if (c.getNome().equals(nome)){
                 return c;
             }
         }
@@ -63,7 +63,7 @@ public class MatriculaDAO {
 
     public static MatriculaDTO consultaPorCPF(long CPF) {
         for (MatriculaDTO c: matriculasLista){
-            if (c.getcpf().equals(CPF)){
+            if (c.getCpf().equals(CPF)){
                 return c;
             }
         }
