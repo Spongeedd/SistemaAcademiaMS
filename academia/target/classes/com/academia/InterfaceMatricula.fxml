@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -14,20 +18,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="550.0" prefWidth="831.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="520.0" prefWidth="1060.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.academia.matricula.MatriculaController">
    <children>
-      <SplitPane dividerPositions="0.29794933655006034" prefHeight="550.0" prefWidth="831.0">
+      <SplitPane dividerPositions="0.293124246079614" prefHeight="550.0" prefWidth="831.0">
         <items>
-            <ScrollPane prefHeight="200.0" prefWidth="200.0">
+            <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="251.0" SplitPane.resizableWithParent="false">
                <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="725.0" prefWidth="242.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="661.0" prefWidth="242.0">
                      <children>
                         <Label layoutX="56.0" layoutY="4.0" text="Cadastro Matrícula" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="29.0" layoutY="53.0" prefHeight="28.0" prefWidth="180.0" />
+                        <TextField fx:id="nomeID" layoutX="29.0" layoutY="53.0" prefHeight="28.0" prefWidth="180.0" />
                         <Label layoutX="98.0" layoutY="32.0" text="Nome" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="13.0" />
@@ -38,14 +42,14 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="29.0" layoutY="113.0" prefHeight="28.0" prefWidth="180.0" />
+                        <TextField fx:id="cpfID" layoutX="29.0" layoutY="113.0" prefHeight="28.0" prefWidth="180.0" />
                         <Label layoutX="60.0" layoutY="146.0" text="Data de Nascimento" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <DatePicker layoutX="29.0" layoutY="170.0" prefHeight="28.0" prefWidth="180.0" />
-                        <TextField layoutX="29.0" layoutY="233.0" prefHeight="28.0" prefWidth="180.0" />
+                        <DatePicker fx:id="nascimentoID" layoutX="29.0" layoutY="170.0" prefHeight="28.0" prefWidth="180.0" />
+                        <TextField fx:id="emailID" layoutX="29.0" layoutY="233.0" prefHeight="28.0" prefWidth="180.0" />
                         <Label layoutX="100.0" layoutY="211.0" text="Email" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="13.0" />
@@ -56,27 +60,15 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="29.0" layoutY="290.0" prefHeight="28.0" prefWidth="180.0" />
+                        <TextField fx:id="telefoneID" layoutX="29.0" layoutY="290.0" prefHeight="28.0" prefWidth="180.0" />
                         <Separator layoutX="8.0" layoutY="392.0" prefHeight="2.0" prefWidth="228.0" />
-                        <TextField layoutX="29.0" layoutY="344.0" prefHeight="28.0" prefWidth="180.0" />
+                        <TextField fx:id="enderecoID" layoutX="29.0" layoutY="344.0" prefHeight="28.0" prefWidth="180.0" />
                         <Label layoutX="88.0" layoutY="326.0" text="Endereço" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <Button layoutX="72.0" layoutY="648.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="85.0" text="Atualizar">
-                           <font>
-                              <Font size="15.0" />
-                           </font></Button>
-                        <Button layoutX="127.0" layoutY="604.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="85.0" text="Remover">
-                           <font>
-                              <Font size="15.0" />
-                           </font></Button>
-                        <Button layoutX="24.0" layoutY="604.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="85.0" text="Adicionar">
-                           <font>
-                              <Font size="15.0" />
-                           </font></Button>
-                        <Label layoutX="95.0" layoutY="394.0" prefHeight="20.0" prefWidth="39.0" text="Plano" textAlignment="CENTER">
+                        <Label layoutX="95.0" layoutY="394.0" prefHeight="20.0" prefWidth="64.0" text="Plano" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -86,27 +78,55 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <ChoiceBox layoutX="29.0" layoutY="442.0" prefHeight="28.0" prefWidth="180.0" />
+                        <ChoiceBox fx:id="planoID" layoutX="29.0" layoutY="442.0" prefHeight="28.0" prefWidth="180.0" />
                         <Label layoutX="70.0" layoutY="483.0" text="Tipo de Pacote" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <ChoiceBox layoutX="29.0" layoutY="507.0" prefHeight="28.0" prefWidth="180.0" />
+                        <ChoiceBox fx:id="pacoteID" layoutX="29.0" layoutY="507.0" prefHeight="28.0" prefWidth="180.0" />
+                        <Button fx:id="adicionarBTN" layoutX="79.0" layoutY="547.0" mnemonicParsing="false" onAction="#adicionarBTN" text="Adicionar" />
+                        <Button fx:id="removerBTN" layoutX="81.0" layoutY="585.0" mnemonicParsing="false" text="Remover" />
+                        <Button fx:id="atualizarBTN" layoutX="81.0" layoutY="622.0" mnemonicParsing="false" text="Atualizar" />
                      </children>
                   </AnchorPane>
                </content>
             </ScrollPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="460.0" prefWidth="449.0">
-               <children>
-                  <TableView layoutX="14.0" layoutY="-22.0" prefHeight="548.0" prefWidth="578.0">
-                    <columns>
-                      <TableColumn prefWidth="75.0" text="C1" />
-                      <TableColumn prefWidth="75.0" text="C2" />
-                    </columns>
-                  </TableView>
-               </children>
-            </AnchorPane>
+            <SplitPane dividerPositions="0.08487084870848709" orientation="VERTICAL" prefHeight="544.0" prefWidth="769.0">
+               <items>
+                  <AnchorPane prefHeight="176.0" prefWidth="759.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="11.0" text="Buscar: ">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="97.0" layoutY="9.0" prefHeight="25.0" prefWidth="558.0" />
+                     </children>
+                  </AnchorPane>
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <AnchorPane prefHeight="492.0" prefWidth="759.0">
+                           <children>
+                              <TableView fx:id="tabela" prefHeight="502.0" prefWidth="799.0">
+                                <columns>
+                                  <TableColumn fx:id="tabelaID" prefWidth="35.0" text="ID" />
+                                  <TableColumn fx:id="tabelaNome" prefWidth="115.0" text="Nome" />
+                                    <TableColumn fx:id="tabelaCPF" prefWidth="74.0" text="CPF" />
+                                    <TableColumn fx:id="tabelaNascimento" prefWidth="83.0" text="D.Nacimento" />
+                                    <TableColumn fx:id="tabelaEmail" prefWidth="108.0" text="Email" />
+                                    <TableColumn fx:id="tabelaTelefone" prefWidth="98.0" text="Telefone" />
+                                    <TableColumn fx:id="tabelaEndereco" prefWidth="120.0" text="Endereço" />
+                                    <TableColumn fx:id="tabelaPlano" text="Plano" />
+                                    <TableColumn fx:id="tabelaPacote" prefWidth="74.0" text="Pacote" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </ScrollPane>
+               </items>
+            </SplitPane>
         </items>
       </SplitPane>
    </children>
