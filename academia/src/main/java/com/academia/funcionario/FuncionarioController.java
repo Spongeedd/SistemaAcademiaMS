@@ -1,15 +1,9 @@
 package com.academia.funcionario;
 
 import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ResourceBundle;
-
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -18,7 +12,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 
 public class FuncionarioController {
 
@@ -129,6 +122,8 @@ public class FuncionarioController {
         tabela.setItems(listaFiltrada);
     }
     */
+
+    
     Alert a = new Alert(AlertType.NONE);
     @FXML
     private void adicionarBTN() throws IOException  {
