@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class FuncionariosDAO {
+    
     private static ObservableList<FuncionariosDTO> observableListFuncionarios;
     private static List<FuncionariosDTO> funcionarioLista;
     private static Integer codigo;
@@ -79,6 +80,16 @@ public class FuncionariosDAO {
         }
         return null;
     }
+
+    public static FuncionariosDTO consultaPorCPF(Long cpf) {
+        for (FuncionariosDTO c: funcionarioLista){
+            if (c.getCpf().equals(cpf)){
+                return c;
+            }
+        }
+        return null;
+    }
+
 
     public static Integer getCodigo() {
         return codigo;

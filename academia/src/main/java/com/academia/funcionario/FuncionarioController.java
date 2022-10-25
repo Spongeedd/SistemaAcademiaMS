@@ -1,19 +1,31 @@
 package com.academia.funcionario;
 
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
+
+import com.academia.App;
+
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
-public class FuncionarioController {
+public class FuncionarioController implements Initializable {
 
     // Inputs
 
@@ -39,10 +51,13 @@ public class FuncionarioController {
     private TextField nomeID;
 
     @FXML
-    private TextField buscarID;
+    private TextField buscarInput;
 
     @FXML
     private TextField telefoneID;
+
+    @FXML
+    private ChoiceBox<String> buscarSelect;
 
     // Botões
 
@@ -54,6 +69,12 @@ public class FuncionarioController {
 
     @FXML
     private Button removerBTN;
+
+    @FXML
+    private Button buscarBTN;
+
+    @FXML
+    private Button inicioBTN;
 
     // Tabela
 
@@ -123,6 +144,12 @@ public class FuncionarioController {
     }
     */
 
+    private String[] buscarSelStrings = {"ID", "Nome", "CPF"};
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        buscarSelect.setValue("ID");
+        buscarSelect.getItems().addAll(buscarSelStrings);
+    }
     
     Alert a = new Alert(AlertType.NONE);
     @FXML
@@ -253,6 +280,103 @@ public class FuncionarioController {
     public Integer getRow() {
         FuncionariosDTO dto = tabela.getSelectionModel().getSelectedItem();
         return codigo = dto.getCodigo();
+    }
+    
+    @FXML
+    private void voltarBTN() throws IOException {
+        Stage stage = new Stage();
+            Parent root = FXMLLoader.load(App.class.getResource("InterfaceLogin.fxml"));
+            stage.setScene(new Scene(root));
+            stage.setTitle("Cadastrar Funcionario");
+            stage.setResizable(false);
+            stage.getIcons().add(new Image(App.class.getResourceAsStream("icone.png")));
+            stage.show();
+            stage = (Stage) inicioBTN.getScene().getWindow();
+            stage.close();
+    }
+
+    @FXML
+    private void buscarBTN() throws IOException {
+        try {
+            String buscaInput = buscarInput.getText();
+            String buscaSelect = buscarSelect.getValue();
+            FuncionariosDTO consulta;
+            if (buscaInput.isEmpty()) {
+                a.setAlertType(AlertType.WARNING);
+                a.setContentText("Campo não pode estar vazio");
+                a.show();
+            }
+            else {
+                switch (buscaSelect) {
+                    case "ID":
+                            Integer id = Integer.parseInt(buscaInput);
+                            consulta = FuncionariosService.consultaPorID(id);
+                            if (consulta == null) {
+                                a.setAlertType(AlertType.WARNING);
+                                a.setContentText("ID não encontrado");
+                                a.show();
+                            }
+                            else {
+                                a.setAlertType(AlertType.INFORMATION);
+                                a.setContentText(textoConsulta(consulta));
+                                a.show();
+                            }
+                        break;
+                    case "Nome":
+                        consulta = FuncionariosService.consultaPorNome(buscaInput);
+                        if (consulta == null) {
+                            a.setAlertType(AlertType.WARNING);
+                            a.setContentText("Nome não encontrado");
+                            a.show();
+                        }
+                        else {
+                            a.setAlertType(AlertType.INFORMATION);
+                            a.setContentText(textoConsulta(consulta));
+                            a.show();
+                        }
+                        break;
+                    case "CPF":
+                        try {
+                            Long cpf = Long.parseLong(buscaInput);
+                            consulta = FuncionariosService.consultaPorCPF(cpf);
+                            if (consulta == null) {
+                                a.setAlertType(AlertType.WARNING);
+                                a.setContentText("CPF não encontrado");
+                                a.show();
+                            }
+                            else {
+                                a.setAlertType(AlertType.INFORMATION);
+                                a.setContentText(textoConsulta(consulta));
+                                a.show();
+                            }
+                        } catch (Exception e) {
+                            a.setAlertType(AlertType.WARNING);
+                            a.setContentText("CPF");
+                            a.show();
+                        }
+                        break;
+                    }
+                }
+        }catch (Exception e) {
+            a.setAlertType(AlertType.WARNING);
+            a.setContentText("ID deve ser um número");
+            a.show();
+        }
+    }
+
+    private String textoConsulta (FuncionariosDTO consulta) {
+        String nome, email;
+        Integer ID, jornada, phora;
+        Long numero, cpf;
+        ID = consulta.getCodigo();
+        cpf = consulta.getCpf();
+        nome = consulta.getNome();
+        numero = consulta.getTelefone();
+        email = consulta.getEmail();
+        jornada = consulta.getJornada();
+        phora = consulta.getPhora();
+        String textoconsultaString = "ID: " + ID + "\nNome: " + nome + "\nCPF: " + cpf +  "\nNúmero: " + numero + "\nEmail: " + email+ "\nJornada: " + jornada + "\nP/Hora: " + phora;
+        return textoconsultaString;
     }
 
 }
