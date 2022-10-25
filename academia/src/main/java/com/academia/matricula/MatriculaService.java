@@ -13,4 +13,16 @@ public class MatriculaService {
     public static void editarMatricula(Integer codigo,String nome, Long cpf, String datanascimento, String endereco, Long telefone, String email, String plano, String pacote) {
         MatriculaDAO.atualizaMatricula(codigo ,nome, cpf, datanascimento, endereco, telefone, email, plano, pacote);
     }
+
+    public static MatriculaDTO consultaPorID(Integer codigo) {
+        return MatriculaDAO.consultaPorID(codigo);
+    }
+
+    public static MatriculaDTO consultaPorNome(String nome) {
+        return MatriculaDAO.consultaPorNome(nome);
+    }
+
+    public static MatriculaDTO consultaPorCPF(Long cpf) {
+        return MatriculaDAO.consultaPorCPF(cpf);
+    }
 }
