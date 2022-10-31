@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="exercicios">
+        <label class="label" for="matricula">Matrícula:  </label><input id="cadastrar" type="text" name="matricula"><br>
+        <label class="label" for="tipoPlano">Tipo de plano:  </label><input class="cadastro" type="text" name="tipoPlano"><br>
+        <label class="label" for="exercIncl">Exercícios incluídos:  </label><input class="cadastro" type="text" name="exercIncl"><br>
+        <label class="label" for="exercMais">Exercícios a mais:  </label><input class="cadastro" type="text" name="exercMais"><br>
+        <table id="tabela">
+            <thead>
+                <tr id="cima">
+                    <th>Exercícios incluídos</th>
+                    <th>Exercícios a mais</th>
+                    <th>Carga horária</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Braço</th>
+                    <td>Triceps pulley</td>
+                    <td>Sim</td>
+                </tr>
+                <tr>
+                    <td>Perna</t>
+                    <td>Leg press</td>
+                    <td>Não</td>
+                </tr>
+            </tbody>
+        </table>  
+    </div>
+
+</body>
+<style>
+    body{
+        padding: 0;
+        margin: 0;
+        background-color: #94B49F;        
+    }
+
+    #exercicios {
+        display: block;
+        margin: auto;
+        background-color: #FCF8E8;
+        width: 20cm;
+        border-radius: 2mm;
+        margin-top: 10mm;
+    }
+
+    #exercicios h2 {
+        text-align: center;
+        font-family: 'Crimson Text', serif;
+        color: #1C6758
+    }
+
+    #exercicios table {
+        margin: auto;
+        background-color: #FCF8E8;
+        width: 15cm;
+        border-radius: 2mm;
+        color: #1C6758;
+    }
+
+    #exercicios tr {
+        text-align: center;
+    }
+
+    .cadastro {
+        border-radius: 1mm;
+        margin-top: 4mm;
+    }
+
+    #cima {
+        background-color: #ffe57f;
+        height: 10mm;
+    }
+
+    #tabela {
+        padding-top: 10mm;
+        padding-bottom: 10mm;
+    }
+
+    .label {
+        margin-left: 10mm;
+    }
+
+    tbody th, td{
+        height: 10mm;
+    }
+
+    #cadastrar {
+        border-radius: 1mm;
+        margin-top: 10mm;
+    }
+
+</style>
+</html>
