@@ -1,89 +1,140 @@
 package com.academia.matricula;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import com.academia.db.DBConnector;
 
 public class MatriculaDAO {
-    private static ObservableList<MatriculaDTO> observableListMatriculas;
-    private static List<MatriculaDTO> matriculasLista;
-    private static Integer codigo;
-    static {
-        matriculasLista = new ArrayList<>();
-        codigo = 1;
-    }
+    public static MatriculaDTO inserirMatricula(String nome, String cpf, Date datanascimento, String endereco, String telefone, String email, String plano, String pacote) {
+        try(Connection connection = DBConnector.getConexao()) {
+        
+            String sql = "INSERT INTO matricula (nome, cpf, nascimento, endereco, telefone, email, plano, pacote) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-    public static MatriculaDTO inserirMatricula(String nome, Long cpf, String datanascimento, String endereco, Long telefone, String email, String plano, String pacote) {
-        while (consultaPorID(codigo)!= null) {
-            codigo++;
+            MatriculaDTO funcionario = new MatriculaDTO(nome, endereco, email, cpf, telefone, datanascimento, plano, pacote);
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, funcionario.getNome());
+            preparedStatement.setString(2, funcionario.getCpf());
+            preparedStatement.setDate(3, funcionario.getDatanascimento());
+            preparedStatement.setString(4, funcionario.getEndereco());
+            preparedStatement.setString(5, funcionario.getTelefone());
+            preparedStatement.setString(6, funcionario.getEmail());
+            preparedStatement.setString(7, funcionario.getPlano());
+            preparedStatement.setString(8, funcionario.getPacote());
+
+            preparedStatement.executeUpdate();
+            
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                Integer id = resultSet.getInt(1);
+                funcionario.setCodigo(id);
+            }
+            return funcionario;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        MatriculaDTO matricula = new MatriculaDTO(codigo, nome, cpf, datanascimento, email, telefone, endereco, plano, pacote);
-        matriculasLista.add(matricula);
-        codigo++;
-        observableListMatriculas = FXCollections.observableArrayList(matriculasLista);
-        return matricula;
     }
 
-    static List<MatriculaDTO> toRemove = new ArrayList();
     public static void removeMatricula(Integer cdg) {
-        for (MatriculaDTO c: matriculasLista){
-            if (c.getCodigo().equals(cdg)){
-                toRemove.add(c);
-                codigo = c.getCodigo();
-            }
+        try (Connection connection = DBConnector.getConexao()) {
+            String sql = "DELETE FROM matricula WHERE idmatricula = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, cdg);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        matriculasLista.removeAll(toRemove);
-        observableListMatriculas = FXCollections.observableArrayList(matriculasLista);
     }
 
-    public static void atualizaMatricula(Integer codigo, String nome, Long cpf, String datanascimento, String endereco, Long telefone, String email, String plano, String pacote) {
-        removeMatricula(codigo);
-        inserirMatricula(nome, cpf, datanascimento, endereco, telefone, email, plano, pacote);
-    }
+    public static void atualizaMatricula(Integer codigo, String nome, String cpf, Date datanascimento, String endereco, String telefone, String email, String plano, String pacote) {
+        try (Connection connection = DBConnector.getConexao()) {
+            String sql = "UPDATE funcionario SET nome=?, cpf=?, nascimento=?, endereco=?, telefone=?, email=?, plano=?, pacote=? WHERE idmatricula=?";
 
-    public static MatriculaDTO consultaPorNome(String nome) {
-        for (MatriculaDTO c: matriculasLista){
-            if (c.getNome().equals(nome)){
-                return c;
-            }
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,nome);
+            preparedStatement.setString(2, cpf);
+            preparedStatement.setDate(3, datanascimento);
+            preparedStatement.setString(4, endereco);
+            preparedStatement.setString(5, telefone);
+            preparedStatement.setString(6, email);
+            preparedStatement.setString(7, plano);
+            preparedStatement.setString(8, pacote);
+            preparedStatement.setInt(9, codigo);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
-    public static MatriculaDTO consultaPorID(Integer codigo) {
-        for (MatriculaDTO c: matriculasLista){
-            if (c.getCodigo().equals(codigo)){
-                return c;
+    public static String consultaPorNome(String nome) {
+        try (Connection connection = DBConnector.getConexao()) {
+            String sql = "SELECT * FROM matricula WHERE nome = "+ nome+"";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                return rs.getString("nome");
             }
-        }
-        return null;
-    }
-
-    public static MatriculaDTO consultaPorCPF(long CPF) {
-        for (MatriculaDTO c: matriculasLista){
-            if (c.getCpf().equals(CPF)){
-                return c;
+            else {
+                return null;
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
-    public static MatriculaDTO consultaPorNumero(Long telefone) {
-        for (MatriculaDTO c: matriculasLista){
-            if (c.getTelefone().equals(telefone)){
-                return c;
+    public static Integer consultaPorID(Integer codigo) {
+        try (Connection connection = DBConnector.getConexao()) {
+            String sql = "SELECT * FROM  matricula WHERE idmatricula = "+ codigo +"";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("idmatricula");
             }
+            else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
-    public static Integer getCodigo() {
-        return codigo;
+    public static String consultaPorCPF(String cpf) {
+        try (Connection connection = DBConnector.getConexao()) {
+            String sql = "SELECT * FROM matricula WHERE cpf = "+ cpf +"";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                return rs.getString("cpf");
+            }
+            else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public static ObservableList<MatriculaDTO> getobservableListMatriculas() {
-        return observableListMatriculas;
+    public static String consultaPorNumero(String telefone) {
+        try (Connection connection = DBConnector.getConexao()) {
+            String sql = "SELECT * FROM matricula WHERE telefone = "+ telefone +"";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                return rs.getString("telefone");
+            }
+            else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
+    
+
 }

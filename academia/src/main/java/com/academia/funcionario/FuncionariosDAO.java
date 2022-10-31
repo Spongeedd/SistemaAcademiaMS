@@ -92,7 +92,6 @@ public class FuncionariosDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public static Integer consultaPorID(Integer codigo) {
