@@ -88,4 +88,3 @@ public class FuncionariosDAO {
         return observableListFuncionarios;
     }
 }
-
