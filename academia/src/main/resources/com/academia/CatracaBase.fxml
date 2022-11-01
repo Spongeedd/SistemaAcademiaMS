@@ -145,7 +145,7 @@
                               <Font name="Corbel" size="15.0" fx:id="x111" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="3.0" layoutY="287.0" prefHeight="22.0" prefWidth="190.0" style="&#10;" text="Status de Acesso:">
+                        <Label alignment="CENTER" layoutX="3.0" layoutY="287.0" prefHeight="22.0" prefWidth="190.0" style="&#10;" text="Status do Acesso:">
                            <font>
                               <Font name="Corbel" size="15.0" fx:id="x1111" />
                            </font>
