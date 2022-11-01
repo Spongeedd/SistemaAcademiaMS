@@ -118,7 +118,7 @@
         </AnchorPane>
         <ScrollPane prefHeight="172.0" prefWidth="746.0">
           <content>
-            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="652.0" prefWidth="756.0">
+            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="699.0" prefWidth="756.0">
               <children>
                 <Label alignment="CENTER" layoutX="94.0" layoutY="14.0" prefHeight="22.0" prefWidth="50.0" style="&#10;" text="Aluno">
                            <font>
