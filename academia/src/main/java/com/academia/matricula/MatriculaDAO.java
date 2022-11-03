@@ -2,7 +2,6 @@ package com.academia.matricula;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -14,7 +13,7 @@ public class MatriculaDAO {
         matriculasLista = new ArrayList<>();
         codigo = 1;
     }
-
+// Registrar
     public static MatriculaDTO inserirMatricula(String nome, Long cpf, String datanascimento, String endereco, Long telefone, String email, String plano, String pacote) {
         while (consultaPorID(codigo)!= null) {
             codigo++;
@@ -25,11 +24,11 @@ public class MatriculaDAO {
         observableListMatriculas = FXCollections.observableArrayList(matriculasLista);
         return matricula;
     }
-
+// Deleta
     static List<MatriculaDTO> toRemove = new ArrayList();
-    public static void removeMatricula(Integer cdg) {
+    public static void delMatr(Integer codg) {
         for (MatriculaDTO c: matriculasLista){
-            if (c.getCodigo().equals(cdg)){
+            if (c.getCodigo().equals(codg)){
                 toRemove.add(c);
                 codigo = c.getCodigo();
             }
@@ -37,12 +36,12 @@ public class MatriculaDAO {
         matriculasLista.removeAll(toRemove);
         observableListMatriculas = FXCollections.observableArrayList(matriculasLista);
     }
-
+// Edita
     public static void atualizaMatricula(Integer codigo, String nome, Long cpf, String datanascimento, String endereco, Long telefone, String email, String plano, String pacote) {
-        removeMatricula(codigo);
+        delMatr(codigo);
         inserirMatricula(nome, cpf, datanascimento, endereco, telefone, email, plano, pacote);
     }
-
+// Pesquisa
     public static MatriculaDTO consultaPorNome(String nome) {
         for (MatriculaDTO c: matriculasLista){
             if (c.getNome().equals(nome)){
@@ -78,7 +77,7 @@ public class MatriculaDAO {
         }
         return null;
     }
-
+// Lol
     public static Integer getCodigo() {
         return codigo;
     }
