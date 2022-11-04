@@ -15,6 +15,8 @@ import com.academia.db.DBConnector;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -63,8 +65,6 @@ public class FuncionarioController implements Initializable {
     @FXML
     private TextField telefoneID;
 
-    @FXML
-    private ChoiceBox<String> buscarSelect;
 
     // Botões
 
@@ -73,9 +73,6 @@ public class FuncionarioController implements Initializable {
 
     @FXML
     private Button atualizarBTN;
-
-    @FXML
-    private Button removerBTN;
 
     @FXML
     private Button buscarBTN;
@@ -118,13 +115,15 @@ public class FuncionarioController implements Initializable {
     @FXML
     private TableColumn<FuncionariosDTO, Integer> tabelaSalario;
 
+    ObservableList<FuncionariosDTO> oblist = FXCollections.observableArrayList();
 
-    /* 
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
-        FilteredList<FuncionariosDTO> listaAux = new FilteredList<>(FuncionariosDAO.getObservableListFuncionarios(), e -> true);
+    public void initialize(URL location, ResourceBundle resources) {
+        carregarTabela();
 
-            buscarID.textProperty().addListener((observable, oldvalue, newValue) -> {
+        FilteredList<FuncionariosDTO> listaAux = new FilteredList<>(oblist, e -> true);
+
+            buscarInput.textProperty().addListener((observable, oldvalue, newValue) -> {
                 listaAux.setPredicate(FuncionariosDTO -> {
     
                     if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
@@ -135,7 +134,7 @@ public class FuncionarioController implements Initializable {
                     if (FuncionariosDTO.getNome().toLowerCase().indexOf(procuraString) > -1) {
                         return true;
                     }
-                    else if (FuncionariosDTO.getEndereco().toLowerCase().indexOf(procuraString) > -1) {
+                    else if (FuncionariosDTO.getCpf().toLowerCase().indexOf(procuraString) > -1) {
                         return true;
                     }
                     else if (FuncionariosDTO.getEmail().toLowerCase().indexOf(procuraString) > -1) {
@@ -147,21 +146,9 @@ public class FuncionarioController implements Initializable {
                 });
             });
 
-        
         SortedList<FuncionariosDTO> listaFiltrada = new SortedList<>(listaAux);
         listaFiltrada.comparatorProperty().bind(tabela.comparatorProperty());
         tabela.setItems(listaFiltrada);
-    }
-    */
-
-    private String[] buscarSelStrings = {"ID", "Nome", "CPF"};
-    ObservableList<FuncionariosDTO> oblist = FXCollections.observableArrayList();
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        buscarSelect.setValue("ID");
-        buscarSelect.getItems().addAll(buscarSelStrings);
-        carregarTabela();
     }
     
     Alert a = new Alert(AlertType.NONE);
@@ -301,89 +288,6 @@ public class FuncionarioController implements Initializable {
             stage.show();
             stage = (Stage) inicioBTN.getScene().getWindow();
             stage.close();
-    }
-    /* */
-    @FXML
-    private void buscarBTN() throws IOException {
-        try {
-            String buscaInput = buscarInput.getText();
-            String buscaSelect = buscarSelect.getValue();
-            FuncionariosDTO consulta;
-            if (buscaInput.isEmpty()) {
-                a.setAlertType(AlertType.WARNING);
-                a.setContentText("Campo não pode estar vazio");
-                a.show();
-            }
-            else {
-                switch (buscaSelect) {
-                    case "ID":
-                            Integer id = Integer.parseInt(buscaInput);
-                            consulta = FuncionariosService.consultaPorID(id);
-                            if (consulta == null) {
-                                a.setAlertType(AlertType.WARNING);
-                                a.setContentText("ID não encontrado");
-                                a.show();
-                            }
-                            else {
-                                a.setAlertType(AlertType.INFORMATION);
-                                a.setContentText(textoConsulta(consulta));
-                                a.show();
-                            }
-                        break;
-                    case "Nome":
-                        consulta = FuncionariosService.consultaPorNome(buscaInput);
-                        if (consulta == null) {
-                            a.setAlertType(AlertType.WARNING);
-                            a.setContentText("Nome não encontrado");
-                            a.show();
-                        }
-                        else {
-                            a.setAlertType(AlertType.INFORMATION);
-                            a.setContentText(textoConsulta(consulta));
-                            a.show();
-                        }
-                        break;
-                    case "CPF":
-                        try {
-                            String cpf = buscaInput;
-                            consulta = FuncionariosService.consultaPorCPF(cpf);
-                            if (consulta == null) {
-                                a.setAlertType(AlertType.WARNING);
-                                a.setContentText("CPF não encontrado");
-                                a.show();
-                            }
-                            else {
-                                a.setAlertType(AlertType.INFORMATION);
-                                a.setContentText(textoConsulta(consulta));
-                                a.show();
-                            }
-                        } catch (Exception e) {
-                            a.setAlertType(AlertType.WARNING);
-                            a.setContentText("CPF");
-                            a.show();
-                        }
-                        break;
-                    }
-                }
-        }catch (Exception e) {
-            a.setAlertType(AlertType.WARNING);
-            a.setContentText("ID deve ser um número");
-            a.show();
-        }
-    }
-
-    private String textoConsulta (FuncionariosDTO consulta) {
-        String nome, email, numero, cpf;
-        Integer ID, jornada, phora;
-        ID = consulta.getCodigo();
-        cpf = consulta.getCpf();
-        nome = consulta.getNome();
-        numero = consulta.getTelefone();
-        email = consulta.getEmail();
-        jornada = consulta.getJornada();
-        phora = consulta.getPhora();
-        String textoconsultaString = "ID: " + ID + "\nNome: " + nome + "\nCPF: " + cpf +  "\nNúmero: " + numero + "\nEmail: " + email+ "\nJornada: " + jornada + "\nP/Hora: " + phora;
-        return textoconsultaString;
     }
 
 }

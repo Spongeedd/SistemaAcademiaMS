@@ -15,6 +15,8 @@ import com.academia.db.DBConnector;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -60,8 +62,6 @@ public class MatriculaController implements Initializable{
     @FXML
     private TextField telefoneID;
 
-    @FXML
-    private ChoiceBox<String> buscarSelect;
 
     @FXML
     private TextField buscarInput;
@@ -110,16 +110,12 @@ public class MatriculaController implements Initializable{
     private Button atualizarBTN;
 
     @FXML
-    private Button buscarBTN;
-
-    @FXML
     private Button inicioBTN;
 
 
 
     private String[] pacoteStrings = {"Mensal", "Trimestral", "Anual"};
     private String[] planoStrings = {"Basico", "Intermediário", "Premium"};
-    private String[] buscarSelStrings = {"ID", "Nome", "CPF"};
     ObservableList<MatriculaDTO> oblist = FXCollections.observableArrayList();
     
     @Override
@@ -128,9 +124,36 @@ public class MatriculaController implements Initializable{
         pacoteID.getItems().addAll(pacoteStrings);
         planoID.setValue("Basico");
         planoID.getItems().addAll(planoStrings);
-        buscarSelect.setValue("ID");
-        buscarSelect.getItems().addAll(buscarSelStrings);
         carregarTabela();
+        
+        FilteredList<MatriculaDTO> listaAux = new FilteredList<>(oblist, e -> true);
+
+        buscarInput.textProperty().addListener((observable, oldvalue, newValue) -> {
+            listaAux.setPredicate(MatriculaDTO -> {
+
+                if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+                    return true;
+                }
+                String procuraString = newValue.toLowerCase();
+
+                if (MatriculaDTO.getNome().toLowerCase().indexOf(procuraString) > -1) {
+                    return true;
+                }
+                else if (MatriculaDTO.getCpf().toLowerCase().indexOf(procuraString) > -1) {
+                    return true;
+                }
+                else if (MatriculaDTO.getEmail().toLowerCase().indexOf(procuraString) > -1) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            });
+        });
+
+        SortedList<MatriculaDTO> listaFiltrada = new SortedList<>(listaAux);
+        listaFiltrada.comparatorProperty().bind(tabela.comparatorProperty());
+        tabela.setItems(listaFiltrada);
     }
 
     Alert a = new Alert(AlertType.NONE);
@@ -273,87 +296,4 @@ public class MatriculaController implements Initializable{
         stage.close();
     }
 
-
-    @FXML
-    private void buscarBTN() throws IOException {
-        try {
-            String buscaInput = buscarInput.getText();
-            String buscaSelect = buscarSelect.getValue();
-            MatriculaDTO consulta;
-            if (buscaInput.isEmpty()) {
-                a.setAlertType(AlertType.WARNING);
-                a.setContentText("Campo não pode estar vazio");
-                a.show();
-            }
-            else {
-                switch (buscaSelect) {
-                    case "ID":
-                            Integer id = Integer.parseInt(buscaInput);
-                            consulta = MatriculaService.consultaPorID(id);
-                            if (consulta == null) {
-                                a.setAlertType(AlertType.WARNING);
-                                a.setContentText("ID não encontrado");
-                                a.show();
-                            }
-                            else {
-                                a.setAlertType(AlertType.INFORMATION);
-                                a.setContentText(textoConsulta(consulta));
-                                a.show();
-                            }
-                        break;
-                    case "Nome":
-                        consulta = MatriculaService.consultaPorNome(buscaInput);
-                        if (consulta == null) {
-                            a.setAlertType(AlertType.WARNING);
-                            a.setContentText("Nome não encontrado");
-                            a.show();
-                        }
-                        else {
-                            a.setAlertType(AlertType.INFORMATION);
-                            a.setContentText(textoConsulta(consulta));
-                            a.show();
-                        }
-                        break;
-                    case "CPF":
-                        try {
-                            Long cpf = Long.parseLong(buscaInput);
-                            consulta = MatriculaService.consultaPorCPF(cpf);
-                            if (consulta == null) {
-                                a.setAlertType(AlertType.WARNING);
-                                a.setContentText("CPF não encontrado");
-                                a.show();
-                            }
-                            else {
-                                a.setAlertType(AlertType.INFORMATION);
-                                a.setContentText(textoConsulta(consulta));
-                                a.show();
-                            }
-                        } catch (Exception e) {
-                            a.setAlertType(AlertType.WARNING);
-                            a.setContentText("CPF");
-                            a.show();
-                        }
-                        break;
-                    }
-                }
-        }catch (Exception e) {
-            a.setAlertType(AlertType.WARNING);
-            a.setContentText("ID deve ser um número");
-            a.show();
-        }
-    }
-
-    private String textoConsulta (MatriculaDTO consulta) {
-        String nome, email, pacote, plano,numero, cpf;
-        Integer ID;
-        ID = consulta.getCodigo();
-        nome = consulta.getNome();
-        cpf = consulta.getCpf();
-        numero = consulta.getTelefone();
-        email = consulta.getEmail();
-        plano = consulta.getPlano();
-        pacote = consulta.getPacote();
-        String textoconsultaString = "ID: " + ID + "\nNome: " + nome + "\nCPF: " + cpf + "\nNúmero: " + numero + "\nEmail: " + email+ "\nPlano: " + plano + "\nPacote: " + pacote;
-        return textoconsultaString;
-    }
 }

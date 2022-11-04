@@ -97,9 +97,7 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="buscarInput" layoutX="97.0" layoutY="9.0" prefHeight="25.0" prefWidth="152.0" />
-                        <ChoiceBox fx:id="buscarSelect" layoutX="259.0" layoutY="9.0" prefHeight="25.0" prefWidth="81.0" />
-                        <Button fx:id="buscarBTN" layoutX="345.0" layoutY="9.0" mnemonicParsing="false" onAction="#buscarBTN" text="Buscar" />
+                        <TextField fx:id="buscarInput" layoutX="97.0" layoutY="9.0" prefHeight="25.0" prefWidth="531.0" />
                         <Button fx:id="inicioBTN" layoutX="736.0" layoutY="9.0" mnemonicParsing="false" onAction="#voltarBTN" prefHeight="25.0" prefWidth="51.0" text="Inicio" />
                      </children>
                   </AnchorPane>
