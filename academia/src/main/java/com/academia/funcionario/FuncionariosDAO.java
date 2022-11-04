@@ -1,91 +1,145 @@
 package com.academia.funcionario;
 
-import java.util.ArrayList;
-
-import java.util.List;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import com.academia.db.DBConnector;
 
 public class FuncionariosDAO {
-    private static ObservableList<FuncionariosDTO> observableListFuncionarios;
-    private static List<FuncionariosDTO> funcionarioLista;
-    private static Integer codigo;
-    static {
-        funcionarioLista = new ArrayList<>();
-        codigo = 1;
-    }
+    
+    public static FuncionariosDTO inserirFuncionarios(String nome, String cpf, Date datanascimento, String endereco, String telefone, String email, Integer jornada, Integer phora) {
+        try(Connection connection = DBConnector.getConexao()) {
+        
+            String sql = "INSERT INTO funcionario (nome, cpf, nascimento, endereco, telefone, email, jornada, phora, salario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    public static FuncionariosDTO inserirFuncionarios(String nome, Long cpf, String datanascimento, String endereco, Long telefone, String email, Integer jornada, Integer phora) {
-        while (consultaPorID(codigo)!= null) {
-            codigo++;
+            FuncionariosDTO funcionario = new FuncionariosDTO(nome, endereco, email, cpf, telefone, datanascimento, jornada, phora);
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, funcionario.getNome());
+            preparedStatement.setString(2, funcionario.getCpf());
+            preparedStatement.setDate(3, funcionario.getDatanascimento());
+            preparedStatement.setString(4, funcionario.getEndereco());
+            preparedStatement.setString(5, funcionario.getTelefone());
+            preparedStatement.setString(6, funcionario.getEmail());
+            preparedStatement.setInt(7, funcionario.getJornada());
+            preparedStatement.setInt(8, funcionario.getPhora());
+            Integer sal = funcionario.getJornada() * funcionario.getPhora();
+            preparedStatement.setInt(9, sal);
+
+            preparedStatement.executeUpdate();
+            
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                Integer id = resultSet.getInt(1);
+                funcionario.setCodigo(id);
+            }
+            return funcionario;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        FuncionariosDTO funcionario = new FuncionariosDTO(codigo, nome, endereco, email, cpf, telefone, datanascimento, jornada, phora);
-        funcionarioLista.add(funcionario);
-        codigo++;
-        observableListFuncionarios = FXCollections.observableArrayList(funcionarioLista);
-        return funcionario;
     }
 
-    static List<FuncionariosDTO> toRemove = new ArrayList();
+   
     public static void removeFuncionario(Integer cdg) {
-        for (FuncionariosDTO c: funcionarioLista){
-            if (c.getCodigo().equals(cdg)){
-                toRemove.add(c);
-                codigo = c.getCodigo();
-            }
+        try (Connection connection = DBConnector.getConexao()) {
+            String sql = "DELETE FROM funcionario WHERE idfuncionario = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, cdg);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        funcionarioLista.removeAll(toRemove);
-        observableListFuncionarios = FXCollections.observableArrayList(funcionarioLista);
     }
 
-    public static void atualizaFuncionario(Integer codigo, String nome, Long cpf, String datanascimento, String endereco, Long telefone, String email, Integer jornada, Integer phora) {
-        removeFuncionario(codigo);
-        inserirFuncionarios(nome, cpf, datanascimento, endereco, telefone, email, jornada, phora);
-    }
+    public static void atualizaFuncionario(Integer codigo, String nome, String cpf, Date datanascimento, String endereco, String telefone, String email, Integer jornada, Integer phora) {
+        try (Connection connection = DBConnector.getConexao()) {
+            String sql = "UPDATE funcionario SET nome=?, cpf=?, nascimento=?, endereco=?, telefone=?, email=?, jornada=?, phora=?, salario=? WHERE idfuncionario=?";
 
-    public static FuncionariosDTO consultaPorNome(String nome) {
-        for (FuncionariosDTO c: funcionarioLista){
-            if (c.getNome().equals(nome)){
-                return c;
-            }
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,nome);
+            preparedStatement.setString(2, cpf);
+            preparedStatement.setDate(3, datanascimento);
+            preparedStatement.setString(4, endereco);
+            preparedStatement.setString(5, telefone);
+            preparedStatement.setString(6, email);
+            preparedStatement.setInt(7, jornada);
+            preparedStatement.setInt(8, phora);
+            Integer sal = jornada * phora;
+            preparedStatement.setInt(9, sal);
+            preparedStatement.setInt(10, codigo);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
-    public static FuncionariosDTO consultaPorID(Integer codigo) {
-        for (FuncionariosDTO c: funcionarioLista){
-            if (c.getCodigo().equals(codigo)){
-                return c;
+    public static String consultaPorNome(String nome) {
+        try (Connection connection = DBConnector.getConexao()) {
+            String sql = "SELECT * FROM funcionario WHERE nome = "+ nome+"";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                return rs.getString("nome");
             }
-        }
-        return null;
-    }
-
-    public static FuncionariosDTO consultaPorCPF(long CPF) {
-        for (FuncionariosDTO c: funcionarioLista){
-            if (c.getCpf().equals(CPF)){
-                return c;
+            else {
+                return null;
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
-    public static FuncionariosDTO consultaPorNumero(Long telefone) {
-        for (FuncionariosDTO c: funcionarioLista){
-            if (c.getTelefone().equals(telefone)){
-                return c;
+    public static Integer consultaPorID(Integer codigo) {
+        try (Connection connection = DBConnector.getConexao()) {
+            String sql = "SELECT * FROM funcionario WHERE idfuncionario = "+ codigo +"";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("idfuncionario");
             }
+            else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
-    public static Integer getCodigo() {
-        return codigo;
+    public static String consultaPorCPF(String cpf) {
+        try (Connection connection = DBConnector.getConexao()) {
+            String sql = "SELECT * FROM funcionario WHERE cpf = "+ cpf +"";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                return rs.getString("cpf");
+            }
+            else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public static ObservableList<FuncionariosDTO> getObservableListFuncionarios() {
-        return observableListFuncionarios;
+    public static String consultaPorNumero(String telefone) {
+        try (Connection connection = DBConnector.getConexao()) {
+            String sql = "SELECT * FROM funcionario WHERE telefone = "+ telefone +"";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                return rs.getString("telefone");
+            }
+            else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 

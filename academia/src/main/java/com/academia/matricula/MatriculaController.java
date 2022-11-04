@@ -2,12 +2,26 @@ package com.academia.matricula;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
+import com.academia.App;
+import com.academia.db.DBConnector;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -17,6 +31,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 public class MatriculaController implements Initializable{
 
@@ -45,6 +61,10 @@ public class MatriculaController implements Initializable{
 
     @FXML
     private TextField telefoneID;
+
+
+    @FXML
+    private TextField buscarInput;
 
     // TABELA
 
@@ -89,41 +109,69 @@ public class MatriculaController implements Initializable{
     @FXML
     private Button atualizarBTN;
 
+    @FXML
+    private Button inicioBTN;
+
+
 
     private String[] pacoteStrings = {"Mensal", "Trimestral", "Anual"};
     private String[] planoStrings = {"Basico", "Intermediário", "Premium"};
-
+    ObservableList<MatriculaDTO> oblist = FXCollections.observableArrayList();
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         pacoteID.setValue("Mensal");
         pacoteID.getItems().addAll(pacoteStrings);
         planoID.setValue("Basico");
         planoID.getItems().addAll(planoStrings);
+        carregarTabela();
+        
+        FilteredList<MatriculaDTO> listaAux = new FilteredList<>(oblist, e -> true);
+
+        buscarInput.textProperty().addListener((observable, oldvalue, newValue) -> {
+            listaAux.setPredicate(MatriculaDTO -> {
+
+                if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+                    return true;
+                }
+                String procuraString = newValue.toLowerCase();
+
+                if (MatriculaDTO.getNome().toLowerCase().indexOf(procuraString) > -1) {
+                    return true;
+                }
+                else if (MatriculaDTO.getCpf().toLowerCase().indexOf(procuraString) > -1) {
+                    return true;
+                }
+                else if (MatriculaDTO.getEmail().toLowerCase().indexOf(procuraString) > -1) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            });
+        });
+
+        SortedList<MatriculaDTO> listaFiltrada = new SortedList<>(listaAux);
+        listaFiltrada.comparatorProperty().bind(tabela.comparatorProperty());
+        tabela.setItems(listaFiltrada);
     }
 
     Alert a = new Alert(AlertType.NONE);
     @FXML
     private void adicionarBTN() throws IOException  {
         try {
-            String nome = nomeID.getText();
-            String numero = telefoneID.getText();
-            String endereco = enderecoID.getText();
-            String email = emailID.getText();
             String pacote = pacoteID.getValue();
             String plano = planoID.getValue();
 
+            String nome = nomeID.getText();
+            String telefone = telefoneID.getText();
+            String endereco = enderecoID.getText();
+            String email = emailID.getText();
+            String cpf = cpfID.getText();
             LocalDate dataaux = nascimentoID.getValue();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String data = dataaux.format(formatter);
-            
-            String cpfaux = cpfID.getText();
+            Date data = Date.valueOf(dataaux);
 
-
-            Long telefone = Long.parseLong(numero);
-            Long cpf = Long.parseLong(cpfaux);
-
-            
-            if (nome.isEmpty() || numero.isEmpty() || endereco.isEmpty() || email.isEmpty() || cpfaux.isEmpty()) {
+            if (nome.isEmpty() || telefone.isEmpty() || endereco.isEmpty() || email.isEmpty() || cpf.isEmpty()) {
                 a.setAlertType(AlertType.WARNING);
                 a.setContentText("Nenhum campo pode estar vazio");
                 a.show();
@@ -144,8 +192,60 @@ public class MatriculaController implements Initializable{
             a.show();
         }
     }
+
+    @FXML
+    private void removerBTN() throws IOException {
+        try {
+            MatriculaService.removerMatricula(getRow());
+            carregarTabela();
+        } catch (Exception e) {
+            a.setAlertType(AlertType.WARNING);
+            a.setContentText("Nenhuma matrícula selecionada");
+            a.show();
+        }
+    }
+
+    @FXML
+    private void atualizarBTN() throws IOException {
+        try {
+            String pacote = pacoteID.getValue();
+            String plano = planoID.getValue();
+
+            String nome = nomeID.getText();
+            String telefone = telefoneID.getText();
+            String endereco = enderecoID.getText();
+            String email = emailID.getText();
+            String cpf = cpfID.getText();
+            LocalDate dataaux = nascimentoID.getValue();
+            Date data = Date.valueOf(dataaux);
+
+            if (nome.isEmpty() || telefone.isEmpty() || endereco.isEmpty() || email.isEmpty() || cpf.isEmpty()) {
+                a.setAlertType(AlertType.WARNING);
+                a.setContentText("Nenhum campo pode estar vazio");
+                a.show();
+            }
+            else if (MatriculaDAO.consultaPorCPF(cpf) != null) {
+                a.setAlertType(AlertType.WARNING);
+                a.setContentText("Aluno ja cadastrado");
+                a.show();
+            }
+            else {
+                MatriculaService.editarMatricula(getRow(),nome, cpf, data, endereco, telefone, email, plano, pacote);
+                carregarTabela();
+                limpaInputs();
+            }
+        } catch (Exception e) {
+            a.setAlertType(AlertType.WARNING);
+            a.setContentText("Telefone/CPF/ não podem conter letras");
+            a.show();
+        }
+    }
+
     
     public void carregarTabela() {
+
+        oblist.clear();
+
         tabelaID.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         tabelaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tabelaCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
@@ -156,7 +256,17 @@ public class MatriculaController implements Initializable{
         tabelaPlano.setCellValueFactory(new PropertyValueFactory<>("plano"));
         tabelaPacote.setCellValueFactory(new PropertyValueFactory<>("pacote"));
 
-        tabela.setItems(MatriculaDAO.getobservableListMatriculas());
+        try(Connection connection = DBConnector.getConexao()) {
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM matricula");
+            while (rs.next()) {
+                oblist.add(new MatriculaDTO(rs.getInt("idmatricula"), rs.getString("nome"),
+                            rs.getString("cpf"), rs.getDate("nascimento"), rs.getString("endereco"), rs.getString("telefone"),
+                            rs.getString("email"), rs.getString("plano"), rs.getString("pacote")));
+            }
+            tabela.setItems(oblist);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void limpaInputs(){
@@ -172,4 +282,18 @@ public class MatriculaController implements Initializable{
         MatriculaDTO dto = tabela.getSelectionModel().getSelectedItem();
         return codigo = dto.getCodigo();
     }
+
+    @FXML
+    private void voltarBTN() throws IOException {
+        Stage stage = new Stage();
+            Parent root = FXMLLoader.load(App.class.getResource("InterfaceLogin.fxml"));
+        stage.setScene(new Scene(root));
+        stage.setTitle("Cadastrar Funcionario");
+        stage.setResizable(false);
+        stage.getIcons().add(new Image(App.class.getResourceAsStream("icone.png")));
+        stage.show();
+        stage = (Stage) inicioBTN.getScene().getWindow();
+        stage.close();
+    }
+
 }

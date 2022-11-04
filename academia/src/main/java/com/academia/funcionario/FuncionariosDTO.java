@@ -1,12 +1,27 @@
 package com.academia.funcionario;
 
-public class FuncionariosDTO {
-    private String nome, endereco, email, datanascimento;
-    private Long  cpf, telefone;
-    private Integer codigo, jornada, phora;
+import java.sql.Date;
 
-    public FuncionariosDTO(Integer codigo, String nome, String endereco, String email, Long cpf, Long telefone, String datanascimento, Integer jornada, Integer phora) {
+
+public class FuncionariosDTO {
+    private String nome, endereco, email, cpf, telefone;
+    private Date datanascimento;
+    private Integer codigo, jornada, phora, salario;
+
+    public FuncionariosDTO(Integer codigo ,String nome, String cpf, Date datanascimento, String endereco, String telefone, String email, Integer jornada, Integer phora, Integer salario) {
+        this.nome = nome;
+        this.telefone = telefone;
+        this.cpf = cpf;
+        this.datanascimento = datanascimento;
+        this.email = email;
+        this.endereco = endereco;
+        this.jornada = jornada;
+        this.phora = phora;
         this.codigo = codigo;
+        this.salario = salario;
+    }
+
+    public FuncionariosDTO(String nome, String endereco, String email, String cpf, String telefone, Date datanascimento, Integer jornada, Integer phora) {
         this.nome = nome;
         this.telefone = telefone;
         this.cpf = cpf;
@@ -18,17 +33,19 @@ public class FuncionariosDTO {
     }
 
     // Setters
-
+    public void setSalario(Integer salario) {
+        this.salario = salario;
+    }
     public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
     public void setNome(String nome) {
         this.nome = nome;
     }
-    public void setCpf(Long cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
-    public void setDatanascimento(String datanascimento) {
+    public void setDatanascimento(Date datanascimento) {
         this.datanascimento = datanascimento;
     }
     public void setEmail(String email) {
@@ -43,23 +60,25 @@ public class FuncionariosDTO {
     public void setPhora(Integer phora) {
         this.phora = phora;
     }
-    public void setTelefone(Long telefone) {
+    public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
 
     ///////////////////////////////////////////////////
     // Getters
-
+    public Integer getSalario() {
+        return salario;
+    }
     public Integer getCodigo() {
         return codigo;
     }
     public String getNome() {
         return nome;
     }
-    public Long getCpf() {
+    public String getCpf() {
         return cpf;
     }
-    public String getDatanascimento() {
+    public Date getDatanascimento() {
         return datanascimento;
     }
     public String getEmail() {
@@ -74,7 +93,7 @@ public class FuncionariosDTO {
     public Integer getPhora() {
         return phora;
     }
-    public Long getTelefone() {
+    public String getTelefone() {
         return telefone;
     }
 }

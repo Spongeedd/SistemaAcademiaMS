@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -18,13 +14,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="520.0" prefWidth="1060.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.academia.matricula.MatriculaController">
+<VBox prefHeight="520.0" prefWidth="1060.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.academia.matricula.MatriculaController">
    <children>
       <SplitPane dividerPositions="0.293124246079614" prefHeight="550.0" prefWidth="831.0">
         <items>
-            <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="251.0" SplitPane.resizableWithParent="false">
+            <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="516.0" prefWidth="251.0" vvalue="1.0" SplitPane.resizableWithParent="false">
                <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="661.0" prefWidth="242.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="626.0" prefWidth="242.0">
                      <children>
                         <Label layoutX="56.0" layoutY="4.0" text="Cadastro Matrícula" textAlignment="CENTER">
                            <font>
@@ -85,9 +81,9 @@
                            </font>
                         </Label>
                         <ChoiceBox fx:id="pacoteID" layoutX="29.0" layoutY="507.0" prefHeight="28.0" prefWidth="180.0" />
-                        <Button fx:id="adicionarBTN" layoutX="79.0" layoutY="547.0" mnemonicParsing="false" onAction="#adicionarBTN" text="Adicionar" />
-                        <Button fx:id="removerBTN" layoutX="81.0" layoutY="585.0" mnemonicParsing="false" text="Remover" />
-                        <Button fx:id="atualizarBTN" layoutX="81.0" layoutY="622.0" mnemonicParsing="false" text="Atualizar" />
+                        <Button fx:id="adicionarBTN" layoutX="14.0" layoutY="585.0" mnemonicParsing="false" onAction="#adicionarBTN" text="Adicionar" />
+                        <Button fx:id="removerBTN" layoutX="90.0" layoutY="585.0" mnemonicParsing="false" onAction="#removerBTN" text="Remover" />
+                        <Button fx:id="atualizarBTN" layoutX="161.0" layoutY="585.0" mnemonicParsing="false" onAction="#atualizarBTN" text="Atualizar" />
                      </children>
                   </AnchorPane>
                </content>
@@ -96,12 +92,13 @@
                <items>
                   <AnchorPane prefHeight="176.0" prefWidth="759.0">
                      <children>
-                        <Label layoutX="14.0" layoutY="11.0" text="Buscar: ">
+                        <Label layoutX="14.0" layoutY="8.0" text="Buscar: ">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="97.0" layoutY="9.0" prefHeight="25.0" prefWidth="558.0" />
+                        <TextField fx:id="buscarInput" layoutX="97.0" layoutY="9.0" prefHeight="25.0" prefWidth="531.0" />
+                        <Button fx:id="inicioBTN" layoutX="736.0" layoutY="9.0" mnemonicParsing="false" onAction="#voltarBTN" prefHeight="25.0" prefWidth="51.0" text="Inicio" />
                      </children>
                   </AnchorPane>
                   <ScrollPane prefHeight="200.0" prefWidth="200.0">
