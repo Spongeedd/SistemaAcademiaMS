@@ -13,13 +13,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.academia.db.DBConnector;
+import com.sistemaacademia.academiaweb.db.DBConnector;
+
+// import com.academia.db.DBConnector;
 
 @WebServlet(name = "IndexServlet", urlPatterns = {"/IndexServlet"})
 public class IndexServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
             try(Connection connection = DBConnector.getConexao()) {
                 String senha = request.getParameter("senha");
                 String login = request.getParameter("login");
@@ -32,10 +33,10 @@ public class IndexServlet extends HttpServlet {
                     response.sendRedirect("CadastrarFuncionario.jsp");
                 }
                 else if (rs.next()) {
-                   
+                    response.sendRedirect("CadastrarMatricula.jsp");
                 }
                 else {
-                  
+                    response.sendRedirect("index.jsp");
                 }
         } catch (SQLException e) {
                 throw new RuntimeException(e);

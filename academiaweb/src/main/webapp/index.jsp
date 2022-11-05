@@ -118,7 +118,7 @@
   <body class="text-center"> 
     <main class="form-signin w-100 m-auto">
     <form action="IndexServlet" method="POST" class="formulario">
-        <img class="mb-4" src="/docs/5.2/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+        <img class="mb-4" src="resources/imgs/icone.png" alt="" width="72" height="57">
         <h1 id="logar" class="h3 mb-3 fw-normal">Login</h1>
 
         <div class="form-floating">
@@ -126,8 +126,8 @@
         <label for="floatingInput">Login</label>
         </div>
         <div class="form-floating">
-        <input name="senha" type="password" class="form-control" id="floatingPassword" placeholder="Password">
-        <label for="floatingPassword">CPF</label>
+        <input name="senha" type="password" class="form-control" id="floatingPassword">
+        <label for="floatingPassword">Senha</label>
         </div>
 
         <div class="checkbox mb-3">
@@ -135,7 +135,7 @@
             <input type="checkbox" value="remember-me"> Lembrar de mim
         </label>
         </div> 
-        <input id="botao" type="submit" value="Login">
+        <input id="botao" type="submit" class="btn btn-primary" value="Login">
         <p id="data" class="mt-5 mb-3 text-muted">&copy; 2022–2022</p>
     </form>
     </main>
