@@ -24,16 +24,18 @@ public class IndexServlet extends HttpServlet {
             try(Connection connection = DBConnector.getConexao()) {
                 String senha = request.getParameter("senha");
                 String login = request.getParameter("login");
+
                 String sql = "SELECT * FROM funcionario WHERE nome=? and cpf=?";
                 PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 preparedStatement.setString(1, login);
                 preparedStatement.setString(2, senha);
+
                 ResultSet rs = preparedStatement.executeQuery();
                 if (login.equals("admin") && senha.equals("123")) {
-                    response.sendRedirect("CadastrarFuncionario.jsp");
+                    response.sendRedirect("Funcionario.jsp");
                 }
                 else if (rs.next()) {
-                    response.sendRedirect("CadastrarMatricula.jsp");
+                    response.sendRedirect("Matricula.jsp");
                 }
                 else {
                     response.sendRedirect("index.jsp");
@@ -41,7 +43,6 @@ public class IndexServlet extends HttpServlet {
         } catch (SQLException e) {
                 throw new RuntimeException(e);
             }   
-    
     }
     
 

@@ -88,7 +88,7 @@
             </div>
           <hr class="my-4">
 
-          <button class="w-100 btn btn-primary btn-lg" type="submit">Cadastrar</button>
+          <button class="w-100 btn btn-primary btn-lg" style="margin-bottom: 20px;" type="submit">Cadastrar</button>
         </form>
       </div>
     </div>

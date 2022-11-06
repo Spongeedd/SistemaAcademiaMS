@@ -255,6 +255,7 @@ public class FuncionarioController implements Initializable {
                             rs.getString("cpf"), rs.getDate("nascimento"), rs.getString("endereco"), rs.getString("telefone"),
                             rs.getString("email"), rs.getInt("jornada"), rs.getInt("phora"), rs.getInt("salario")));
             }
+            
             tabela.setItems(oblist);
         } catch (SQLException e) {
             throw new RuntimeException(e);

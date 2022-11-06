@@ -9,8 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link href="/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <meta name="theme-color" content="#712cf9">
-
-
+    <link rel="icon" href="resources/imgs/icone.ico">
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -112,13 +111,12 @@
         #data {
             color: #1C6758;
         }
-
     </style>
   </head>
   <body class="text-center"> 
     <main class="form-signin w-100 m-auto">
     <form action="IndexServlet" method="POST" class="formulario">
-        <img class="mb-4" src="resources/imgs/icone.png" alt="" width="72" height="57">
+        <img class="mb-4" src="" alt="" width="72" height="57">
         <h1 id="logar" class="h3 mb-3 fw-normal">Login</h1>
 
         <div class="form-floating">
@@ -129,12 +127,6 @@
         <input name="senha" type="password" class="form-control" id="floatingPassword">
         <label for="floatingPassword">Senha</label>
         </div>
-
-        <div class="checkbox mb-3">
-        <label id="lembrar">
-            <input type="checkbox" value="remember-me"> Lembrar de mim
-        </label>
-        </div> 
         <input id="botao" type="submit" class="btn btn-primary" value="Login">
         <p id="data" class="mt-5 mb-3 text-muted">&copy; 2022–2022</p>
     </form>
