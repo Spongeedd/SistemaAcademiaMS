@@ -1,13 +1,24 @@
 package com.academia.matricula;
 
+import java.sql.Date;
+
 public class MatriculaDTO {
-    private String nome, endereco, email, datanascimento, plano, pacote;
-    private Long  cpf, telefone;
+    private String nome, endereco, email, plano, pacote, cpf, telefone;
+    private Date datanascimento;
     private Integer codigo;
 
-    public MatriculaDTO () {}
+    public MatriculaDTO(String nome, String endereco, String email, String cpf, String telefone, Date datanascimento, String plano, String pacote) {
+        this.nome = nome;
+        this.telefone = telefone;
+        this.cpf = cpf;
+        this.datanascimento = datanascimento;
+        this.email = email;
+        this.endereco = endereco;
+        this.pacote = pacote;
+        this.plano = plano;
+    }
 
-    public MatriculaDTO(Integer codigo, String nome, Long cpf, String datanascimento, String email, Long telefone, String endereco, String plano, String pacote) {
+    public MatriculaDTO(Integer codigo, String nome, String cpf, Date datanascimento, String email, String telefone, String endereco, String plano, String pacote) {
         this.codigo = codigo;
         this.nome = nome;
         this.cpf = cpf;
@@ -22,6 +33,7 @@ public class MatriculaDTO {
     ////////////////////////////////////////////////////
     // Setters
 
+
     public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
@@ -30,11 +42,11 @@ public class MatriculaDTO {
       return codigo;
     }
 
-    public void setnome(String nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public void setTelefone(Long telefone) {
+    public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
 
@@ -42,7 +54,7 @@ public class MatriculaDTO {
         this.email = email;
     }
 
-    public void setcpf(Long cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
     
@@ -50,7 +62,7 @@ public class MatriculaDTO {
         this.endereco = endereco;
     }
 
-    public void setdatanascimento(String datanascimento) {
+    public void setDatanascimento(Date datanascimento) {
         this.datanascimento = datanascimento;
     }
 
@@ -65,11 +77,11 @@ public class MatriculaDTO {
     ////////////////////////////////////////////////////
     // Getters
 
-    public String getnome() {
+    public String getNome() {
         return nome;
     }
 
-    public Long getTelefone() {
+    public String getTelefone() {
         return telefone;
     }
 
@@ -77,11 +89,11 @@ public class MatriculaDTO {
         return email;
     }
 
-    public Long getcpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public String getdatanascimento() {
+    public Date getDatanascimento() {
         return datanascimento;
     }
 
