@@ -1,0 +1,5 @@
+com\sistemaacademia\academiaweb\db\DBConnector.class
+com\sistemaacademia\academiaweb\servlets\IndexServlet.class
+com\sistemaacademia\academiaweb\resources\JavaEE8Resource.class
+com\sistemaacademia\academiaweb\servlets\FuncionarioServlet.class
+com\sistemaacademia\academiaweb\JAXRSConfiguration.class

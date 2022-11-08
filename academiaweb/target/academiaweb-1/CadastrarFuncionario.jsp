@@ -22,7 +22,7 @@
           <div class="row g-3">
             <div class="col-12">
               <label for="nome" class="form-label">Nome</label>
-              <input type="text" class="form-control" id="nome" placeholder="" value="" required>
+              <input type="text" name="nome" class="form-control" id="nome" placeholder="" value="" required>
               <div class="invalid-feedback">
                 Nome é obrigatório
               </div>
@@ -30,12 +30,12 @@
 
             <div class="col-sm-8">
               <label for="cpf" class="form-label">CPF</label>
-                <input type="text" class="form-control" id="cpf" placeholder="CPF" required>
+                <input type="text" name="cpf" class="form-control" id="cpf" placeholder="CPF" required>
                 <div class="invalid-feedback">
                 CPF é obrigatório
                 </div>
                 <label for="nascimento" class="form-label">Data Nascimento</label>
-                  <input type="date" class="form-control" id="nascimento" required>
+                  <input type="date" name="data" class="form-control" id="nascimento" required>
                   <div class="invalid-feedback">
                     Data é obrigatória
                   </div>
@@ -43,7 +43,7 @@
             
             <div class="col-12">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+                <input type="email" name="email" class="form-control" id="email" placeholder="you@example.com" required>
                 <div class="invalid-feedback">
                     Email é obrigatório
                 </div>
@@ -51,7 +51,7 @@
 
             <div class="col-12">
               <label for="endereco" class="form-label">Endereço</label>
-              <input type="text" class="form-control" id="endereco" placeholder="Rua... Nº Bairro..." required>
+              <input type="text" name="endereco" class="form-control" id="endereco" placeholder="Rua... Nº Bairro..." required>
               <div class="invalid-feedback">
                Endereço é obrigatório
               </div>
@@ -59,7 +59,7 @@
 
             <div class="col-sm-8">
               <label for="telefone" class="form-label">Telefone</label>
-              <input type="text" class="form-control" id="telefone" placeholder="(DDD)9XXXX-XXXX" required>
+              <input type="text" name="telefone" class="form-control" id="telefone" placeholder="(DDD)9XXXX-XXXX" required>
               <div class="invalid-feedback">
                 Telefone é obrigatório
               </div>
@@ -73,7 +73,7 @@
           <div class="row gy-3">
             <div class="col-md-6">
               <label for="jornada" class="form-label">Jornada</label>
-              <input type="text" class="form-control" id="jornada" placeholder="" required>
+              <input type="text" name="jornada" class="form-control" id="jornada" placeholder="" required>
               <div class="invalid-feedback">
                 Jornada é obrigatório
               </div>
@@ -81,7 +81,7 @@
 
             <div class="col-md-6">
               <label for="phora" class="form-label">Pagamento p/hora</label>
-              <input type="text" class="form-control" id="phora" placeholder="" required>
+              <input type="text" name="pagamento" class="form-control" id="phora" placeholder="" required>
               <div class="invalid-feedback">
                 P/Hora é obrigatório
               </div>

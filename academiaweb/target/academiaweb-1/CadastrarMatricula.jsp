@@ -23,7 +23,7 @@
           <div class="row g-3">
             <div class="col-12">
               <label for="nome" class="form-label">Nome</label>
-              <input type="text" class="form-control" id="nome" placeholder="" value="" required>
+              <input type="text" name="nome" class="form-control" id="nome" placeholder="" value="" required>
               <div class="invalid-feedback">
                 Nome é obrigatório
               </div>
@@ -31,12 +31,12 @@
 
             <div class="col-sm-8">
               <label for="cpf" class="form-label">CPF</label>
-                <input type="text" class="form-control" id="cpf" placeholder="CPF" required>
+                <input type="text" name="cpf" class="form-control" id="cpf" placeholder="CPF" required>
                 <div class="invalid-feedback">
                 CPF é obrigatório
                 </div>
                 <label for="nascimento" class="form-label">Data Nascimento</label>
-                  <input type="date" class="form-control" id="nascimento" required>
+                  <input type="date" name="data" class="form-control" id="nascimento" required>
                   <div class="invalid-feedback">
                     Data é obrigatória
                   </div>
@@ -44,7 +44,7 @@
             
             <div class="col-12">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+                <input type="email" name="email" class="form-control" id="email" placeholder="you@example.com" required>
                 <div class="invalid-feedback">
                     Email é obrigatório
                 </div>
@@ -52,7 +52,7 @@
 
             <div class="col-12">
               <label for="endereco" class="form-label">Endereço</label>
-              <input type="text" class="form-control" id="endereco" placeholder="Rua... Nº Bairro..." required>
+              <input type="text" name="endereco" class="form-control" id="endereco" placeholder="Rua... Nº Bairro..." required>
               <div class="invalid-feedback">
                Endereço é obrigatório
               </div>
@@ -60,7 +60,7 @@
 
             <div class="col-sm-8">
               <label for="telefone" class="form-label">Telefone</label>
-              <input type="text" class="form-control" id="telefone" placeholder="(DDD)9XXXX-XXXX" required>
+              <input type="text" name="telefone" class="form-control" id="telefone" placeholder="(DDD)9XXXX-XXXX" required>
               <div class="invalid-feedback">
                 Telefone é obrigatório
               </div>
@@ -71,10 +71,10 @@
           <h4 class="mb-3">Pagamento</h4>
           <div class="col-md-5">
             <label for="plano" class="form-label">Plano</label>
-            <select class="form-select" id="plano" required>
-              <option value="">Básico</option>
-              <option>Intermediário</option>
-              <option>Premium</option>
+            <select name="plano" class="form-select" id="plano" required>
+              <option name="plano" value="basico">Básico</option>
+              <option name="plano" value="intermediario">Intermediário</option>
+              <option name="plano" value="premium">Premium</option>
             </select>
             <div class="invalid-feedback">
               Selecione um plano válido
@@ -82,10 +82,10 @@
           </div>
           <div class="col-md-4">
             <label for="pacote" class="form-label">Pacote</label>
-            <select class="form-select" id="pacote" required>
-              <<option value="">Mensal</option>
-              <option>Trimestral</option>
-              <option>Anual</option>
+            <select name="pacote" class="form-select" id="pacote" required>
+              <option name="pacote" value="menal">Mensal</option>
+              <option name="pacote" value="trimestral">Trimestral</option>
+              <option name="pacote" value="anual">Anual</option>
             </select>
             <div class="invalid-feedback">
               Selecione um pacote válido.
