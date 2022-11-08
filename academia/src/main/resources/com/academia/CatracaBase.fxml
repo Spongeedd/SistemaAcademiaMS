@@ -135,7 +135,7 @@
                               <Font name="Corbel" size="18.0" fx:id="x11" />
                            </font>
                         </Label>
-                        <ImageView fitHeight="165.0" fitWidth="279.0" layoutX="12.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="perfilFoto" fitHeight="165.0" fitWidth="279.0" layoutX="12.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@placeholderB.gif" />
                            </image>
@@ -163,18 +163,18 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Button>
-                        <Label alignment="CENTER" layoutX="584.0" layoutY="241.0" prefHeight="22.0" prefWidth="152.0" style="&#10;" text="Esqueceu sua senha?">
+                        <Label fx:id="passwordRequest" alignment="CENTER" layoutX="584.0" layoutY="241.0" prefHeight="22.0" prefWidth="152.0" style="&#10;" text="Esqueceu sua senha?">
                            <font>
                               <Font name="Corbel" size="15.0" fx:id="x1112" />
                            </font>
                         </Label>
-                        <TableView layoutX="181.0" layoutY="456.0" prefHeight="139.0" prefWidth="663.0">
+                        <TableView fx:id="tbl" layoutX="181.0" layoutY="456.0" prefHeight="139.0" prefWidth="663.0">
                           <columns>
-                            <TableColumn prefWidth="119.99996948242188" text="Descrição" />
-                            <TableColumn prefWidth="121.33331298828125" text="Fidelidade" />
-                              <TableColumn prefWidth="113.60000610351562" text="Data de Início" />
-                              <TableColumn prefWidth="99.20001220703125" text="Vencimento" />
-                              <TableColumn prefWidth="215.7332763671875" text="Conteúdo Adicional" />
+                            <TableColumn fx:id="tblDesc" prefWidth="119.99996948242188" text="Descrição" />
+                            <TableColumn fx:id="tblFidel" prefWidth="121.33331298828125" text="Fidelidade" />
+                              <TableColumn fx:id="tblStart" prefWidth="113.60000610351562" text="Data de Início" />
+                              <TableColumn fx:id="tblExpire" prefWidth="99.20001220703125" text="Vencimento" />
+                              <TableColumn fx:id="tblExtra" prefWidth="215.7332763671875" text="Conteúdo Adicional" />
                           </columns>
                         </TableView>
               </children>
@@ -191,11 +191,11 @@
                   </Label>
                   <ScrollPane layoutX="2.0" layoutY="135.0" prefHeight="556.0" prefWidth="365.0">
                      <content>
-                        <TableView prefHeight="710.0" prefWidth="367.0">
+                        <TableView fx:id="tbl2" prefHeight="710.0" prefWidth="367.0">
                            <columns>
-                              <TableColumn prefWidth="91.20006114244461" text="Data" />
-                              <TableColumn prefWidth="116.0" text="Código" />
-                              <TableColumn prefWidth="151.19998168945312" text="Aluno" />
+                              <TableColumn fx:id="tbl2Data" prefWidth="91.20006114244461" text="Data" />
+                              <TableColumn fx:id="tbl2Code" prefWidth="116.0" text="Código" />
+                              <TableColumn fx:id="tbl2Aluno" prefWidth="151.19998168945312" text="Aluno" />
                            </columns>
                         </TableView>
                      </content>
@@ -203,6 +203,11 @@
                   <Label alignment="CENTER" layoutX="14.0" layoutY="90.0" prefHeight="22.0" prefWidth="109.0" style="&#10;" text="Filtros de login:">
                      <font>
                         <Font name="Corbel Bold" size="15.0" fx:id="x1131" />
+                     </font>
+                  </Label>
+                  <Label fx:id="dailyAccess" alignment="CENTER" layoutX="90.0" layoutY="31.0" prefHeight="22.0" prefWidth="109.0" style="&#10;" text="Num acessos">
+                     <font>
+                        <Font name="Corbel" size="14.0" fx:id="x1132" />
                      </font>
                   </Label>
           </children>
