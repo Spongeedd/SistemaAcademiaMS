@@ -230,7 +230,11 @@ public class MatriculaController implements Initializable{
                 a.show();
             }
             else {
+
                 MatriculaService.editarMatricula(getRow(),nome, cpf, data, endereco, telefone, email, plano, pacote);
+
+                MatriculaService.editarMatricula(getRow(), nome, cpf, data, endereco, telefone, email, plano, pacote);
+
                 carregarTabela();
                 limpaInputs();
             }

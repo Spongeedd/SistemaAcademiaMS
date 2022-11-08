@@ -104,6 +104,7 @@ public class MatriculaDAO {
         }
     }
 
+
     public static String consultaPorCPF(String cpf) {
         try (Connection connection = DBConnector.getConexao()) {
             String sql = "SELECT * FROM matricula WHERE cpf = "+ cpf +"";
