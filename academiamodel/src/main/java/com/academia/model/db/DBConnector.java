@@ -1,4 +1,4 @@
-package com.academia.db;
+package com.academia.model.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,8 +10,9 @@ public class DBConnector {
     private DBConnector(){}
 
 
-    public static Connection getConexao() throws SQLException {
+    public static Connection getConexao() throws SQLException, ClassNotFoundException {
         try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
             return DriverManager.getConnection("jdbc:mysql://us-cdbr-east-06.cleardb.net:3306/heroku_aa28e844ee07386", "b918cc3160b707", "16d9b4b7");
         } catch (SQLException e) {
             throw new RuntimeException(e);

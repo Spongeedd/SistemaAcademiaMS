@@ -1,5 +1,8 @@
 package com.academia.matricula;
 
+import service.MatriculaService;
+import dto.MatriculaDTO;
+import dao.MatriculaDAO;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -7,11 +10,12 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import com.academia.App;
-import com.academia.db.DBConnector;
+import db.DBConnector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -120,40 +124,46 @@ public class MatriculaController implements Initializable{
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        pacoteID.setValue("Mensal");
-        pacoteID.getItems().addAll(pacoteStrings);
-        planoID.setValue("Basico");
-        planoID.getItems().addAll(planoStrings);
-        carregarTabela();
-        
-        FilteredList<MatriculaDTO> listaAux = new FilteredList<>(oblist, e -> true);
-
-        buscarInput.textProperty().addListener((observable, oldvalue, newValue) -> {
-            listaAux.setPredicate(MatriculaDTO -> {
-
-                if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
-                    return true;
-                }
-                String procuraString = newValue.toLowerCase();
-
-                if (MatriculaDTO.getNome().toLowerCase().indexOf(procuraString) > -1) {
-                    return true;
-                }
-                else if (MatriculaDTO.getCpf().toLowerCase().indexOf(procuraString) > -1) {
-                    return true;
-                }
-                else if (MatriculaDTO.getEmail().toLowerCase().indexOf(procuraString) > -1) {
-                    return true;
-                }
-                else {
-                    return false;
-                }
+        try {
+            pacoteID.setValue("Mensal");
+            pacoteID.getItems().addAll(pacoteStrings);
+            planoID.setValue("Basico");
+            planoID.getItems().addAll(planoStrings);
+            carregarTabela();
+            
+            FilteredList<MatriculaDTO> listaAux = new FilteredList<>(oblist, e -> true);
+            
+            buscarInput.textProperty().addListener((observable, oldvalue, newValue) -> {
+                listaAux.setPredicate(MatriculaDTO -> {
+                    
+                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+                        return true;
+                    }
+                    String procuraString = newValue.toLowerCase();
+                    
+                    if (MatriculaDTO.getNome().toLowerCase().indexOf(procuraString) > -1) {
+                        return true;
+                    }
+                    else if (MatriculaDTO.getCpf().toLowerCase().indexOf(procuraString) > -1) {
+                        return true;
+                    }
+                    else if (MatriculaDTO.getEmail().toLowerCase().indexOf(procuraString) > -1) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                });
             });
-        });
-
-        SortedList<MatriculaDTO> listaFiltrada = new SortedList<>(listaAux);
-        listaFiltrada.comparatorProperty().bind(tabela.comparatorProperty());
-        tabela.setItems(listaFiltrada);
+            
+            SortedList<MatriculaDTO> listaFiltrada = new SortedList<>(listaAux);
+            listaFiltrada.comparatorProperty().bind(tabela.comparatorProperty());
+            tabela.setItems(listaFiltrada);
+        } catch (SQLException ex) {
+            Logger.getLogger(MatriculaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MatriculaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     Alert a = new Alert(AlertType.NONE);
@@ -242,7 +252,7 @@ public class MatriculaController implements Initializable{
     }
 
     
-    public void carregarTabela() {
+    public void carregarTabela() throws SQLException, ClassNotFoundException {
 
         oblist.clear();
 

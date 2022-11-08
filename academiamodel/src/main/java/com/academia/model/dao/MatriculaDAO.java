@@ -1,4 +1,4 @@
-package com.academia.matricula;
+package com.academia.model.dao;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -6,7 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import com.academia.db.DBConnector;
+import com.academia.model.db.DBConnector;
+import com.academia.model.dto.MatriculaDTO;
 
 public class MatriculaDAO {
     public static MatriculaDTO inserirMatricula(String nome, String cpf, Date datanascimento, String endereco, String telefone, String email, String plano, String pacote) {
@@ -36,6 +37,8 @@ public class MatriculaDAO {
             return funcionario;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -47,6 +50,8 @@ public class MatriculaDAO {
             preparedStatement.setInt(1, cdg);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -69,6 +74,8 @@ public class MatriculaDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -84,6 +91,8 @@ public class MatriculaDAO {
                 return null;
             }
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -101,6 +110,8 @@ public class MatriculaDAO {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -117,6 +128,8 @@ public class MatriculaDAO {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -132,6 +145,8 @@ public class MatriculaDAO {
                 return null;
             }
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

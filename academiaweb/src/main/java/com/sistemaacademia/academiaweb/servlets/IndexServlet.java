@@ -1,5 +1,6 @@
 package com.sistemaacademia.academiaweb.servlets;
 
+import com.academia.model.db.DBConnector;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,14 +14,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sistemaacademia.academiaweb.db.DBConnector;
 
 // import com.academia.db.DBConnector;
 
 @WebServlet(name = "IndexServlet", urlPatterns = {"/IndexServlet"})
 public class IndexServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException, ClassNotFoundException {
             try(Connection connection = DBConnector.getConexao()) {
                 String senha = request.getParameter("senha");
                 String login = request.getParameter("login");

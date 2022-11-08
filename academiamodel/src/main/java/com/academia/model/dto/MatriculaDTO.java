@@ -1,4 +1,4 @@
-package com.academia.matricula;
+package com.academia.model.dto;
 
 import java.sql.Date;
 

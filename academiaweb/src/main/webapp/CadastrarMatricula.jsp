@@ -19,7 +19,7 @@
     <div class="row g-5">
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">Dados</h4>
-        <form class="needs-validation" novalidate>
+        <form class="needs-validation" action="cadastrarServlet" novalidate>
           <div class="row g-3">
             <div class="col-12">
               <label for="nome" class="form-label">Nome</label>

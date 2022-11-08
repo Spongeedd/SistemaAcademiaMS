@@ -1,5 +1,7 @@
-package com.academia.matricula;
+package com.academia.model.service;
 
+import com.academia.model.dto.MatriculaDTO;
+import com.academia.model.dao.MatriculaDAO;
 import java.sql.Date;
 
 public class MatriculaService {
