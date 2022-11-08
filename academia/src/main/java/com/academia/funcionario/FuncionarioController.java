@@ -291,5 +291,3 @@ public class FuncionarioController implements Initializable {
     }
 
 }
-
-
