@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -14,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="511.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.academia.funcionario.FuncionarioController">
+<VBox prefHeight="511.0" prefWidth="1061.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.academia.funcionario.FuncionarioController">
    <children>
       <SplitPane dividerPositions="0.23157051282051277" prefHeight="550.0" prefWidth="831.0">
         <items>
@@ -97,17 +96,15 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="buscarInput" layoutX="97.0" layoutY="9.0" prefHeight="25.0" prefWidth="165.0" />
-                        <ChoiceBox fx:id="buscarSelect" layoutX="272.0" layoutY="9.0" prefHeight="25.0" prefWidth="81.0" />
-                        <Button fx:id="buscarBTN" layoutX="358.0" layoutY="9.0" mnemonicParsing="false" onAction="#buscarBTN" text="Buscar" />
+                        <TextField fx:id="buscarInput" layoutX="97.0" layoutY="9.0" prefHeight="25.0" prefWidth="468.0" />
                         <Button fx:id="inicioBTN" layoutX="701.0" layoutY="9.0" mnemonicParsing="false" onAction="#voltarBTN" prefHeight="25.0" prefWidth="51.0" text="Inicio" />
                      </children>
                   </AnchorPane>
-                  <ScrollPane prefHeight="439.0" prefWidth="767.0">
+                  <ScrollPane hbarPolicy="ALWAYS" prefHeight="439.0" prefWidth="767.0" vbarPolicy="ALWAYS">
                      <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="452.0" prefWidth="757.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="452.0" prefWidth="843.0">
                            <children>
-                              <TableView fx:id="tabela" layoutX="-2.0" layoutY="-2.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="478.0" prefWidth="777.0">
+                              <TableView fx:id="tabela" layoutX="-2.0" layoutY="-2.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="478.0" prefWidth="845.0">
                                 <columns>
                                     <TableColumn fx:id="tabelaID" prefWidth="32.0" text="ID" />
                                   <TableColumn fx:id="tabelaNome" prefWidth="95.0" text="Nome" />
@@ -118,6 +115,7 @@
                                     <TableColumn fx:id="tabelaEmail" prefWidth="136.0" text="Email" />
                                     <TableColumn fx:id="tabelaJornada" prefWidth="68.0" text="Jornada" />
                                     <TableColumn fx:id="tabelaHora" prefWidth="69.0" text="P/Hora" />
+                                    <TableColumn fx:id="tabelaSalario" prefWidth="75.0" text="Salário" />
                                 </columns>
                               </TableView>
                            </children>

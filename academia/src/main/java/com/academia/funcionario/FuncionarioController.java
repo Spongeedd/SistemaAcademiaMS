@@ -2,12 +2,21 @@ package com.academia.funcionario;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import com.academia.App;
+import com.academia.db.DBConnector;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -56,8 +65,6 @@ public class FuncionarioController implements Initializable {
     @FXML
     private TextField telefoneID;
 
-    @FXML
-    private ChoiceBox<String> buscarSelect;
 
     // Botões
 
@@ -66,9 +73,6 @@ public class FuncionarioController implements Initializable {
 
     @FXML
     private Button atualizarBTN;
-
-    @FXML
-    private Button removerBTN;
 
     @FXML
     private Button buscarBTN;
@@ -108,13 +112,18 @@ public class FuncionarioController implements Initializable {
     @FXML
     private TableColumn<FuncionariosDTO, String> tabelaTelefone;
 
+    @FXML
+    private TableColumn<FuncionariosDTO, Integer> tabelaSalario;
 
-    /* 
+    ObservableList<FuncionariosDTO> oblist = FXCollections.observableArrayList();
+
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
-        FilteredList<FuncionariosDTO> listaAux = new FilteredList<>(FuncionariosDAO.getObservableListFuncionarios(), e -> true);
+    public void initialize(URL location, ResourceBundle resources) {
+        carregarTabela();
 
-            buscarID.textProperty().addListener((observable, oldvalue, newValue) -> {
+        FilteredList<FuncionariosDTO> listaAux = new FilteredList<>(oblist, e -> true);
+
+            buscarInput.textProperty().addListener((observable, oldvalue, newValue) -> {
                 listaAux.setPredicate(FuncionariosDTO -> {
     
                     if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
@@ -125,7 +134,7 @@ public class FuncionarioController implements Initializable {
                     if (FuncionariosDTO.getNome().toLowerCase().indexOf(procuraString) > -1) {
                         return true;
                     }
-                    else if (FuncionariosDTO.getEndereco().toLowerCase().indexOf(procuraString) > -1) {
+                    else if (FuncionariosDTO.getCpf().toLowerCase().indexOf(procuraString) > -1) {
                         return true;
                     }
                     else if (FuncionariosDTO.getEmail().toLowerCase().indexOf(procuraString) > -1) {
@@ -137,62 +146,41 @@ public class FuncionarioController implements Initializable {
                 });
             });
 
-        
         SortedList<FuncionariosDTO> listaFiltrada = new SortedList<>(listaAux);
         listaFiltrada.comparatorProperty().bind(tabela.comparatorProperty());
         tabela.setItems(listaFiltrada);
-    }
-    */
-
-    private String[] buscarSelStrings = {"ID", "Nome", "CPF"};
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        buscarSelect.setValue("ID");
-        buscarSelect.getItems().addAll(buscarSelStrings);
     }
     
     Alert a = new Alert(AlertType.NONE);
     @FXML
     private void adicionarBTN() throws IOException  {
-        try {
-            String nome = nomeID.getText();
-            String numero = telefoneID.getText();
-            String endereco = enderecoID.getText();
-            String email = emailID.getText();
+        String nome = nomeID.getText();
+        String telefone = telefoneID.getText();
+        String endereco = enderecoID.getText();
+        String email = emailID.getText();
+        String cpf = cpfID.getText();
+        LocalDate dataaux = dataID.getValue();
+        Date data = Date.valueOf(dataaux);
+        String jornadaaux = jornadaID.getText();
+        String phoraaux = horaID.getText();
 
-            LocalDate dataaux = dataID.getValue();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String data = dataaux.format(formatter);
-            
-            String jornadaaux = jornadaID.getText();
-            String phoraaux = horaID.getText();
-            String cpfaux = cpfID.getText();
-
-
-            Long telefone = Long.parseLong(numero);
-            Long cpf = Long.parseLong(cpfaux);
+        
+        if (nome.isEmpty() || telefone.isEmpty() || endereco.isEmpty() || email.isEmpty() || jornadaaux.isEmpty() || phoraaux.isEmpty() || cpf.isEmpty()) {
+            a.setAlertType(AlertType.WARNING);
+            a.setContentText("Nenhum campo pode estar vazio");
+            a.show();
+        }
+        else if (FuncionariosDAO.consultaPorCPF(cpf) != null) {
+            a.setAlertType(AlertType.WARNING);
+            a.setContentText("Funcionario ja cadastrado");
+            a.show();
+        }
+        else {
             Integer jornada = Integer.parseInt(jornadaaux);
             Integer phora = Integer.parseInt(phoraaux);
-            
-            if (nome.isEmpty() || numero.isEmpty() || endereco.isEmpty() || email.isEmpty() || jornadaaux.isEmpty() || phoraaux.isEmpty() || cpfaux.isEmpty()) {
-                a.setAlertType(AlertType.WARNING);
-                a.setContentText("Nenhum campo pode estar vazio");
-                a.show();
-            }
-            else if (FuncionariosDAO.consultaPorCPF(cpf) != null) {
-                a.setAlertType(AlertType.WARNING);
-                a.setContentText("Funcionario ja cadastrado");
-                a.show();
-            }
-            else {
-                FuncionariosService.adicionarFuncionario(nome, cpf, data, endereco, telefone, email, jornada, phora);
-                carregarTabela();
-                limpaInputs();
-            }
-        } catch (Exception e) {
-            a.setAlertType(AlertType.WARNING);
-            a.setContentText("Telefone/CPF/Jornada/PHora não podem conter letras");
-            a.show();
+            FuncionariosService.adicionarFuncionario(nome, cpf, data, endereco, telefone, email, jornada, phora);
+            carregarTabela();
+            limpaInputs();
         }
     }
 
@@ -212,25 +200,18 @@ public class FuncionarioController implements Initializable {
     private void atualizarBTN() throws IOException {
         try {
             String nome = nomeID.getText();
-            String numero = telefoneID.getText();
+            String telefone = telefoneID.getText();
             String endereco = enderecoID.getText();
             String email = emailID.getText();
-
+            String cpf = cpfID.getText();
             LocalDate dataaux = dataID.getValue();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String data = dataaux.format(formatter);
-            
+            Date data = Date.valueOf(dataaux);
             String jornadaaux = jornadaID.getText();
             String phoraaux = horaID.getText();
-            String cpfaux = cpfID.getText();
-
-
-            Long telefone = Long.parseLong(numero);
-            Long cpf = Long.parseLong(cpfaux);
             Integer jornada = Integer.parseInt(jornadaaux);
             Integer phora = Integer.parseInt(phoraaux);
             
-            if (nome.isEmpty() || numero.isEmpty() || endereco.isEmpty() || email.isEmpty() || jornadaaux.isEmpty() || phoraaux.isEmpty() || cpfaux.isEmpty()) {
+            if (nome.isEmpty() || telefone.isEmpty() || endereco.isEmpty() || email.isEmpty() || jornadaaux.isEmpty() || phoraaux.isEmpty() || cpf.isEmpty()) {
                 a.setAlertType(AlertType.WARNING);
                 a.setContentText("Nenhum campo pode estar vazio");
                 a.show();
@@ -253,6 +234,9 @@ public class FuncionarioController implements Initializable {
     }
 
     public void carregarTabela() {
+
+        oblist.clear();
+        
         tabelaID.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         tabelaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tabelaCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
@@ -262,8 +246,19 @@ public class FuncionarioController implements Initializable {
         tabelaEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         tabelaJornada.setCellValueFactory(new PropertyValueFactory<>("jornada"));
         tabelaHora.setCellValueFactory(new PropertyValueFactory<>("phora"));
-
-        tabela.setItems(FuncionariosDAO.getObservableListFuncionarios());
+        tabelaSalario.setCellValueFactory(new PropertyValueFactory<>("salario"));
+        
+        try(Connection connection = DBConnector.getConexao()) {
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM funcionario");
+            while (rs.next()) {
+                oblist.add(new FuncionariosDTO(rs.getInt("idfuncionario"), rs.getString("nome"),
+                            rs.getString("cpf"), rs.getDate("nascimento"), rs.getString("endereco"), rs.getString("telefone"),
+                            rs.getString("email"), rs.getInt("jornada"), rs.getInt("phora"), rs.getInt("salario")));
+            }
+            tabela.setItems(oblist);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void limpaInputs(){
@@ -293,90 +288,6 @@ public class FuncionarioController implements Initializable {
             stage.show();
             stage = (Stage) inicioBTN.getScene().getWindow();
             stage.close();
-    }
-
-    @FXML
-    private void buscarBTN() throws IOException {
-        try {
-            String buscaInput = buscarInput.getText();
-            String buscaSelect = buscarSelect.getValue();
-            FuncionariosDTO consulta;
-            if (buscaInput.isEmpty()) {
-                a.setAlertType(AlertType.WARNING);
-                a.setContentText("Campo não pode estar vazio");
-                a.show();
-            }
-            else {
-                switch (buscaSelect) {
-                    case "ID":
-                            Integer id = Integer.parseInt(buscaInput);
-                            consulta = FuncionariosService.consultaPorID(id);
-                            if (consulta == null) {
-                                a.setAlertType(AlertType.WARNING);
-                                a.setContentText("ID não encontrado");
-                                a.show();
-                            }
-                            else {
-                                a.setAlertType(AlertType.INFORMATION);
-                                a.setContentText(textoConsulta(consulta));
-                                a.show();
-                            }
-                        break;
-                    case "Nome":
-                        consulta = FuncionariosService.consultaPorNome(buscaInput);
-                        if (consulta == null) {
-                            a.setAlertType(AlertType.WARNING);
-                            a.setContentText("Nome não encontrado");
-                            a.show();
-                        }
-                        else {
-                            a.setAlertType(AlertType.INFORMATION);
-                            a.setContentText(textoConsulta(consulta));
-                            a.show();
-                        }
-                        break;
-                    case "CPF":
-                        try {
-                            Long cpf = Long.parseLong(buscaInput);
-                            consulta = FuncionariosService.consultaPorCPF(cpf);
-                            if (consulta == null) {
-                                a.setAlertType(AlertType.WARNING);
-                                a.setContentText("CPF não encontrado");
-                                a.show();
-                            }
-                            else {
-                                a.setAlertType(AlertType.INFORMATION);
-                                a.setContentText(textoConsulta(consulta));
-                                a.show();
-                            }
-                        } catch (Exception e) {
-                            a.setAlertType(AlertType.WARNING);
-                            a.setContentText("CPF");
-                            a.show();
-                        }
-                        break;
-                    }
-                }
-        }catch (Exception e) {
-            a.setAlertType(AlertType.WARNING);
-            a.setContentText("ID deve ser um número");
-            a.show();
-        }
-    }
-
-    private String textoConsulta (FuncionariosDTO consulta) {
-        String nome, email;
-        Integer ID, jornada, phora;
-        Long numero, cpf;
-        ID = consulta.getCodigo();
-        cpf = consulta.getCpf();
-        nome = consulta.getNome();
-        numero = consulta.getTelefone();
-        email = consulta.getEmail();
-        jornada = consulta.getJornada();
-        phora = consulta.getPhora();
-        String textoconsultaString = "ID: " + ID + "\nNome: " + nome + "\nCPF: " + cpf +  "\nNúmero: " + numero + "\nEmail: " + email+ "\nJornada: " + jornada + "\nP/Hora: " + phora;
-        return textoconsultaString;
     }
 
 }

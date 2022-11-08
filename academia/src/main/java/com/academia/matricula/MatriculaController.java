@@ -2,12 +2,21 @@ package com.academia.matricula;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import com.academia.App;
+import com.academia.db.DBConnector;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -53,8 +62,6 @@ public class MatriculaController implements Initializable{
     @FXML
     private TextField telefoneID;
 
-    @FXML
-    private ChoiceBox<String> buscarSelect;
 
     @FXML
     private TextField buscarInput;
@@ -103,50 +110,68 @@ public class MatriculaController implements Initializable{
     private Button atualizarBTN;
 
     @FXML
-    private Button buscarBTN;
-
-    @FXML
     private Button inicioBTN;
 
 
 
     private String[] pacoteStrings = {"Mensal", "Trimestral", "Anual"};
     private String[] planoStrings = {"Basico", "Intermediário", "Premium"};
-    private String[] buscarSelStrings = {"ID", "Nome", "CPF"};
-
+    ObservableList<MatriculaDTO> oblist = FXCollections.observableArrayList();
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         pacoteID.setValue("Mensal");
         pacoteID.getItems().addAll(pacoteStrings);
         planoID.setValue("Basico");
         planoID.getItems().addAll(planoStrings);
-        buscarSelect.setValue("ID");
-        buscarSelect.getItems().addAll(buscarSelStrings);
+        carregarTabela();
+        
+        FilteredList<MatriculaDTO> listaAux = new FilteredList<>(oblist, e -> true);
+
+        buscarInput.textProperty().addListener((observable, oldvalue, newValue) -> {
+            listaAux.setPredicate(MatriculaDTO -> {
+
+                if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+                    return true;
+                }
+                String procuraString = newValue.toLowerCase();
+
+                if (MatriculaDTO.getNome().toLowerCase().indexOf(procuraString) > -1) {
+                    return true;
+                }
+                else if (MatriculaDTO.getCpf().toLowerCase().indexOf(procuraString) > -1) {
+                    return true;
+                }
+                else if (MatriculaDTO.getEmail().toLowerCase().indexOf(procuraString) > -1) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            });
+        });
+
+        SortedList<MatriculaDTO> listaFiltrada = new SortedList<>(listaAux);
+        listaFiltrada.comparatorProperty().bind(tabela.comparatorProperty());
+        tabela.setItems(listaFiltrada);
     }
 
     Alert a = new Alert(AlertType.NONE);
     @FXML
     private void adicionarBTN() throws IOException  {
         try {
-            String nome = nomeID.getText();
-            String numero = telefoneID.getText();
-            String endereco = enderecoID.getText();
-            String email = emailID.getText();
             String pacote = pacoteID.getValue();
             String plano = planoID.getValue();
 
+            String nome = nomeID.getText();
+            String telefone = telefoneID.getText();
+            String endereco = enderecoID.getText();
+            String email = emailID.getText();
+            String cpf = cpfID.getText();
             LocalDate dataaux = nascimentoID.getValue();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String data = dataaux.format(formatter);
-            
-            String cpfaux = cpfID.getText();
+            Date data = Date.valueOf(dataaux);
 
-
-            Long telefone = Long.parseLong(numero);
-            Long cpf = Long.parseLong(cpfaux);
-
-            
-            if (nome.isEmpty() || numero.isEmpty() || endereco.isEmpty() || email.isEmpty() || cpfaux.isEmpty()) {
+            if (nome.isEmpty() || telefone.isEmpty() || endereco.isEmpty() || email.isEmpty() || cpf.isEmpty()) {
                 a.setAlertType(AlertType.WARNING);
                 a.setContentText("Nenhum campo pode estar vazio");
                 a.show();
@@ -183,25 +208,18 @@ public class MatriculaController implements Initializable{
     @FXML
     private void atualizarBTN() throws IOException {
         try {
-            String nome = nomeID.getText();
-            String numero = telefoneID.getText();
-            String endereco = enderecoID.getText();
-            String email = emailID.getText();
             String pacote = pacoteID.getValue();
             String plano = planoID.getValue();
 
+            String nome = nomeID.getText();
+            String telefone = telefoneID.getText();
+            String endereco = enderecoID.getText();
+            String email = emailID.getText();
+            String cpf = cpfID.getText();
             LocalDate dataaux = nascimentoID.getValue();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String data = dataaux.format(formatter);
-            
-            String cpfaux = cpfID.getText();
+            Date data = Date.valueOf(dataaux);
 
-
-            Long telefone = Long.parseLong(numero);
-            Long cpf = Long.parseLong(cpfaux);
-
-            
-            if (nome.isEmpty() || numero.isEmpty() || endereco.isEmpty() || email.isEmpty() || cpfaux.isEmpty()) {
+            if (nome.isEmpty() || telefone.isEmpty() || endereco.isEmpty() || email.isEmpty() || cpf.isEmpty()) {
                 a.setAlertType(AlertType.WARNING);
                 a.setContentText("Nenhum campo pode estar vazio");
                 a.show();
@@ -212,19 +230,22 @@ public class MatriculaController implements Initializable{
                 a.show();
             }
             else {
-                MatriculaService.editarMatricula(getRow(), nome, cpf, data, endereco, telefone, email, plano, pacote);
+                MatriculaService.editarMatricula(getRow(),nome, cpf, data, endereco, telefone, email, plano, pacote);
                 carregarTabela();
                 limpaInputs();
             }
         } catch (Exception e) {
             a.setAlertType(AlertType.WARNING);
-            a.setContentText("Nenhum contato selecionado");
+            a.setContentText("Telefone/CPF/ não podem conter letras");
             a.show();
         }
     }
 
     
     public void carregarTabela() {
+
+        oblist.clear();
+
         tabelaID.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         tabelaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tabelaCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
@@ -235,7 +256,17 @@ public class MatriculaController implements Initializable{
         tabelaPlano.setCellValueFactory(new PropertyValueFactory<>("plano"));
         tabelaPacote.setCellValueFactory(new PropertyValueFactory<>("pacote"));
 
-        tabela.setItems(MatriculaDAO.getobservableListMatriculas());
+        try(Connection connection = DBConnector.getConexao()) {
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM matricula");
+            while (rs.next()) {
+                oblist.add(new MatriculaDTO(rs.getInt("idmatricula"), rs.getString("nome"),
+                            rs.getString("cpf"), rs.getDate("nascimento"), rs.getString("endereco"), rs.getString("telefone"),
+                            rs.getString("email"), rs.getString("plano"), rs.getString("pacote")));
+            }
+            tabela.setItems(oblist);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void limpaInputs(){
@@ -265,88 +296,4 @@ public class MatriculaController implements Initializable{
         stage.close();
     }
 
-
-    @FXML
-    private void buscarBTN() throws IOException {
-        try {
-            String buscaInput = buscarInput.getText();
-            String buscaSelect = buscarSelect.getValue();
-            MatriculaDTO consulta;
-            if (buscaInput.isEmpty()) {
-                a.setAlertType(AlertType.WARNING);
-                a.setContentText("Campo não pode estar vazio");
-                a.show();
-            }
-            else {
-                switch (buscaSelect) {
-                    case "ID":
-                            Integer id = Integer.parseInt(buscaInput);
-                            consulta = MatriculaService.consultaPorID(id);
-                            if (consulta == null) {
-                                a.setAlertType(AlertType.WARNING);
-                                a.setContentText("ID não encontrado");
-                                a.show();
-                            }
-                            else {
-                                a.setAlertType(AlertType.INFORMATION);
-                                a.setContentText(textoConsulta(consulta));
-                                a.show();
-                            }
-                        break;
-                    case "Nome":
-                        consulta = MatriculaService.consultaPorNome(buscaInput);
-                        if (consulta == null) {
-                            a.setAlertType(AlertType.WARNING);
-                            a.setContentText("Nome não encontrado");
-                            a.show();
-                        }
-                        else {
-                            a.setAlertType(AlertType.INFORMATION);
-                            a.setContentText(textoConsulta(consulta));
-                            a.show();
-                        }
-                        break;
-                    case "CPF":
-                        try {
-                            Long cpf = Long.parseLong(buscaInput);
-                            consulta = MatriculaService.consultaPorCPF(cpf);
-                            if (consulta == null) {
-                                a.setAlertType(AlertType.WARNING);
-                                a.setContentText("CPF não encontrado");
-                                a.show();
-                            }
-                            else {
-                                a.setAlertType(AlertType.INFORMATION);
-                                a.setContentText(textoConsulta(consulta));
-                                a.show();
-                            }
-                        } catch (Exception e) {
-                            a.setAlertType(AlertType.WARNING);
-                            a.setContentText("CPF");
-                            a.show();
-                        }
-                        break;
-                    }
-                }
-        }catch (Exception e) {
-            a.setAlertType(AlertType.WARNING);
-            a.setContentText("ID deve ser um número");
-            a.show();
-        }
-    }
-
-    private String textoConsulta (MatriculaDTO consulta) {
-        String nome, email, pacote, plano;
-        Integer ID;
-        Long numero, cpf;
-        ID = consulta.getCodigo();
-        nome = consulta.getNome();
-        cpf = consulta.getCpf();
-        numero = consulta.getTelefone();
-        email = consulta.getEmail();
-        plano = consulta.getPlano();
-        pacote = consulta.getPacote();
-        String textoconsultaString = "ID: " + ID + "\nNome: " + nome + "\nCPF: " + cpf + "\nNúmero: " + numero + "\nEmail: " + email+ "\nPlano: " + plano + "\nPacote: " + pacote;
-        return textoconsultaString;
-    }
 }
