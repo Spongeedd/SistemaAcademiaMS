@@ -1,8 +1,5 @@
 package com.academia.matricula;
 
-import service.MatriculaService;
-import dto.MatriculaDTO;
-import dao.MatriculaDAO;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -13,7 +10,11 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import com.academia.App;
-import db.DBConnector;
+import com.academia.model.dao.MatriculaDAO;
+import com.academia.model.db.DBConnector;
+import com.academia.model.dto.MatriculaDTO;
+import com.academia.model.service.MatriculaService;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

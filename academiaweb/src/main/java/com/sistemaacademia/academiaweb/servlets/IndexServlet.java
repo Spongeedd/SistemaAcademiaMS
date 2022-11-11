@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 public class IndexServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
+        
             try(Connection connection = DBConnector.getConexao()) {
                 String senha = request.getParameter("senha");
                 String login = request.getParameter("login");
@@ -43,6 +44,7 @@ public class IndexServlet extends HttpServlet {
         } catch (SQLException e) {
                 throw new RuntimeException(e);
             }   
+        
     }
     
 
@@ -58,7 +60,10 @@ public class IndexServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException | SQLException e) {
+        }
     }
 
     /**
@@ -72,7 +77,12 @@ public class IndexServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException | SQLException e) {
+            // TODO Auto-generated catch block
+
+        }
     }
 
     /**

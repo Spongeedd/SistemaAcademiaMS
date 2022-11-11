@@ -1,7 +1,5 @@
 package com.academia.funcionario;
 
-import dto.FuncionariosDTO;
-import dao.FuncionariosDAO;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -12,7 +10,11 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import com.academia.App;
-import db.DBConnector;
+import com.academia.model.dao.FuncionariosDAO;
+import com.academia.model.db.DBConnector;
+import com.academia.model.dto.FuncionariosDTO;
+import com.academia.model.service.FuncionariosService;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,7 +37,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import service.FuncionariosService;
 
 public class FuncionarioController implements Initializable {
 

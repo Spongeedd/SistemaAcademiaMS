@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.academia.model.db.DBConnector;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,8 +32,8 @@ public class Controller {
     private Button btnEntrar;
     
     @FXML
-    private void exibeInfo() throws IOException {
-        try(Connection connection = com.academia.model.db.DBConnector.getConexao()) {
+    private void exibeInfo() throws IOException, ClassNotFoundException {
+        try(Connection connection = DBConnector.getConexao()) {
             String senha = senhaInput.getText();
             String login = funcionarioInput.getText();
             String sql = "SELECT * FROM funcionario WHERE nome=? and cpf=?";
