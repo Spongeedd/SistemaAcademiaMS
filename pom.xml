@@ -12,5 +12,6 @@
         <module>academiaweb</module>
         <module>academia</module>
         <module>academiamodel</module>
-    </modules>
+      <module>academiawb</module>
+  </modules>
 </project>
