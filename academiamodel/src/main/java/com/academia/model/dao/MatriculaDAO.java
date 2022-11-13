@@ -1,4 +1,4 @@
-package com.academia.funcionario;
+package com.academia.model.dao;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -6,16 +6,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import com.academia.db.DBConnector;
+import com.academia.model.db.DBConnector;
+import com.academia.model.dto.MatriculaDTO;
 
-public class FuncionariosDAO {
-    
-    public static FuncionariosDTO inserirFuncionarios(String nome, String cpf, Date datanascimento, String endereco, String telefone, String email, Integer jornada, Integer phora) {
+public class MatriculaDAO {
+    public static MatriculaDTO inserirMatricula(String nome, String cpf, Date datanascimento, String endereco, String telefone, String email, String plano, String pacote) {
         try(Connection connection = DBConnector.getConexao()) {
         
-            String sql = "INSERT INTO funcionario (nome, cpf, nascimento, endereco, telefone, email, jornada, phora, salario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO matricula (nome, cpf, nascimento, endereco, telefone, email, plano, pacote) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-            FuncionariosDTO funcionario = new FuncionariosDTO(nome, endereco, email, cpf, telefone, datanascimento, jornada, phora);
+            MatriculaDTO funcionario = new MatriculaDTO(nome, endereco, email, cpf, telefone, datanascimento, plano, pacote);
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, funcionario.getNome());
@@ -24,10 +24,8 @@ public class FuncionariosDAO {
             preparedStatement.setString(4, funcionario.getEndereco());
             preparedStatement.setString(5, funcionario.getTelefone());
             preparedStatement.setString(6, funcionario.getEmail());
-            preparedStatement.setInt(7, funcionario.getJornada());
-            preparedStatement.setInt(8, funcionario.getPhora());
-            Integer sal = funcionario.getJornada() * funcionario.getPhora();
-            preparedStatement.setInt(9, sal);
+            preparedStatement.setString(7, funcionario.getPlano());
+            preparedStatement.setString(8, funcionario.getPacote());
 
             preparedStatement.executeUpdate();
             
@@ -39,25 +37,28 @@ public class FuncionariosDAO {
             return funcionario;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
-   
-    public static void removeFuncionario(Integer cdg) {
+    public static void removeMatricula(Integer cdg) {
         try (Connection connection = DBConnector.getConexao()) {
-            String sql = "DELETE FROM funcionario WHERE idfuncionario = ?";
+            String sql = "DELETE FROM matricula WHERE idmatricula = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, cdg);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public static void atualizaFuncionario(Integer codigo, String nome, String cpf, Date datanascimento, String endereco, String telefone, String email, Integer jornada, Integer phora) {
+    public static void atualizaMatricula(Integer codigo, String nome, String cpf, Date datanascimento, String endereco, String telefone, String email, String plano, String pacote) {
         try (Connection connection = DBConnector.getConexao()) {
-            String sql = "UPDATE funcionario SET nome=?, cpf=?, nascimento=?, endereco=?, telefone=?, email=?, jornada=?, phora=?, salario=? WHERE idfuncionario=?";
+            String sql = "UPDATE funcionario SET nome=?, cpf=?, nascimento=?, endereco=?, telefone=?, email=?, plano=?, pacote=? WHERE idmatricula=?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,nome);
@@ -66,21 +67,21 @@ public class FuncionariosDAO {
             preparedStatement.setString(4, endereco);
             preparedStatement.setString(5, telefone);
             preparedStatement.setString(6, email);
-            preparedStatement.setInt(7, jornada);
-            preparedStatement.setInt(8, phora);
-            Integer sal = jornada * phora;
-            preparedStatement.setInt(9, sal);
-            preparedStatement.setInt(10, codigo);
+            preparedStatement.setString(7, plano);
+            preparedStatement.setString(8, pacote);
+            preparedStatement.setInt(9, codigo);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
     public static String consultaPorNome(String nome) {
         try (Connection connection = DBConnector.getConexao()) {
-            String sql = "SELECT * FROM funcionario WHERE nome = "+ nome+"";
+            String sql = "SELECT * FROM matricula WHERE nome = "+ nome+"";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
@@ -91,28 +92,32 @@ public class FuncionariosDAO {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
     public static Integer consultaPorID(Integer codigo) {
         try (Connection connection = DBConnector.getConexao()) {
-            String sql = "SELECT * FROM funcionario WHERE idfuncionario = "+ codigo +"";
+            String sql = "SELECT * FROM  matricula WHERE idmatricula = "+ codigo +"";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                return rs.getInt("idfuncionario");
+                return rs.getInt("idmatricula");
             }
             else {
                 return null;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
     public static String consultaPorCPF(String cpf) {
         try (Connection connection = DBConnector.getConexao()) {
-            String sql = "SELECT * FROM funcionario WHERE cpf = "+ cpf +"";
+            String sql = "SELECT * FROM matricula WHERE cpf = "+ cpf +"";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
@@ -123,12 +128,14 @@ public class FuncionariosDAO {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
     public static String consultaPorNumero(String telefone) {
         try (Connection connection = DBConnector.getConexao()) {
-            String sql = "SELECT * FROM funcionario WHERE telefone = "+ telefone +"";
+            String sql = "SELECT * FROM matricula WHERE telefone = "+ telefone +"";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
@@ -139,6 +146,10 @@ public class FuncionariosDAO {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
+    
+
 }

@@ -1,5 +1,7 @@
-package com.academia.funcionario;
+package academiawb.model.service;
 
+import academiawb.model.dao.FuncionariosDAO;
+import academiawb.model.dto.FuncionariosDTO;
 import java.sql.Date;
 
 public class FuncionariosService {

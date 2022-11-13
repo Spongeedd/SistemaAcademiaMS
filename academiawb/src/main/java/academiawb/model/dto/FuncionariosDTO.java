@@ -1,4 +1,4 @@
-package com.academia.funcionario;
+package academiawb.model.dto;
 
 import java.sql.Date;
 

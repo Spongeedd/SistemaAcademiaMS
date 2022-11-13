@@ -7,11 +7,16 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import com.academia.App;
-import com.academia.db.DBConnector;
+import com.academia.model.dao.FuncionariosDAO;
+import com.academia.model.db.DBConnector;
+import com.academia.model.dto.FuncionariosDTO;
+import com.academia.model.service.FuncionariosService;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,7 +30,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -119,10 +123,11 @@ public class FuncionarioController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        carregarTabela();
-
-        FilteredList<FuncionariosDTO> listaAux = new FilteredList<>(oblist, e -> true);
-
+        try {
+            carregarTabela();
+            
+            FilteredList<FuncionariosDTO> listaAux = new FilteredList<>(oblist, e -> true);
+            
             buscarInput.textProperty().addListener((observable, oldvalue, newValue) -> {
                 listaAux.setPredicate(FuncionariosDTO -> {
     
@@ -145,15 +150,20 @@ public class FuncionarioController implements Initializable {
                     }
                 });
             });
-
-        SortedList<FuncionariosDTO> listaFiltrada = new SortedList<>(listaAux);
-        listaFiltrada.comparatorProperty().bind(tabela.comparatorProperty());
-        tabela.setItems(listaFiltrada);
+            
+            SortedList<FuncionariosDTO> listaFiltrada = new SortedList<>(listaAux);
+            listaFiltrada.comparatorProperty().bind(tabela.comparatorProperty());
+            tabela.setItems(listaFiltrada);
+        } catch (SQLException ex) {
+            Logger.getLogger(FuncionarioController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FuncionarioController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     Alert a = new Alert(AlertType.NONE);
     @FXML
-    private void adicionarBTN() throws IOException  {
+    private void adicionarBTN() throws IOException, SQLException, ClassNotFoundException  {
         String nome = nomeID.getText();
         String telefone = telefoneID.getText();
         String endereco = enderecoID.getText();
@@ -233,7 +243,7 @@ public class FuncionarioController implements Initializable {
         }
     }
 
-    public void carregarTabela() {
+    public void carregarTabela() throws SQLException, ClassNotFoundException {
 
         oblist.clear();
         
