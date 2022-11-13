@@ -7,11 +7,16 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import com.academia.App;
-import com.academia.db.DBConnector;
+import com.academia.model.dao.MatriculaDAO;
+import com.academia.model.db.DBConnector;
+import com.academia.model.dto.MatriculaDTO;
+import com.academia.model.service.MatriculaService;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -120,40 +125,46 @@ public class MatriculaController implements Initializable{
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        pacoteID.setValue("Mensal");
-        pacoteID.getItems().addAll(pacoteStrings);
-        planoID.setValue("Basico");
-        planoID.getItems().addAll(planoStrings);
-        carregarTabela();
-        
-        FilteredList<MatriculaDTO> listaAux = new FilteredList<>(oblist, e -> true);
-
-        buscarInput.textProperty().addListener((observable, oldvalue, newValue) -> {
-            listaAux.setPredicate(MatriculaDTO -> {
-
-                if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
-                    return true;
-                }
-                String procuraString = newValue.toLowerCase();
-
-                if (MatriculaDTO.getNome().toLowerCase().indexOf(procuraString) > -1) {
-                    return true;
-                }
-                else if (MatriculaDTO.getCpf().toLowerCase().indexOf(procuraString) > -1) {
-                    return true;
-                }
-                else if (MatriculaDTO.getEmail().toLowerCase().indexOf(procuraString) > -1) {
-                    return true;
-                }
-                else {
-                    return false;
-                }
+        try {
+            pacoteID.setValue("Mensal");
+            pacoteID.getItems().addAll(pacoteStrings);
+            planoID.setValue("Basico");
+            planoID.getItems().addAll(planoStrings);
+            carregarTabela();
+            
+            FilteredList<MatriculaDTO> listaAux = new FilteredList<>(oblist, e -> true);
+            
+            buscarInput.textProperty().addListener((observable, oldvalue, newValue) -> {
+                listaAux.setPredicate(MatriculaDTO -> {
+                    
+                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+                        return true;
+                    }
+                    String procuraString = newValue.toLowerCase();
+                    
+                    if (MatriculaDTO.getNome().toLowerCase().indexOf(procuraString) > -1) {
+                        return true;
+                    }
+                    else if (MatriculaDTO.getCpf().toLowerCase().indexOf(procuraString) > -1) {
+                        return true;
+                    }
+                    else if (MatriculaDTO.getEmail().toLowerCase().indexOf(procuraString) > -1) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                });
             });
-        });
-
-        SortedList<MatriculaDTO> listaFiltrada = new SortedList<>(listaAux);
-        listaFiltrada.comparatorProperty().bind(tabela.comparatorProperty());
-        tabela.setItems(listaFiltrada);
+            
+            SortedList<MatriculaDTO> listaFiltrada = new SortedList<>(listaAux);
+            listaFiltrada.comparatorProperty().bind(tabela.comparatorProperty());
+            tabela.setItems(listaFiltrada);
+        } catch (SQLException ex) {
+            Logger.getLogger(MatriculaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MatriculaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     Alert a = new Alert(AlertType.NONE);
@@ -230,7 +241,11 @@ public class MatriculaController implements Initializable{
                 a.show();
             }
             else {
+
                 MatriculaService.editarMatricula(getRow(),nome, cpf, data, endereco, telefone, email, plano, pacote);
+
+                MatriculaService.editarMatricula(getRow(), nome, cpf, data, endereco, telefone, email, plano, pacote);
+
                 carregarTabela();
                 limpaInputs();
             }
@@ -242,61 +257,7 @@ public class MatriculaController implements Initializable{
     }
 
     
-    @FXML
-    private void removerBTN() throws IOException {
-        try {
-            MatriculaService.delMatr(getRow());
-            carregarTabela();
-        } catch (Exception e) {
-            a.setAlertType(AlertType.WARNING);
-            a.setContentText("Nenhuma matrícula selecionado");
-            a.show();
-        }
-    }
-
-    @FXML
-    private void atualizarBTN() throws IOException {
-        try {
-            String nome = nomeID.getText();
-            String numero = telefoneID.getText();
-            String endereco = enderecoID.getText();
-            String email = emailID.getText();
-            String pacote = pacoteID.getValue();
-            String plano = planoID.getValue();
-
-            LocalDate dataaux = nascimentoID.getValue();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String data = dataaux.format(formatter);
-            
-            String cpfaux = cpfID.getText();
-
-
-            Long telefone = Long.parseLong(numero);
-            Long cpf = Long.parseLong(cpfaux);
-            
-            if (nome.isEmpty() || numero.isEmpty() || endereco.isEmpty() || email.isEmpty() || cpfaux.isEmpty()) {
-                a.setAlertType(AlertType.WARNING);
-                a.setContentText("Nenhum campo pode estar vazio");
-                a.show();
-            }
-            else if (MatriculaDAO.consultaPorCPF(cpf) != null) {
-                a.setAlertType(AlertType.WARNING);
-                a.setContentText("Matrícula existente");
-                a.show();
-            }
-            else {
-                MatriculaService.editarMatricula(getRow(), nome, cpf, data, endereco, telefone, email, plano, pacote);
-                carregarTabela();
-                limpaInputs();
-            }
-        } catch (Exception e) {
-            a.setAlertType(AlertType.WARNING);
-            a.setContentText("Nenhuma matrícula selecionado");
-            a.show();
-        }
-    }
-    
-    public void carregarTabela() {
+    public void carregarTabela() throws SQLException, ClassNotFoundException {
 
         oblist.clear();
 
