@@ -34,7 +34,6 @@
 
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -42,15 +41,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="575.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="526.0" prefWidth="688.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
   <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="480.0" prefWidth="786.0" VBox.vgrow="ALWAYS">
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="526.0" prefWidth="690.0" VBox.vgrow="ALWAYS">
       <children>
-            <ScrollPane prefHeight="574.0" prefWidth="690.0">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-              </content>
-            </ScrollPane>
         <Label alignment="CENTER" layoutX="262.0" layoutY="14.0" style="&#10;" text="Cadastro de Exercícios" textAlignment="CENTER" wrapText="false">
           <font>
             <Font name="Serif Bold" size="18.0" />
@@ -61,32 +55,30 @@
                   <Font name="Corbel Bold" size="14.0" fx:id="x12" />
                </font>
             </Label>
-            <TextField fx:id="cpfID" layoutX="43.0" layoutY="73.0" prefHeight="34.0" prefWidth="497.0" />
-            <ChoiceBox fx:id="planoID" layoutX="42.0" layoutY="141.0" prefHeight="34.0" prefWidth="498.0" />
+            <TextField fx:id="MatriculaCampo" layoutX="43.0" layoutY="73.0" prefHeight="34.0" prefWidth="588.0" />
+            <ChoiceBox fx:id="TipoPlanoCampo" layoutX="42.0" layoutY="141.0" prefHeight="34.0" prefWidth="588.0" />
             <Label alignment="CENTER" layoutX="40.0" layoutY="118.0" prefHeight="22.0" prefWidth="102.0" style="&#10;" text="Tipo de Plano">
                <font>
                   <Font name="Corbel Bold" size="14.0" fx:id="x121" />
                </font>
             </Label>
-            <ChoiceBox fx:id="planoID1" layoutX="43.0" layoutY="214.0" prefHeight="34.0" prefWidth="498.0" />
+            <ChoiceBox fx:id="ExerciciosIncluidosCampo" layoutX="43.0" layoutY="214.0" prefHeight="34.0" prefWidth="588.0" />
             <Label alignment="CENTER" layoutX="41.0" layoutY="191.0" prefHeight="22.0" prefWidth="126.0" style="&#10;" text="Exercícios Incluídos">
                <font>
                   <Font name="Corbel Bold" size="14.0" fx:id="x1211" />
                </font>
             </Label>
-            <ChoiceBox fx:id="planoID2" layoutX="43.0" layoutY="285.0" prefHeight="34.0" prefWidth="498.0" />
-            <Label alignment="CENTER" layoutX="36.0" layoutY="262.0" prefHeight="22.0" prefWidth="110.0" style="&#10;" text="Exercícios a Mais">
+            <ChoiceBox fx:id="ExerciciosAdicionaisCampo" layoutX="43.0" layoutY="285.0" prefHeight="34.0" prefWidth="588.0" />
+            <Label alignment="CENTER" layoutX="36.0" layoutY="262.0" prefHeight="22.0" prefWidth="142.0" style="&#10;" text="Exercícios Adicionais">
                <font>
                   <Font name="Corbel Bold" size="14.0" fx:id="x1212" />
                </font>
             </Label>
-            <TableView fx:id="tbl" layoutX="191.0" layoutY="466.0" prefHeight="139.0" prefWidth="516.0">
+            <TableView fx:id="tabelaIncluded" layoutX="63.0" layoutY="343.0" prefHeight="139.0" prefWidth="537.0">
                <columns>
-                  <TableColumn fx:id="tblDesc" prefWidth="119.99996948242188" text="Descrição" />
-                  <TableColumn fx:id="tblFidel" prefWidth="121.33331298828125" text="Fidelidade" />
-                  <TableColumn fx:id="tblStart" prefWidth="113.60000610351562" text="Data de Início" />
-                  <TableColumn fx:id="tblExpire" prefWidth="99.20001220703125" text="Vencimento" />
-                  <TableColumn fx:id="tblExtra" prefWidth="215.7332763671875" text="Conteúdo Adicional" />
+                  <TableColumn fx:id="tblDesc" prefWidth="179.0" text="Exercícios Incluídos" />
+                  <TableColumn fx:id="tabelaAdd" prefWidth="179.0" text="Exercícios Adicionais" />
+                  <TableColumn fx:id="tabelaCarga" prefWidth="179.0" text="Carga horária total" />
                </columns>
             </TableView>
       </children>
