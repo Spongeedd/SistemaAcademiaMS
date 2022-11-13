@@ -8,9 +8,11 @@ module com.academia {
     opens com.academia.funcionario to javafx.fxml;
     opens com.academia.matricula to javafx.fxml;
     opens com.academia.catraca to javafx.fxml;
+    opens com.academia.exercicios to javafx.fxml;
 
     exports com.academia;
     exports com.academia.funcionario;
     exports com.academia.matricula;    
     exports com.academia.catraca;
+    exports com.academia.exercicios;
 }

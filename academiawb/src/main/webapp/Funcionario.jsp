@@ -39,7 +39,7 @@
               <ul class="nav nav-pills">
                 <li class="nav-item"><a href="index.jsp" class="nav-link active" aria-current="page">Home</a></li>
                 <li class="nav-item"><a href="Matricula.jsp" class="nav-link">Matriculas</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">...</a></li>
+                <li class="nav-item"><a href="Exercicios.jsp" class="nav-link">Exercicio</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">...</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">...</a></li>
               </ul>
