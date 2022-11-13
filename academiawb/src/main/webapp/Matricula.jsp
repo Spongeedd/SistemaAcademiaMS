@@ -62,17 +62,82 @@
                                 </tr>    
                             </thead>
                             <tbody>
-                                <c:forEach var="row" items="${result.rowsByIndex}">
+                                <c:forEach var="row" items="${result.rows}">
                                     <tr>
-                                    <c:forEach var="col" items="${row}">
-                                        <td><c:out value="${col}"/></td>
-                                    </c:forEach>
-                                    <td><a href="#"  class="btn btn-outline-primary" role="button">Editar</a></td>
-                                    <td><a href="#" class="btn btn-outline-danger" role="button">Excluir</a></td>
-                                    </tr>
-                                </c:forEach> 
-                            </tbody>    
-                        </table>
+                                        <td><c:out value="${row.idmatricula}"/></td>
+                                        <td><c:out value="${row.nome}"/></td>
+                                        <td><c:out value="${row.cpf}"/></td>
+                                        <td><c:out value="${row.nascimento}"/></td>
+                                        <td><c:out value="${row.endereco}"/></td>
+                                        <td><c:out value="${row.telefone}"/></td>
+                                        <td><c:out value="${row.email}"/></td>
+                                        <td><c:out value="${row.plano}"/></td>
+                                        <td><c:out value="${row.pacote}"/></td>
+                                        <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEditar">Editar</button></td>
+                                        <td><a href="FuncionarioServlet?op=d&id=<c:out value="${row.idmatricula}"/>"  class="btn btn-outline-danger" name="exlcuir" role="button">Excluir</a></td>
+			
+                                        <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="modalEditarTitle" aria-hidden="true">
+                                            <form action="FuncionarioServlet?op=u&id=<c:out value="${row.idmatricula}"/>" method="POST">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLongTitle">Editar Matricula</h5>
+                                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="col-10">
+                                                                <label for="nome" class="form-label">Nome</label>
+                                                                <input type="text" class="form-control" name="nome" id="nome" placeholder="" value="" required>                                                       
+                                                            </div>
+                                                            <div class="col-sm-8">
+                                                                <label for="cpf" class="form-label">CPF</label>
+                                                                <input type="text" class="form-control" name="cpf" id="cpf" placeholder="CPF" required>
+                                                                <label for="nascimento" class="form-label">Data Nascimento</label>
+                                                                <input type="date" class="form-control" name="nascimento" placeholder="yyyy-mm-dd" id="nascimento" required>
+                                                            </div>
+                                                            <div class="col-12">
+                                                                <label for="email" class="form-label">Email</label>
+                                                                <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>                                                        
+                                                                <label for="endereco" class="form-label">Endereço</label>
+                                                                <input type="text" class="form-control" name="endereco" id="endereco" placeholder="Rua... Nº Bairro..." required>
+                                                            </div>
+                                                            <div class="col-sm-8">
+                                                                <label for="telefone" class="form-label">Telefone</label>
+                                                                <input type="text" class="form-control" name="telefone" id="telefone" placeholder="(DDD)9XXXX-XXXX" required>
+                                                            </div>
+                                                            <hr class="my-4">
+                                                            <h4 class="mb-">Pagamento</h4>
+                                                            <div class="col-md-5">
+                                                                <label for="plano" class="form-label">Plano</label>
+                                                                <select class="form-select" id="plano" required>
+                                                                  <option value="">Básico</option>
+                                                                  <option>Intermediário</option>
+                                                                  <option>Premium</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label for="pacote" class="form-label">Pacote</label>
+                                                                <select class="form-select" id="pacote" required>
+                                                                        <option value="">Mensal</option>
+                                                                        <option>Trimestral</option>
+                                                                        <option>Anual</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                          <button class="btn btn-primary" type="submit">Confirmar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>   
+                                </tr>
+                            </c:forEach> 
+                        </tbody>   
+                    </table>
                     </div>
                     <div class="d-grid gap-2 d-md-flex justify-content">
                         <a href="CadastrarMatricula.jsp" class="btn btn-primary" role="button">Cadastrar Novo</a>
