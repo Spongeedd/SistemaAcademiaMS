@@ -45,7 +45,7 @@
                 <li class="nav-item"><a href="index.jsp" class="nav-link active" aria-current="page">Home</a></li>
                 <li class="nav-item"><a href="Matricula.jsp" class="nav-link">Matricula</a></li>
                 <li class="nav-item"><a href="Funcionario.jsp" class="nav-link">Funcionario</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">...</a></li>
+                <li class="nav-item"><a href="Catraca.jsp" class="nav-link">Catraca</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">...</a></li>
             </ul>
         </header>
