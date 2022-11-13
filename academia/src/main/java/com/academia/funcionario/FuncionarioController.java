@@ -31,6 +31,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -71,6 +72,15 @@ public class FuncionarioController implements Initializable {
 
 
     // Botões
+
+    @FXML
+    private MenuItem catracaBTN;
+
+    @FXML
+    private MenuItem exerciciosBTN;
+    
+    @FXML
+    private MenuItem matriculaBTN;
 
     @FXML
     private Button adicionarBTN;
@@ -289,16 +299,55 @@ public class FuncionarioController implements Initializable {
     }
     
     @FXML
+    private void catracaBTN() throws IOException {
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(App.class.getResource("CatracaBase.fxml"));
+        stage.setScene(new Scene(root));
+        stage.setTitle("Catraca");
+        stage.setResizable(false);
+        stage.getIcons().add(new Image(App.class.getResourceAsStream("icone.png")));
+        stage.show();
+        stage = (Stage) inicioBTN.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    private void matriculaBTN() throws IOException {
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(App.class.getResource("InterfaceMatricula.fxml"));
+        stage.setScene(new Scene(root));
+        stage.setTitle("Catraca");
+        stage.setResizable(false);
+        stage.getIcons().add(new Image(App.class.getResourceAsStream("icone.png")));
+        stage.show();
+        stage = (Stage) inicioBTN.getScene().getWindow();
+        stage.close();
+    }
+    
+    @FXML
+    private void exerciciosBTN() throws IOException {
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(App.class.getResource("CatracaBase.fxml"));
+        stage.setScene(new Scene(root));
+        stage.setTitle("Catraca");
+        stage.setResizable(false);
+        stage.getIcons().add(new Image(App.class.getResourceAsStream("icone.png")));
+        stage.show();
+        stage = (Stage) inicioBTN.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
     private void voltarBTN() throws IOException {
         Stage stage = new Stage();
-            Parent root = FXMLLoader.load(App.class.getResource("InterfaceLogin.fxml"));
-            stage.setScene(new Scene(root));
-            stage.setTitle("Cadastrar Funcionario");
-            stage.setResizable(false);
-            stage.getIcons().add(new Image(App.class.getResourceAsStream("icone.png")));
-            stage.show();
-            stage = (Stage) inicioBTN.getScene().getWindow();
-            stage.close();
+        Parent root = FXMLLoader.load(App.class.getResource("InterfaceLogin.fxml"));
+        stage.setScene(new Scene(root));
+        stage.setTitle("Login");
+        stage.setResizable(false);
+        stage.getIcons().add(new Image(App.class.getResourceAsStream("icone.png")));
+        stage.show();
+        stage = (Stage) inicioBTN.getScene().getWindow();
+        stage.close();
     }
 
 }
