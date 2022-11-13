@@ -54,7 +54,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="674.0" prefWidth="1084.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="741.0" prefWidth="1460.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -95,7 +95,7 @@
         </Menu>
       </menus>
     </MenuBar>
-    <SplitPane dividerPositions="0.06032947462154942, 0.7626892252894033" focusTraversable="true" prefHeight="506.0" prefWidth="1086.0" VBox.vgrow="ALWAYS">
+    <SplitPane dividerPositions="0.05860244988864142, 0.741369710467706" focusTraversable="true" prefHeight="677.0" prefWidth="1407.0" VBox.vgrow="ALWAYS">
       <items>
         <AnchorPane prefHeight="558.0" prefWidth="52.0">
                <children>
@@ -116,9 +116,9 @@
                   </ImageView>
                </children>
         </AnchorPane>
-        <ScrollPane prefHeight="172.0" prefWidth="746.0">
+        <ScrollPane prefHeight="691.0" prefWidth="821.0">
           <content>
-            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="699.0" prefWidth="756.0">
+            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="699.0" prefWidth="891.0">
               <children>
                 <Label alignment="CENTER" layoutX="94.0" layoutY="14.0" prefHeight="22.0" prefWidth="50.0" style="&#10;" text="Aluno">
                            <font>
@@ -130,7 +130,7 @@
                               <Image url="@placeholderA.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="CENTER" layoutX="94.0" layoutY="46.0" prefHeight="22.0" prefWidth="111.0" style="&#10;" text="Área de Login">
+                        <Label alignment="CENTER" layoutX="94.0" layoutY="46.0" prefHeight="22.0" prefWidth="242.0" style="&#10;" text="13802 Reisen (aluno Exemplo)">
                            <font>
                               <Font name="Corbel" size="18.0" fx:id="x11" />
                            </font>
@@ -145,17 +145,12 @@
                               <Font name="Corbel" size="15.0" fx:id="x111" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="3.0" layoutY="287.0" prefHeight="22.0" prefWidth="190.0" style="&#10;" text="Status do Acesso:">
-                           <font>
-                              <Font name="Corbel" size="15.0" fx:id="x1111" />
-                           </font>
-                        </Label>
                         <Label alignment="CENTER" layoutX="326.0" layoutY="98.0" prefHeight="22.0" prefWidth="50.0" style="&#10;" text="CPF">
                            <font>
                               <Font name="Corbel Bold" size="16.0" fx:id="x12" />
                            </font>
                         </Label>
-                        <Separator layoutY="79.0" prefHeight="3.0" prefWidth="756.0" />
+                        <Separator layoutY="79.0" prefHeight="2.0" prefWidth="989.0" />
                         <Label alignment="CENTER" layoutX="334.0" layoutY="176.0" prefHeight="22.0" prefWidth="62.0" style="&#10;" text="Senha">
                            <font>
                               <Font name="Corbel Bold" size="16.0" fx:id="x121" />
@@ -173,11 +168,20 @@
                               <Font name="Corbel" size="15.0" fx:id="x1112" />
                            </font>
                         </Label>
+                        <TableView layoutX="181.0" layoutY="456.0" prefHeight="139.0" prefWidth="663.0">
+                          <columns>
+                            <TableColumn prefWidth="119.99996948242188" text="Descrição" />
+                            <TableColumn prefWidth="121.33331298828125" text="Fidelidade" />
+                              <TableColumn prefWidth="113.60000610351562" text="Data de Início" />
+                              <TableColumn prefWidth="99.20001220703125" text="Vencimento" />
+                              <TableColumn prefWidth="215.7332763671875" text="Conteúdo Adicional" />
+                          </columns>
+                        </TableView>
               </children>
             </AnchorPane>
           </content>
         </ScrollPane>
-        <AnchorPane prefHeight="640.0" prefWidth="275.0">
+        <AnchorPane prefHeight="691.0" prefWidth="282.0">
           <children>
                   <Separator layoutY="84.0" prefHeight="3.0" prefWidth="274.0" />
                   <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="22.0" prefWidth="109.0" style="&#10;" text="Acessos do dia: ">
@@ -185,15 +189,14 @@
                         <Font name="Corbel" size="14.0" fx:id="x113" />
                      </font>
                   </Label>
-                  <ScrollPane layoutX="2.0" layoutY="135.0" prefHeight="556.0" prefWidth="274.0">
+                  <ScrollPane layoutX="2.0" layoutY="135.0" prefHeight="556.0" prefWidth="365.0">
                      <content>
-                        <TableView layoutX="24.0" layoutY="123.0" prefHeight="573.0" prefWidth="303.0">
-                          <columns>
-                            <TableColumn prefWidth="75.0" text="Filtro A" />
-                            <TableColumn prefWidth="75.0" text="Filtro B" />
-                              <TableColumn prefWidth="75.0" text="Filtro C" />
-                              <TableColumn prefWidth="75.0" text="Filtro D" />
-                          </columns>
+                        <TableView prefHeight="710.0" prefWidth="367.0">
+                           <columns>
+                              <TableColumn prefWidth="91.20006114244461" text="Data" />
+                              <TableColumn prefWidth="116.0" text="Código" />
+                              <TableColumn prefWidth="151.19998168945312" text="Aluno" />
+                           </columns>
                         </TableView>
                      </content>
                   </ScrollPane>
