@@ -2,7 +2,6 @@ package servlets;
 
 import academiawb.model.service.MatriculaService;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -25,15 +24,11 @@ public class MatriculaServlet extends HttpServlet {
             String email;
             String endereco;
             String telefone;
-
             String plano;
             String pacote;
             Date nascimento;
-            
             String idstr;
             Integer id;
-            
-            
             
             switch (operacao) {
                 case "a":
@@ -49,17 +44,17 @@ public class MatriculaServlet extends HttpServlet {
                     nascimento = Date.valueOf(datastr);
 
                     MatriculaService.adicionarMatricula(nome, cpf, nascimento, endereco, telefone, email, plano, pacote);
-                    response.sendRedirect("Funcionario.jsp");
+                    response.sendRedirect("Matricula.jsp");
                     break;
                 case "d":
                     idstr = request.getParameter("id");
                     id = Integer.valueOf(idstr);
                     MatriculaService.removerMatricula(id);
-                    response.sendRedirect("Funcionario.jsp");
+                    response.sendRedirect("Matricula.jsp");
                     break;
                 case "u":
                     idstr = request.getParameter("id");
-                    id = Integer.parseInt(idstr);
+                    id = Integer.valueOf(idstr);
                     
                     nome = request.getParameter("nome");
                     cpf = request.getParameter("cpf");
@@ -72,7 +67,7 @@ public class MatriculaServlet extends HttpServlet {
                     nascimento = Date.valueOf(datastr);
                     
                     MatriculaService.editarMatricula(id, nome, cpf, nascimento, endereco, telefone, email, plano, pacote);
-                    response.sendRedirect("Funcionario.jsp");
+                    response.sendRedirect("Matricula.jsp");
                     break;
                 default:
                     response.sendRedirect("Matricula.jsp");

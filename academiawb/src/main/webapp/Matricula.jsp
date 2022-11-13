@@ -7,7 +7,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Interface Funcionario</title>
+        <title>Interface Matricula</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
         <link rel="icon" href="resources/imgs/icone.ico">
         <style>
@@ -74,7 +74,7 @@
                                         <td><c:out value="${row.plano}"/></td>
                                         <td><c:out value="${row.pacote}"/></td>
                                         <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEditar">Editar</button></td>
-                                        <td><a href="FuncionarioServlet?op=d&id=<c:out value="${row.idmatricula}"/>"  class="btn btn-outline-danger" name="exlcuir" role="button">Excluir</a></td>
+                                        <td><a href="MatriculaServlet?op=d&id=<c:out value="${row.idmatricula}"/>"  class="btn btn-outline-danger" name="exlcuir" role="button">Excluir</a></td>
 			
                                         <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="modalEditarTitle" aria-hidden="true">
                                             <form action="FuncionarioServlet?op=u&id=<c:out value="${row.idmatricula}"/>" method="POST">
