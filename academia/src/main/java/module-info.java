@@ -7,9 +7,10 @@ module com.academia {
     opens com.academia to javafx.fxml, java.sql;
     opens com.academia.funcionario to javafx.fxml;
     opens com.academia.matricula to javafx.fxml;
+    opens com.academia.catraca to javafx.fxml;
 
     exports com.academia;
     exports com.academia.funcionario;
     exports com.academia.matricula;    
-    
+    exports com.academia.catraca;
 }

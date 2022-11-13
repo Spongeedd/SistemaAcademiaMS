@@ -1,14 +1,13 @@
 package com.academia.model.dto;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 public class CatracaDTO {
     Integer ID;
     String nome;
     Timestamp data;
-
-  public CatracaDTO(String nome, Timestamp data, Integer ID) {
+    
+  public CatracaDTO( Integer ID, String nome, Timestamp data) {
     this.nome = nome;
     this.data = data;
     this.ID = ID;
