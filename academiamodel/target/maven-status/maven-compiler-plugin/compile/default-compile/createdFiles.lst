@@ -1,0 +1,8 @@
+com\academia\model\dto\MatriculaDTO.class
+com\academia\model\dao\MatriculaDAO.class
+com\academia\model\dao\FuncionariosDAO.class
+com\academia\model\service\MatriculaService.class
+module-info.class
+com\academia\model\db\DBConnector.class
+com\academia\model\dto\FuncionariosDTO.class
+com\academia\model\service\FuncionariosService.class

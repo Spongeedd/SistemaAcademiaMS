@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.academia.db.DBConnector;
+import com.academia.model.db.DBConnector;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,7 +32,7 @@ public class Controller {
     private Button btnEntrar;
     
     @FXML
-    private void exibeInfo() throws IOException {
+    private void exibeInfo() throws IOException, ClassNotFoundException {
         try(Connection connection = DBConnector.getConexao()) {
             String senha = senhaInput.getText();
             String login = funcionarioInput.getText();
