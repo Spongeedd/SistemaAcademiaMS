@@ -1,23 +1,5 @@
 package com.academia.model.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-public class MatriculaDAO {
-    private static ObservableList<MatriculaDTO> observableListMatriculas;
-    private static List<MatriculaDTO> matriculasLista;
-    private static Integer codigo;
-    static {
-        matriculasLista = new ArrayList<>();
-        codigo = 1;
-    }
-// Registrar
-    public static MatriculaDTO inserirMatricula(String nome, Long cpf, String datanascimento, String endereco, Long telefone, String email, String plano, String pacote) {
-        while (consultaPorID(codigo)!= null) {
-            codigo++; }
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -55,18 +37,6 @@ public class MatriculaDAO {
             return funcionario;
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-// Deleta
-    static List<MatriculaDTO> toRemove = new ArrayList();
-    public static void delMatr(Integer codg) {
-        for (MatriculaDTO c: matriculasLista){
-            if (c.getCodigo().equals(codg)){
-                toRemove.add(c);
-                codigo = c.getCodigo();
-            }
-
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -81,21 +51,6 @@ public class MatriculaDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-// Edita
-    public static void atualizaMatricula(Integer codigo, String nome, Long cpf, String datanascimento, String endereco, Long telefone, String email, String plano, String pacote) {
-        delMatr(codigo);
-        inserirMatricula(nome, cpf, datanascimento, endereco, telefone, email, plano, pacote);
-    }
-// Pesquisa
-    public static MatriculaDTO consultaPorNome(String nome) {
-        for (MatriculaDTO c: matriculasLista){
-            if (c.getnome().equals(nome)){
-                return c;
-            }
-
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -160,10 +115,6 @@ public class MatriculaDAO {
         }
     }
 
-// Lol
-    public static Integer getCodigo() {
-        return codigo;
-
     public static String consultaPorCPF(String cpf) {
         try (Connection connection = DBConnector.getConexao()) {
             String sql = "SELECT * FROM matricula WHERE cpf = "+ cpf +"";
@@ -199,5 +150,4 @@ public class MatriculaDAO {
             throw new RuntimeException(e);
         }
     }
-}
 }
