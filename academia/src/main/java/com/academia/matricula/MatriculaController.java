@@ -31,6 +31,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -105,6 +106,12 @@ public class MatriculaController implements Initializable{
 
     // BOTÕES
 
+    @FXML
+    private MenuItem catracaBTN;
+
+    @FXML
+    private MenuItem exerciciosBTN;
+    
     @FXML
     private Button removerBTN;
 
@@ -299,11 +306,11 @@ public class MatriculaController implements Initializable{
     }
 
     @FXML
-    private void voltarBTN() throws IOException {
+    private void catracaBTN() throws IOException {
         Stage stage = new Stage();
-            Parent root = FXMLLoader.load(App.class.getResource("InterfaceLogin.fxml"));
+        Parent root = FXMLLoader.load(App.class.getResource("CatracaBase.fxml"));
         stage.setScene(new Scene(root));
-        stage.setTitle("Cadastrar Funcionario");
+        stage.setTitle("Catraca");
         stage.setResizable(false);
         stage.getIcons().add(new Image(App.class.getResourceAsStream("icone.png")));
         stage.show();
@@ -311,4 +318,30 @@ public class MatriculaController implements Initializable{
         stage.close();
     }
 
+    @FXML
+    private void exerciciosBTN() throws IOException {
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(App.class.getResource("CatracaBase.fxml"));
+        stage.setScene(new Scene(root));
+        stage.setTitle("Exercicios");
+        stage.setResizable(false);
+        stage.getIcons().add(new Image(App.class.getResourceAsStream("icone.png")));
+        stage.show();
+        stage = (Stage) inicioBTN.getScene().getWindow();
+        stage.close();
+    }
+
+
+    @FXML
+    private void voltarBTN() throws IOException {
+        Stage stage = new Stage();
+            Parent root = FXMLLoader.load(App.class.getResource("InterfaceLogin.fxml"));
+        stage.setScene(new Scene(root));
+        stage.setTitle("Login");
+        stage.setResizable(false);
+        stage.getIcons().add(new Image(App.class.getResourceAsStream("icone.png")));
+        stage.show();
+        stage = (Stage) inicioBTN.getScene().getWindow();
+        stage.close();
+    }
 }

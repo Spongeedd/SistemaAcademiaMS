@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import com.academia.model.db.DBConnector;
 import com.academia.model.dto.MatriculaDTO;
 
@@ -150,6 +151,4 @@ public class MatriculaDAO {
             throw new RuntimeException(e);
         }
     }
-    
-
 }

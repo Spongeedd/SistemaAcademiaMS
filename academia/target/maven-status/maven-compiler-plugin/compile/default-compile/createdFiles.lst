@@ -1,0 +1,7 @@
+com\academia\matricula\MatriculaDTO.class
+com\academia\Controller.class
+com\academia\matricula\MatriculaService.class
+com\academia\matricula\MatriculaDAO.class
+com\academia\matricula\MatriculaController.class
+module-info.class
+com\academia\App.class
