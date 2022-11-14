@@ -3,8 +3,11 @@
     Created on : 13 de nov de 2022, 17:57:43
     Author     : david
 --%>
-
+<%@page import="academiawb.model.db.DBConnector"%>
+<%@page import="academiawb.model.service.ExerciciosService"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <!DOCTYPE html>
 <html lang="PT-BR">
 <head>
@@ -35,6 +38,10 @@
 
 </head>
 <body>
+    <sql:setDataSource var= "conexao" driver= "com.mysql.jdbc.Driver" url= "jdbc:mysql://us-cdbr-east-06.cleardb.net:3306/heroku_aa28e844ee07386?autoReconnect=true&useSSL=false" user= "b918cc3160b707"  password= "16d9b4b7" />
+        <sql:query dataSource="${conexao}" var="result" >
+            select * from exercicios
+        </sql:query>
     <div class="container shadow-lg p-3 mb-5 rounded">
         <header class="d-flex flex-wrap justify-content-center mb-4 border-bottom p-3 text-bg-dark">
             <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-light text-decoration-none">
@@ -55,84 +62,63 @@
     </h1>
     <br>
     <div class="geral">
-        <div class="form-floating mb-3">
-            <input type="tel" class="form-control" id="floatingInput" placeholder="name@example.com">
-            <label for="floatingInput">Matrícula</label>
+        <form action="ExerciciosServlet?op=a" method="POST">
+            <div class="col-md-5">
+                <label for="plano" class="form-label">Plano</label>
+                <select class="form-select" name="plano" id="plano" required>
+                  <option name="plano" value="Basico">Básico</option>
+                  <option name="plano" value="Intermediario">Intermediário</option>
+                  <option name="plano" value="Premium">Premium</option>
+                </select>
+            </div>
+            <div class="col-10">
+                <label for="Descrição">Descrição</label>
+                <textarea class="form-control" name="descricao" id="Descrição" rows="3"></textarea>                                                      
+            </div>
+            <div class="col-10">
+                <label for="serie" class="form-label">Série</label>
+                <input type="text" class="form-control" name="serie" id="serie" placeholder="" value="" required>
+                <label for="repeticoes" class="form-label">Repetições</label>
+                <input type="text" class="form-control" name="repeticoes" id="repeticoes" placeholder="" value="" required>         
+            </div>
+            <br>
+            <div class="col-md-5">
+                <button class="w-100 btn btn-primary btn-lg" style="margin-bottom: 20px;" type="submit">Cadastrar</button>
+            </div>
+        </form>
+        <br>
+        <div class="container-tabela">
+            <div class="row">
+                <h2>Exercícios Cadastrados</h2>
+                <div class="col-md-12">
+                    <div class="scrollable shadow-lg p-3 mb-5 rounded">
+                        <table class="table table-bordered text-center">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Plano</th>
+                                    <th scope="col">Descrição</th>
+                                    <th scope="col">Série</th>
+                                    <th scope="col">Repetições</th>
+                                </tr>    
+                            </thead>
+                            <tbody>
+                                <c:forEach var="row" items="${result.rows}">
+                                    <tr>
+                                        <td><c:out value="${row.idexercicios}"/></td>
+                                        <td><c:out value="${row.plano}"/></td>
+                                        <td><c:out value="${row.descricao}"/></td>
+                                        <td><c:out value="${row.serie}"/></td>
+                                        <td><c:out value="${row.repeticoes}"/></td>  
+                                        <td><a href="ExerciciosServlet?op=d&id=<c:out value="${row.idexercicios}"/>"  class="btn btn-outline-danger" name="exlcuir" role="button">Excluir</a></td>
+                                    </tr>
+                                </c:forEach> 
+                            </tbody>    
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-        <select class="form-select" aria-label="Default select example">
-                <option selected>Tipo de Plano</option>
-                <option value="1">SImples</option>
-                <option value="2">Padrão</option>
-                <option value="3">Elite</option>
-        </select>
-        <br>
-        <select class="form-select" aria-label="Default select example">
-            <option selected>Exercícios incluídos</option>
-            <option value="1">Exemplo 1</option>
-            <option value="2">Exemplo 2</option>
-            <option value="3">Exemplo 3</option>
-        </select>
-        <br>
-        <select class="form-select" aria-label="Default select example">
-            <option selected>Exercícios a mais</option>
-            <option value="1">Exemplo 1</option>
-            <option value="2">Exemplo 2</option>
-            <option value="3">Exemplo 3</option>
-        </select>
-    </div>
-        <br>
-        <table class="table">
-            <thead class="table-dark">
-                <tr>
-                    <td>
-                        Exercícios incluídos
-                    </td>
-                    <td>
-                        Exercícios a mais 
-
-                    </td>
-                    <td>
-                        Carga horária total
-                    </td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        ...
-                    </td>
-                    <td>
-                        ...
-                    </td>
-                    <td>
-                        ...
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        ...
-                    </td>
-                    <td>
-                        ...
-                    </td>
-                    <td>
-                        ...
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        ...
-                    </td>
-                    <td>
-                        ...
-                    </td>
-                    <td>
-                        ...
-                    </td>
-                </tr>
-            </tbody>
-          </table>
-
     </body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>

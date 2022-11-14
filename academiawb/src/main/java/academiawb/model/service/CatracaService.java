@@ -2,8 +2,6 @@ package academiawb.model.service;
 
 import academiawb.model.dao.CatracaDAO;
 
-
-
 public class CatracaService {
 
     public static Integer login(String login, String senha) {

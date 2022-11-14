@@ -111,18 +111,18 @@
                                                             <h4 class="mb-">Pagamento</h4>
                                                             <div class="col-md-5">
                                                                 <label for="plano" class="form-label">Plano</label>
-                                                                <select class="form-select" id="plano" required>
-                                                                  <option value="">Básico</option>
-                                                                  <option>Intermediário</option>
-                                                                  <option>Premium</option>
+                                                                <select class="form-select" name="plano" id="plano" required>
+                                                                  <option name="plano" value="Basico">Básico</option>
+                                                                  <option name="plano" value="Intermediario">Intermediário</option>
+                                                                  <option name="plano" value="Premium">Premium</option>
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <label for="pacote" class="form-label">Pacote</label>
+                                                                <label for="pacote" name="pacote" class="form-label">Pacote</label>
                                                                 <select class="form-select" id="pacote" required>
-                                                                        <option value="">Mensal</option>
-                                                                        <option>Trimestral</option>
-                                                                        <option>Anual</option>
+                                                                        <option name="pacote" value="Mensal">Mensal</option>
+                                                                        <option name="pacote" value="Trimestral">Trimestral</option>
+                                                                        <option name="pacote" value="Anual">Anual</option>
                                                                 </select>
                                                             </div>
                                                         </div>
