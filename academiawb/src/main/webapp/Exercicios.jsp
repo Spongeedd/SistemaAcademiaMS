@@ -42,6 +42,9 @@
         <sql:query dataSource="${conexao}" var="result" >
             select * from exercicios
         </sql:query>
+        <sql:query dataSource="${conexao}" var="matricula" >
+            select * from matricula
+        </sql:query>
     <div class="container shadow-lg p-3 mb-5 rounded">
         <header class="d-flex flex-wrap justify-content-center mb-4 border-bottom p-3 text-bg-dark">
             <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-light text-decoration-none">
@@ -119,6 +122,64 @@
                 </div>
             </div>
         </div>
+        <h2>Alunos Cadastrados</h2>
+            <div class="col-md-8">
+                <div class="scrollable shadow-lg p-3 mb-5 rounded">
+                    <table class="table table-bordered text-center">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">CPF</th>
+                                <th scope="col">Plano</th>
+                                <th scope="col">Ficha</th>
+                            </tr>    
+                        </thead>
+                        <tbody>
+                            <c:forEach var="row" items="${matricula.rows}">
+                                <tr>
+                                    <td><c:out value="${row.idmatricula}"/></td>
+                                    <td><c:out value="${row.nome}"/></td>
+                                    <td><c:out value="${row.cpf}"/></td>
+                                    <td><c:out value="${row.plano}"/></td>
+                                    <td><c:out value="${row.ficha}"/></td>
+                                    <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalAtribuir">Atribuir</button></td>
+                                    <td><a href="#"  class="btn btn-outline-danger" name="exlcuir" role="button">Excluir</a></td>
+
+                                    <div class="modal fade" id="modalAtribuir" tabindex="-1" role="dialog" aria-labelledby="modalAtribuirTitle" aria-hidden="true">
+                                        <form action="FuncionarioServlet?op=u&id=<c:out value="${row.idmatricula}"/>" method="POST">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle">Atribuir Ficha</h5>
+                                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="col-md-4">
+                                                            <label for="pacote" name="pacote" class="form-label">ID-Ficha</label>
+                                                            <select class="form-select" id="ficha" required>
+                                                                <c:forEach var="row" items="${result.rows}">
+                                                                    <option name="ficha" value="<c:out value="${row.idexercicios}"/>"><c:out value="${row.idexercicios}"/></option> 
+                                                                 </c:forEach>                                                                                                                   
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                      <button class="btn btn-primary" type="submit">Confirmar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>   
+                                </tr>
+                            </c:forEach> 
+                        </tbody>   
+                    </table>
+                </div>
+            </div>
     </body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>

@@ -116,7 +116,8 @@
   <body class="text-center"> 
     <main class="form-signin w-100 m-auto">
     <form action="IndexServlet" method="POST" class="formulario">
-        <img class="mb-4" src="https://i.imgur.com/h68jOwG.png" alt="" width="174" height="144">
+        <img class="mb-4" src="https://i.imgur.com/h68jOwG.png" alt="" width="231" height="141">
+        
         <h2 class="h3 mb-3 fw-normal">Sistema Academia</h2>
         <h1 id="logar" class="h3 mb-3 fw-normal">Login</h1>
 
@@ -124,6 +125,7 @@
         <input name="login" type="text" class="form-control" id="floatingInput">
         <label for="floatingInput">Login</label>
         </div>
+        <br>
         <div class="form-floating">
         <input name="senha" type="password" class="form-control" id="floatingPassword">
         <label for="floatingPassword">Senha</label>

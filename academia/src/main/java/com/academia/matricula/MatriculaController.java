@@ -127,7 +127,7 @@ public class MatriculaController implements Initializable{
 
 
     private String[] pacoteStrings = {"Mensal", "Trimestral", "Anual"};
-    private String[] planoStrings = {"Basico", "Intermediário", "Premium"};
+    private String[] planoStrings = {"Basico", "Intermediario", "Premium"};
     ObservableList<MatriculaDTO> oblist = FXCollections.observableArrayList();
     
     @Override
