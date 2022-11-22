@@ -12,4 +12,9 @@ public class ExerciciosService {
     public static void removerExercicio(Integer codigo) {
         ExerciciosDAO.removeExercicio(codigo);
     }
+    
+    public static void atribuirExercicio (Integer idExercicio, Integer idMatricula) {
+        ExerciciosDAO.atribuirExercicios(idExercicio, idMatricula);
+    
+}
 }
