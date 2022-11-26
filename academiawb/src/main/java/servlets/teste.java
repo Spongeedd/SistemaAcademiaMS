@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import academiawb.model.service.FinanceiroService;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,11 +20,12 @@ public class teste extends HttpServlet {
         FinanceiroService.caculaDebitos();
         FinanceiroService.calculaFaturamento();
         FinanceiroService.calculaReceita();
-
-        request.setAttribute("faturamento", FinanceiroService.getFaturamento());
-        System.out.println(FinanceiroService.getFaturamento());
-        response.sendRedirect("teste.jsp");
-                
+        
+        Integer faturamento = FinanceiroService.getFaturamento();
+        request.setAttribute("faturamento", faturamento);
+        System.out.println(faturamento);
+        RequestDispatcher rd = request.getRequestDispatcher("teste.jsp");   
+        rd.forward(request, response);
     }
     
 
