@@ -9,7 +9,27 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
+
+
 public class ExerciciosDAO {
+    
+    public static void atribuirExercicios (Integer idmatricula, Integer idexercicios) {
+        try(Connection connection = DBConnector.getConexao()) {
+            Integer ID;
+            
+            String sql = "INSERT INTO matricula (ficha) VALUES (?) WHERE idmatricula="+idmatricula+"";
+ 
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, idexercicios);
+            preparedStatement.executeUpdate();
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    } 
+    
     public static ExerciciosDTO inserirExercicios(String plano, String descricao, String serie, String repeticoes) {
         try(Connection connection = DBConnector.getConexao()) {
         
