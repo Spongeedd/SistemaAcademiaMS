@@ -1,8 +1,11 @@
-package servlets;
+package com.sistemaacademiams.academiawb.servlets;
 
-import academiawb.model.service.CatracaService;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import com.academia.model.service.ExerciciosService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -10,22 +13,24 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-
-@WebServlet(name = "CatracaServlet", urlPatterns = {"/CatracaServlet"})
-public class CatracaServlet extends HttpServlet {
+@WebServlet(name = "MatriculaServlet", urlPatterns = {"/MatriculaServlet"})
+public class FinanceiroServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
-        
-            String senha = request.getParameter("senha");
-            String login = request.getParameter("login");
+            Integer idMatricula, idExercicio;
+            String idMatriculaaux = request.getParameter("idmatricula");
+            String idExercicioaux = request.getParameter("idexercicio");
             
-            Integer id = CatracaService.login(login, senha);
-            CatracaService.adicionaCatraca(id);
-            response.sendRedirect("Catraca.jsp");
+            idMatricula = Integer.valueOf(idMatriculaaux);
+            idExercicio = Integer.valueOf(idExercicioaux);
+            
+            ExerciciosService.atribuirExercicio (idMatricula, idExercicio);
+            response.sendRedirect("Exercicios.jsp");
     }
-    
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the    + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -37,10 +42,13 @@ public class CatracaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+     
         try {
             processRequest(request, response);
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(FinanceiroServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+ 
     }
 
     /**
@@ -54,12 +62,13 @@ public class CatracaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         try {
             processRequest(request, response);
-        } catch (ClassNotFoundException | SQLException e) {
-            // TODO Auto-generated catch block
-
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(FinanceiroServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
 
     /**

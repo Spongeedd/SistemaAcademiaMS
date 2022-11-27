@@ -3,8 +3,7 @@
     Created on : 13 de nov de 2022, 17:57:43
     Author     : david
 --%>
-<%@page import="academiawb.model.db.DBConnector"%>
-<%@page import="academiawb.model.service.ExerciciosService"%>
+<%@page import="com.academia.model.db.DBConnector"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
@@ -19,16 +18,6 @@
     <style>
         h1 {
             text-align: center;
-        }
-
-        .table {
-            text-align: center;
-            border: 1px black solid;
-            width: 90% !important; /*Importante manter o !important rs */
-            margin: auto;
-
-
-
         }
         .geral {
             width: 90% !important; /*Importante manter o !important rs */
@@ -138,50 +127,71 @@
                         <tbody>
                             <c:forEach var="row" items="${matricula.rows}">
                                 <tr>
-                                    <td><c:out value="${row.idmatricula}"/></td>
-                                    <td><c:out value="${row.nome}"/></td>
-                                    <td><c:out value="${row.cpf}"/></td>
-                                    <td><c:out value="${row.plano}"/></td>
-                                    <td><c:out value="${row.ficha}"/></td>
-                                    <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalAtribuir">Atribuir</button></td>
-                                    <td><a href="#"  class="btn btn-outline-danger" name="exlcuir" role="button">Excluir</a></td>
-
-                                    <div class="modal fade" id="modalAtribuir" tabindex="-1" role="dialog" aria-labelledby="modalAtribuirTitle" aria-hidden="true">
-                                        <form action="FuncionarioServlet?op=u&id=<c:out value="${row.idmatricula}"/>" method="POST">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle">Atribuir Ficha</h5>
-                                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="col-md-4">
-                                                            <label for="pacote" name="pacote" class="form-label">ID-Ficha</label>
-                                                            <select class="form-select" id="ficha" required>
-                                                                <c:forEach var="row" items="${result.rows}">
-                                                                    <option name="ficha" value="<c:out value="${row.idexercicios}"/>"><c:out value="${row.idexercicios}"/></option> 
-                                                                 </c:forEach>                                                                                                                   
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                      <button class="btn btn-primary" type="submit">Confirmar</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>   
+                                    <c:if test = "${row.plano != 'Basico'}">
+                                        <td><c:out value="${row.idmatricula}"/></td>
+                                        <td><c:out value="${row.nome}"/></td>
+                                        <td><c:out value="${row.cpf}"/></td>
+                                        <td><c:out value="${row.plano}"/></td>
+                                        <td><c:out value="${row.ficha}"/></td>
+                                        <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalAtribuir" data-id="<c:out value="${row.idmatricula}"/>">Atribuir</button></td>
+                                        <c:choose>
+                                            <c:when test = "${row.ficha != ''}">
+                                               <td><a href="ExerciciosServlet?op=dt&idficha=<c:out value="${row.ficha}"/>"  class="btn btn-outline-danger" name="exlcuir" role="button">Excluir</a></td>
+                                            </c:when>
+                                            <c:otherwise>
+                                               
+                                            </c:otherwise>
+                                        </c:choose> 
+                                    </c:if>
                                 </tr>
-                            </c:forEach> 
-                        </tbody>   
+                            </c:forEach>
+                        </tbody>
                     </table>
                 </div>
             </div>
+            <div class="modal fade" id="modalAtribuir" tabindex="-1" role="dialog" aria-labelledby="modalAtribuirTitle" aria-hidden="true">
+                <form action="ExerciciosServlet?op=at" method="POST">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Atribuir Ficha</h5>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="col-md-4">
+                                    <div class="col-10">
+                                        <label for="id" class="form-label">ID</label>
+                                        <input type="text" class="form-control" name="id" id="id" placeholder="" value="">                                                       
+                                    </div>
+                                    <label for="at-exercicio" name="at-exercicio" class="form-label">ID-Ficha</label>
+                                    <select name="ficha" class="form-select" id="ficha" required>
+                                        <c:forEach var="row" items="${result.rows}">
+                                            <option name="ficha" value="<c:out value="${row.idexercicios}"/>"><c:out value="${row.idexercicios}"/></option> 
+                                         </c:forEach>                                                                                                                   
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                              <button class="btn btn-primary" type="submit">Confirmar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>                         
     </body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script>
+        $('#modalAtribuir').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) 
+        var recipient = button.data('id')
+        var modal = $(this)
+        modal.find('.modal-body .col-10 input').val(recipient)
+        })
+    </script>
 </html>

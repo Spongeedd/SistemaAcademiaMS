@@ -1,4 +1,4 @@
-package academiawb.model.dto;
+package com.academia.model.dto;
 
 public class FinanceiroDTO {
     private Integer faturamento, receita, pagamentos;

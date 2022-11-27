@@ -1,7 +1,7 @@
-package academiawb.model.service;
+package com.academia.model.service;
 
-import academiawb.model.dao.FinanceiroDAO;
-import academiawb.model.dto.FinanceiroDTO;
+import com.academia.model.dao.FinanceiroDAO;
+import com.academia.model.dto.FinanceiroDTO;
 
 public class FinanceiroService {
     public static FinanceiroDTO caculaDebitos() {

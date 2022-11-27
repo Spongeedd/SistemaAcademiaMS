@@ -1,15 +1,17 @@
-package servlets;
+package com.sistemaacademiams.academiawb.servlets;
 
-import academiawb.model.service.ExerciciosService;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import com.academia.model.service.ExerciciosService;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @WebServlet(name = "ExerciciosServlet", urlPatterns = {"/ExerciciosServlet"})
 public class ExerciciosServlet extends HttpServlet {
@@ -19,10 +21,7 @@ public class ExerciciosServlet extends HttpServlet {
            
             String idstr;
             Integer id;
-            String plano;
-            String descricao;
-            String serie;
-            String repeticoes;
+            String plano, descricao, serie, repeticoes;
             
             switch (operacao) {
                 case "a":
@@ -40,9 +39,27 @@ public class ExerciciosServlet extends HttpServlet {
                     ExerciciosService.removerExercicio(id);
                     response.sendRedirect("Exercicios.jsp");
                     break;
-                default:
-                    response.sendRedirect("Exercicios.jsp");
+                case "at":
+                        Integer idMatricula, idExercicio;
+                        String idMatriculaaux = request.getParameter("id");
+                        String idExercicioaux = request.getParameter("ficha");
+                        System.out.println(idMatriculaaux);
+                        idMatricula = Integer.valueOf(idMatriculaaux);
+                        idExercicio = Integer.valueOf(idExercicioaux);
+
+                        ExerciciosService.atribuirExercicio (idExercicio, idMatricula);
+                        response.sendRedirect("Exercicios.jsp");
                     break;
+                case "dt":
+                        Integer idficha;
+                        String idfichaaux = request.getParameter("idficha");
+                         
+                        idficha = Integer.valueOf(idfichaaux);
+
+                        ExerciciosService.desatribuirExercicios(idficha);
+                        response.sendRedirect("Exercicios.jsp");
+                    break;
+
     }
     }
 
@@ -60,9 +77,7 @@ public class ExerciciosServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(ExerciciosServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ExerciciosServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -80,9 +95,7 @@ public class ExerciciosServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(ExerciciosServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ExerciciosServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

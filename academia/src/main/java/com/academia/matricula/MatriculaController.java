@@ -206,7 +206,7 @@ public class MatriculaController implements Initializable{
             }
         } catch (Exception e) {
             a.setAlertType(AlertType.WARNING);
-            a.setContentText("Telefone/CPF/ não podem conter letras");
+            a.setContentText("Telefone/CPF não podem conter letras");
             a.show();
         }
     }
@@ -248,17 +248,13 @@ public class MatriculaController implements Initializable{
                 a.show();
             }
             else {
-
                 MatriculaService.editarMatricula(getRow(),nome, cpf, data, endereco, telefone, email, plano, pacote);
-
-                MatriculaService.editarMatricula(getRow(), nome, cpf, data, endereco, telefone, email, plano, pacote);
-
                 carregarTabela();
                 limpaInputs();
             }
         } catch (Exception e) {
             a.setAlertType(AlertType.WARNING);
-            a.setContentText("Telefone/CPF/ não podem conter letras");
+            a.setContentText("Telefone/CPF não podem conter letras");
             a.show();
         }
     }

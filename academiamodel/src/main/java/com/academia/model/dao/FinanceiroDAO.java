@@ -1,12 +1,12 @@
-package academiawb.model.dao;
+package com.academia.model.dao;
 
+import com.academia.model.db.DBConnector;
+import com.academia.model.dto.FinanceiroDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import academiawb.model.db.DBConnector;
-import academiawb.model.dto.FinanceiroDTO;
 
 public class FinanceiroDAO {
 

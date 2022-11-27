@@ -1,48 +1,34 @@
-package servlets;
+package com.sistemaacademiams.academiawb.servlets;
 
-import academiawb.model.db.DBConnector;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
+import com.academia.model.service.FinanceiroService;
+
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
-@WebServlet(name = "IndexServlet", urlPatterns = {"/IndexServlet"})
-public class IndexServlet extends HttpServlet {
+@WebServlet(name = "teste", urlPatterns = {"/teste"})
+public class teste extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         
-            try(Connection connection = DBConnector.getConexao()) {
-                String senha = request.getParameter("senha");
-                String login = request.getParameter("login");
-
-                String sql = "SELECT * FROM funcionario WHERE nome=? and cpf=?";
-                PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                preparedStatement.setString(1, login);
-                preparedStatement.setString(2, senha);
-
-                ResultSet rs = preparedStatement.executeQuery();
-                if (login.equals("admin") && senha.equals("123")) {
-                    response.sendRedirect("Funcionario.jsp");
-                }
-                else if (rs.next()) {
-                    response.sendRedirect("Matricula.jsp");
-                }
-                else {
-                    response.sendRedirect("index.jsp");
-                }
-        } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }   
+        FinanceiroService.caculaDebitos();
+        FinanceiroService.calculaFaturamento();
+        FinanceiroService.calculaReceita();
         
+        Integer faturamento = FinanceiroService.getFaturamento();
+        request.setAttribute("faturamento", faturamento);
+        System.out.println(faturamento);
+        RequestDispatcher rd = request.getRequestDispatcher("teste.jsp");   
+        rd.forward(request, response);
     }
     
 
@@ -61,6 +47,7 @@ public class IndexServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException | SQLException e) {
+            Logger.getLogger(FinanceiroServlet.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
@@ -78,7 +65,7 @@ public class IndexServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException | SQLException e) {
-            // TODO Auto-generated catch block
+            Logger.getLogger(FinanceiroServlet.class.getName()).log(Level.SEVERE, null, e);
 
         }
     }

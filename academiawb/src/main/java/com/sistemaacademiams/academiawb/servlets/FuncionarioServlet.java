@@ -1,34 +1,31 @@
-package servlets;
+package com.sistemaacademiams.academiawb.servlets;
 
-import academiawb.model.service.MatriculaService;
 import java.io.IOException;
+import java.sql.Date;
+import java.sql.SQLException;
+
+import com.academia.model.service.FuncionariosService;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
-import java.sql.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@WebServlet(name = "MatriculaServlet", urlPatterns = {"/MatriculaServlet"})
-public class MatriculaServlet extends HttpServlet {
+
+@WebServlet(name = "FuncionarioServlet", urlPatterns = {"/FuncionarioServlet"})
+public class FuncionarioServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
             String operacao = request.getParameter("op");
             
-            String nome;
-            String cpf;
-            String datastr;
-            String email;
-            String endereco;
-            String telefone;
-            String plano;
-            String pacote;
+            String nome, cpf, datastr, email, endereco, telefone;
+
+            String jornadastr, phorastr, idstr;
+            Integer jornada, phora, id;
             Date nascimento;
-            String idstr;
-            Integer id;
             
             switch (operacao) {
                 case "a":
@@ -39,18 +36,20 @@ public class MatriculaServlet extends HttpServlet {
                     endereco = request.getParameter("endereco");
                     telefone = request.getParameter("telefone");
 
-                    plano = request.getParameter("plano");
-                    pacote = request.getParameter("pacote");
+                    jornadastr = request.getParameter("jornada");
+                    jornada = Integer.valueOf(jornadastr);
+                    phorastr = request.getParameter("phora");
+                    phora = Integer.valueOf(phorastr);
                     nascimento = Date.valueOf(datastr);
 
-                    MatriculaService.adicionarMatricula(nome, cpf, nascimento, endereco, telefone, email, plano, pacote);
-                    response.sendRedirect("Matricula.jsp");
+                    FuncionariosService.adicionarFuncionario(nome, cpf, nascimento, endereco, telefone, email, jornada, phora);
+                    response.sendRedirect("Funcionario.jsp");
                     break;
                 case "d":
                     idstr = request.getParameter("id");
                     id = Integer.valueOf(idstr);
-                    MatriculaService.removerMatricula(id);
-                    response.sendRedirect("Matricula.jsp");
+                    FuncionariosService.removerFuncionario(id);
+                    response.sendRedirect("Funcionario.jsp");
                     break;
                 case "u":
                     idstr = request.getParameter("id");
@@ -62,18 +61,19 @@ public class MatriculaServlet extends HttpServlet {
                     email = request.getParameter("email");
                     endereco = request.getParameter("endereco");
                     telefone = request.getParameter("telefone");
-                    plano = request.getParameter("plano");
-                    pacote = request.getParameter("pacote");
+                    jornadastr = request.getParameter("jornada");
+                    jornada = Integer.valueOf(jornadastr);
+                    phorastr = request.getParameter("phora");
+                    phora = Integer.valueOf(phorastr);
                     nascimento = Date.valueOf(datastr);
                     
-                    MatriculaService.editarMatricula(id, nome, cpf, nascimento, endereco, telefone, email, plano, pacote);
-                    response.sendRedirect("Matricula.jsp");
+                    FuncionariosService.editarFuncionario(id, nome, cpf, nascimento, endereco, telefone, email, jornada, phora);
+                    response.sendRedirect("Funcionario.jsp");
                     break;
-                default:
-                    response.sendRedirect("Matricula.jsp");
-                    break;
+            }
+            
     }
-    }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -89,10 +89,8 @@ public class MatriculaServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(MatriculaServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MatriculaServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | SQLException e) {
+            Logger.getLogger(FinanceiroServlet.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
@@ -109,10 +107,9 @@ public class MatriculaServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(MatriculaServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MatriculaServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | SQLException e) {
+            Logger.getLogger(FinanceiroServlet.class.getName()).log(Level.SEVERE, null, e);
+
         }
     }
 
