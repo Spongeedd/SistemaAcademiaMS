@@ -44,9 +44,9 @@ public class Controller {
             Alert a = new Alert(AlertType.NONE);
             if (login.equals("admin") && senha.equals("123")) {
                 Stage stage = new Stage();
-                Parent root = FXMLLoader.load(App.class.getResource("InterfaceCadastrarFuncionario.fxml"));
+                Parent root = FXMLLoader.load(App.class.getResource("DashboardAdmin.fxml"));
                 stage.setScene(new Scene(root));
-                stage.setTitle("Cadastrar Funcionario");
+                stage.setTitle("Sistema Academia");
                 stage.setResizable(false);
                 stage.getIcons().add(new Image(App.class.getResourceAsStream("icone.png")));
                 stage.show();
@@ -57,7 +57,7 @@ public class Controller {
                 Stage stage = new Stage();
                 Parent root = FXMLLoader.load(App.class.getResource("InterfaceMatricula.fxml"));
                 stage.setScene(new Scene(root));
-                stage.setTitle("Cadastrar Matrícula");
+                stage.setTitle("Sistema Academia");
                 stage.setResizable(false);
                 stage.getIcons().add(new Image(App.class.getResourceAsStream("icone.png")));
                 stage.show();
