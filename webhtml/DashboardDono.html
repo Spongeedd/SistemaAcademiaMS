@@ -70,9 +70,48 @@
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
       }
-    </style>
 
-    
+      section {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+  	  }
+
+      .quadrado {
+        border: inset 2px #8611FD;
+        padding-top: 20px;
+        margin-right: 30px;
+        background-color: #eadef6;
+        border-radius: 22px;
+        margin-bottom: 12px;
+        max-width: 250px;
+        text-decoration: none;
+        color: #000000;
+      }
+
+      .imagens {
+        width: 55px;
+        height: auto;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .quadrado p {
+        margin-left: 6px;
+        margin-right: 6px;
+        text-align: center;
+      }
+      .quadrado h3 {
+        font-size: 20px;
+        margin-left: 65px;
+        margin-right: 65px;
+        margin-bottom: 2px;
+        margin-top: 5px;
+        text-align: center;
+      }
+</style>
     <!-- Custom styles for this template -->
     <link href="dashboard.css" rel="stylesheet">
   </head>
@@ -146,21 +185,25 @@
     </nav>
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <h2>Section title</h2>
+    <h2>Vendas do mês</h2>
       <div class="table-responsive">
+         <section>
           <div class="quadrado" id="CS"> 
-            <img class="imagens" src="imgs/cs-go_icon.jpg" width=210 height=210>
-            <p>Aqui você encontrará dicas para subir de patente, utilitários, e granadas triveladas.</p>
+            <img class="imagens" src="Cart.png" width=210 height=210>
+            <h3>NÚMERO</h3>
+            <p>Vendas</p>
           </div>
 
           <div class="quadrado" id="genshin">
-            <img class="imagens" src="imgs/genshin/genshin_icon.png" width=210 height=210>
-            <p>Aqui você verá um guia sobre o mundo vasto e complexo de Genshin Impact</p>
+            <img class="imagens" src="Dollar.png" width=210 height=210>
+            <h3>NÚMERO</h3>
+            <p>Faturamento</p>
           </div>
 
           <div class="quadrado" id="soku">
-            <img class="imagens" src="imgs/touhou_icon.png" width=210 height=210>
-            <p> Aqui temos um guia para a instalação e gameplay básico do jogo Touhou 12.3 - Hisoutensoku.</p>
+            <img class="imagens" src="Arrows.png" width=210 height=210>
+            <h3>NÚMERO</h3>
+            <p>Ticket Médio</p>
           </div>
       </div>
 
@@ -170,6 +213,7 @@
         <div class="btn-toolbar mb-2 mb-md-0">
         </div>
       </div>
+    </section>
 
       <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
     </div>
