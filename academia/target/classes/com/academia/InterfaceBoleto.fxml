@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="683.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.academia.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="683.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane layoutX="22.0" layoutY="14.0" prefHeight="65.0" prefWidth="391.0" style="-fx-background-color: #c4c4c4;">
          <children>
@@ -57,10 +56,10 @@
                         <Font name="FontAwesome" size="18.0" />
                      </font>
                   </Label>
-                  <FontAwesomeIconView glyphName="FILE_PDF_ALT" layoutX="578.0" layoutY="25.0" onMouseClicked="#menuAluno" size="22" wrappingWidth="19.0" />
-                  <FontAwesomeIconView glyphName="DOLLAR" layoutX="392.0" layoutY="24.0" onMouseClicked="#menuAluno" size="22" wrappingWidth="19.0" />
+                  <FontAwesomeIconView glyphName="FILE_PDF_ALT" layoutX="578.0" layoutY="25.0" size="22" wrappingWidth="19.0" />
+                  <FontAwesomeIconView glyphName="DOLLAR" layoutX="392.0" layoutY="24.0" size="22" wrappingWidth="19.0" />
                   <Button layoutX="411.0" layoutY="5.0" mnemonicParsing="false" text="Pagar" />
-                  <FontAwesomeIconView glyphName="SEND" layoutX="535.0" layoutY="24.0" onMouseClicked="#menuAluno" size="22" wrappingWidth="19.0" />
+                  <FontAwesomeIconView glyphName="SEND" layoutX="535.0" layoutY="24.0" size="22" wrappingWidth="19.0" />
                </children>
             </Pane>
             <Pane layoutX="14.0" layoutY="128.0" prefHeight="35.0" prefWidth="641.0" style="-fx-background-color: #b2b2b2;">
@@ -80,10 +79,10 @@
                         <Font name="FontAwesome" size="18.0" />
                      </font>
                   </Label>
-                  <FontAwesomeIconView glyphName="FILE_PDF_ALT" layoutX="578.0" layoutY="25.0" onMouseClicked="#menuAluno" size="22" wrappingWidth="19.0" />
-                  <FontAwesomeIconView glyphName="DOLLAR" layoutX="392.0" layoutY="24.0" onMouseClicked="#menuAluno" size="22" wrappingWidth="19.0" />
+                  <FontAwesomeIconView glyphName="FILE_PDF_ALT" layoutX="578.0" layoutY="25.0" size="22" wrappingWidth="19.0" />
+                  <FontAwesomeIconView glyphName="DOLLAR" layoutX="392.0" layoutY="24.0" size="22" wrappingWidth="19.0" />
                   <Button layoutX="411.0" layoutY="5.0" mnemonicParsing="false" text="Pagar" />
-                  <FontAwesomeIconView glyphName="SEND" layoutX="535.0" layoutY="24.0" onMouseClicked="#menuAluno" size="22" wrappingWidth="19.0" />
+                  <FontAwesomeIconView glyphName="SEND" layoutX="535.0" layoutY="24.0" size="22" wrappingWidth="19.0" />
                </children>
             </Pane>
             <Pane layoutX="14.0" layoutY="174.0" prefHeight="35.0" prefWidth="641.0" style="-fx-background-color: #b2b2b2;">
@@ -103,8 +102,8 @@
                         <Font name="FontAwesome" size="18.0" />
                      </font>
                   </Label>
-                  <FontAwesomeIconView glyphName="FILE_PDF_ALT" layoutX="578.0" layoutY="25.0" onMouseClicked="#menuAluno" size="22" wrappingWidth="19.0" />
-                  <FontAwesomeIconView glyphName="SEND" layoutX="535.0" layoutY="24.0" onMouseClicked="#menuAluno" size="22" wrappingWidth="19.0" />
+                  <FontAwesomeIconView glyphName="FILE_PDF_ALT" layoutX="578.0" layoutY="25.0" size="22" wrappingWidth="19.0" />
+                  <FontAwesomeIconView glyphName="SEND" layoutX="535.0" layoutY="24.0" size="22" wrappingWidth="19.0" />
                </children>
             </Pane>
             <Pane layoutX="14.0" layoutY="221.0" prefHeight="35.0" prefWidth="641.0" style="-fx-background-color: #b2b2b2;">
@@ -124,8 +123,8 @@
                         <Font name="FontAwesome" size="18.0" />
                      </font>
                   </Label>
-                  <FontAwesomeIconView glyphName="FILE_PDF_ALT" layoutX="578.0" layoutY="25.0" onMouseClicked="#menuAluno" size="22" wrappingWidth="19.0" />
-                  <FontAwesomeIconView glyphName="SEND" layoutX="535.0" layoutY="24.0" onMouseClicked="#menuAluno" size="22" wrappingWidth="19.0" />
+                  <FontAwesomeIconView glyphName="FILE_PDF_ALT" layoutX="578.0" layoutY="25.0" size="22" wrappingWidth="19.0" />
+                  <FontAwesomeIconView glyphName="SEND" layoutX="535.0" layoutY="24.0" size="22" wrappingWidth="19.0" />
                </children>
             </Pane>
             <Pane layoutX="14.0" layoutY="266.0" prefHeight="35.0" prefWidth="641.0" style="-fx-background-color: #b2b2b2;">
@@ -145,8 +144,8 @@
                         <Font name="FontAwesome" size="18.0" />
                      </font>
                   </Label>
-                  <FontAwesomeIconView glyphName="FILE_PDF_ALT" layoutX="578.0" layoutY="25.0" onMouseClicked="#menuAluno" size="22" wrappingWidth="19.0" />
-                  <FontAwesomeIconView glyphName="SEND" layoutX="535.0" layoutY="24.0" onMouseClicked="#menuAluno" size="22" wrappingWidth="19.0" />
+                  <FontAwesomeIconView glyphName="FILE_PDF_ALT" layoutX="578.0" layoutY="25.0" size="22" wrappingWidth="19.0" />
+                  <FontAwesomeIconView glyphName="SEND" layoutX="535.0" layoutY="24.0" size="22" wrappingWidth="19.0" />
                </children>
             </Pane>
             <Pane layoutX="14.0" layoutY="314.0" prefHeight="35.0" prefWidth="641.0" style="-fx-background-color: #b2b2b2;">
@@ -166,8 +165,8 @@
                         <Font name="FontAwesome" size="18.0" />
                      </font>
                   </Label>
-                  <FontAwesomeIconView glyphName="FILE_PDF_ALT" layoutX="578.0" layoutY="25.0" onMouseClicked="#menuAluno" size="22" wrappingWidth="19.0" />
-                  <FontAwesomeIconView glyphName="SEND" layoutX="535.0" layoutY="24.0" onMouseClicked="#menuAluno" size="22" wrappingWidth="19.0" />
+                  <FontAwesomeIconView glyphName="FILE_PDF_ALT" layoutX="578.0" layoutY="25.0" size="22" wrappingWidth="19.0" />
+                  <FontAwesomeIconView glyphName="SEND" layoutX="535.0" layoutY="24.0" size="22" wrappingWidth="19.0" />
                </children>
             </Pane>
             <Label alignment="TOP_LEFT" layoutX="14.0" layoutY="427.0" prefHeight="118.0" prefWidth="293.0" text="OBS* : Não foi possível implementar funcionalidade devido a complexidade da mesma" wrapText="true" />
