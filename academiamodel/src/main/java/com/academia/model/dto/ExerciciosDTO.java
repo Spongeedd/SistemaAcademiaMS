@@ -25,13 +25,14 @@ public class ExerciciosDTO {
         this.repeticoes = repeticoes;
     }
     
-    public ExerciciosDTO(Integer id, String nome, String cpf, String plano, Integer ficha) {
+    public ExerciciosDTO(Integer id, String nome, String plano, Integer ficha) {
         this.id = id;
         this.nome = nome;
-        this.cpf = cpf;
         this.plano = plano;
         this.ficha = ficha;
     }
+
+    
 
     public Integer getId() {
         return id;

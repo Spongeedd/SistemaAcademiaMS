@@ -72,6 +72,22 @@ public class ExerciciosController implements Initializable {
     private TableColumn<ExerciciosDTO, String> tabelaPlano;
 
     @FXML
+    private TableColumn<ExerciciosDTO, String> nomeAluno;
+
+    @FXML
+    private TableColumn<ExerciciosDTO, String> planoAluno;
+
+    @FXML
+    private TableColumn<ExerciciosDTO, Integer> fichaAluno;
+
+    @FXML
+    private TableColumn<ExerciciosDTO, Integer> idAluno;
+
+    @FXML
+    private TableView<ExerciciosDTO> tabelaAluno;
+
+
+    @FXML
     private Button addBTN;
 
     @FXML
@@ -101,6 +117,7 @@ public class ExerciciosController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             carregarTabela();
+            carregaMatricula();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -175,6 +192,12 @@ public class ExerciciosController implements Initializable {
         return codigo = dto.getId();
     }
 
+    Integer codigoaluno;
+    public Integer getRowAluno() {
+        ExerciciosDTO dto = tabelaAluno.getSelectionModel().getSelectedItem();
+        return codigo = dto.getId();
+    }
+
     ObservableList<ExerciciosDTO> oblist = FXCollections.observableArrayList();
     private void carregarTabela() throws ClassNotFoundException {
 
@@ -242,38 +265,40 @@ public class ExerciciosController implements Initializable {
     }
     
     @FXML
-    private void atribuirExercicios() throws IOException {
-        String matricula = idMatricula.getText();
-        String exercicio = idExercicio.getText();
-        
-        ExerciciosService.atribuirExercicio (idExercicio, idMatricula);
+    private void atribuirExercicios() throws IOException, ClassNotFoundException {
+        Integer matricula = getRowAluno();
+        Integer exercicio = getRow();
+    
+        ExerciciosService.atribuirExercicio (exercicio, matricula);
+        carregaMatricula();
     }
     
     @FXML
-    private void desatribuirExercicios() throws IOException {
-        String ficha = idFicha.getText();
+    private void desatribuirExercicios() throws IOException, ClassNotFoundException {
+        Integer matricula = getRowAluno();
         
-        ExerciciosService.desatribuirExercicios (idFicha);
+        ExerciciosService.desatribuirExercicios (matricula);
+        carregaMatricula();
     }
     
     ObservableList<ExerciciosDTO> listaMatriculas = FXCollections.observableArrayList();
     private void carregaMatricula() throws ClassNotFoundException {
 
         listaMatriculas.clear();
-
-        tabelaID.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tabelaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        tabelaCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
-        tabelaPlano.setCellValueFactory(new PropertyValueFactory<>("plano"));
-        tabelaFicha.setCellValueFactory(new PropertyValueFactory<>("ficha"));
+        
+        idAluno.setCellValueFactory(new PropertyValueFactory<>("id"));
+        nomeAluno.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        planoAluno.setCellValueFactory(new PropertyValueFactory<>("plano"));
+        fichaAluno.setCellValueFactory(new PropertyValueFactory<>("ficha"));
         
         
         try(Connection connection = DBConnector.getConexao()) {
-            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM exercicios");
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM matricula");
             while (rs.next()) {
-                listaMatriculas.add(new ExerciciosDTO(rs.getInt("id"), rs.getString("nome"), rs.getString("cpf"), rs.getString("plano"), rs.getInt("ficha")));
+                listaMatriculas.add(new ExerciciosDTO(rs.getInt("idmatricula"), rs.getString("nome"),
+                 rs.getString("plano"), rs.getInt("ficha")));
             }
-            tabela.setItems(listaMatriculas);
+            tabelaAluno.setItems(listaMatriculas);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

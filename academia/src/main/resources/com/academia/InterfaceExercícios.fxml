@@ -143,16 +143,16 @@
             </AnchorPane>
             <Button fx:id="addBTN" layoutX="44.0" layoutY="242.0" mnemonicParsing="false" onAction="#addBTN" prefHeight="25.0" prefWidth="74.0" text="Adicionar" />
             <Button fx:id="rmvBTN" layoutX="42.0" layoutY="567.0" mnemonicParsing="false" onAction="#removerBTN" prefHeight="30.0" prefWidth="74.0" text="Remover" />
-            <TableView layoutX="438.0" layoutY="361.0" prefHeight="200.0" prefWidth="448.0">
+            <TableView fx:id="tabelaAluno" layoutX="438.0" layoutY="361.0" prefHeight="200.0" prefWidth="448.0">
               <columns>
-                <TableColumn prefWidth="50.0" text="ID" />
-                <TableColumn prefWidth="196.0" text="Nome" />
-                  <TableColumn prefWidth="98.0" text="Plano" />
-                  <TableColumn prefWidth="103.0" text="Ficha" />
+                <TableColumn fx:id="idAluno" prefWidth="50.0" text="ID" />
+                <TableColumn fx:id="nomeAluno" prefWidth="196.0" text="Nome" />
+                  <TableColumn fx:id="planoAluno" prefWidth="98.0" text="Plano" />
+                  <TableColumn fx:id="fichaAluno" prefWidth="103.0" text="Ficha" />
               </columns>
             </TableView>
-            <Button layoutX="438.0" layoutY="570.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="64.0" text="Atribuir" />
-            <Button layoutX="517.0" layoutY="570.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="74.0" text="Remover" />
+            <Button layoutX="438.0" layoutY="570.0" mnemonicParsing="false" onAction="#atribuirExercicios" prefHeight="30.0" prefWidth="64.0" text="Atribuir" />
+            <Button layoutX="517.0" layoutY="570.0" mnemonicParsing="false" onAction="#desatribuirExercicios" prefHeight="30.0" prefWidth="74.0" text="Remover" />
             <Label layoutX="35.0" layoutY="329.0" text="Exercícios Cadastrados">
                <font>
                   <Font name="Gadugi Bold" size="17.0" />
