@@ -5,7 +5,6 @@ import com.academia.model.dao.MatriculaDAO;
 import java.sql.Date;
 
 public class MatriculaService {
-
     public static MatriculaDTO adicionarMatricula(String nome, String cpf, Date datanascimento, String endereco, String telefone, String email, String plano, String pacote) {
         return MatriculaDAO.inserirMatricula(nome, cpf, datanascimento, endereco, telefone, email, plano, pacote);
     }

@@ -1,5 +1,4 @@
-<%@page import="academiawb.model.db.DBConnector"%>
-<%@page import="academiawb.model.service.FuncionariosService"%>
+<%@page import="com.academia.model.db.DBConnector"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
