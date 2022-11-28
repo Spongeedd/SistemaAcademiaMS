@@ -240,5 +240,45 @@ public class ExerciciosController implements Initializable {
         stage = (Stage) addBTN.getScene().getWindow();
         stage.close();
     }
+    
+    @FXML
+    private void atribuirExercicios() throws IOException {
+        String matricula = idMatricula.getText();
+        String exercicio = idExercicio.getText();
+        
+        ExerciciosService.atribuirExercicio (idExercicio, idMatricula);
+    }
+    
+    @FXML
+    private void desatribuirExercicios() throws IOException {
+        String ficha = idFicha.getText();
+        
+        ExerciciosService.desatribuirExercicios (idFicha);
+    }
+    
+    ObservableList<ExerciciosDTO> listaMatriculas = FXCollections.observableArrayList();
+    private void carregaMatricula() throws ClassNotFoundException {
+
+        listaMatriculas.clear();
+
+        tabelaID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tabelaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        tabelaCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+        tabelaPlano.setCellValueFactory(new PropertyValueFactory<>("plano"));
+        tabelaFicha.setCellValueFactory(new PropertyValueFactory<>("ficha"));
+        
+        
+        try(Connection connection = DBConnector.getConexao()) {
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM exercicios");
+            while (rs.next()) {
+                listaMatriculas.add(new ExerciciosDTO(rs.getInt("id"), rs.getString("nome"), rs.getString("cpf"), rs.getString("plano"), rs.getInt("ficha")));
+            }
+            tabela.setItems(listaMatriculas);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 
 }
