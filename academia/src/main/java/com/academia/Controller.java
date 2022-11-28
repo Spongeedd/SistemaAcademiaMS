@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.academia.dashboard.DashboardControllerAluno;
 import com.academia.model.db.DBConnector;
 
 import javafx.fxml.FXML;
@@ -55,7 +56,7 @@ public class Controller {
             }
             else if (rs.next()) {
                 Stage stage = new Stage();
-                Parent root = FXMLLoader.load(App.class.getResource("InterfaceMatricula.fxml"));
+                Parent root = FXMLLoader.load(App.class.getResource("DashboardFuncionario.fxml"));
                 stage.setScene(new Scene(root));
                 stage.setTitle("Sistema Academia");
                 stage.setResizable(false);
@@ -65,9 +66,34 @@ public class Controller {
                 stage.close();
             }
             else {
-                a.setAlertType(AlertType.WARNING);
-                a.setContentText("Login não encontrado");
-                a.show();
+                sql = "SELECT * FROM matricula WHERE nome=? and cpf=?";
+                preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                preparedStatement.setString(1, login);
+                preparedStatement.setString(2, senha);
+                rs = preparedStatement.executeQuery();   
+                if (rs.next()) {
+
+                    FXMLLoader loader = new FXMLLoader(App.class.getResource("DashboardAluno.fxml"));
+                    Parent root = loader.load();
+                    Integer id = rs.getInt("idmatricula");
+
+                    DashboardControllerAluno dashboardControllerAluno = loader.getController();
+                    dashboardControllerAluno.mostraAluno(id);
+
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root));
+                    stage.setTitle("Sistema Academia");
+                    stage.setResizable(false);
+                    stage.getIcons().add(new Image(App.class.getResourceAsStream("icone.png")));
+                    stage.show();
+                    stage = (Stage) btnEntrar.getScene().getWindow();
+                    stage.close();
+                }
+                else {
+                    a.setAlertType(AlertType.WARNING);
+                    a.setContentText("Login não encontrado");
+                    a.show();
+                }             
             }
     } catch (SQLException e) {
             throw new RuntimeException(e);

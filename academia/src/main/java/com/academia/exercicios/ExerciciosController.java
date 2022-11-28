@@ -96,7 +96,7 @@ public class ExerciciosController implements Initializable {
     private Label serieTXT;
 
 
-    private String[] planoStrings = {"Basico", "Intermediário", "Premium"};
+    private String[] planoStrings = {"Intermediário", "Premium"};
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
@@ -104,7 +104,7 @@ public class ExerciciosController implements Initializable {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        planoID.setValue("Basico");
+        planoID.setValue("Intermediário");
         planoID.getItems().addAll(planoStrings);
     }
 
