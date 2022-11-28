@@ -22,7 +22,12 @@ public class teste extends HttpServlet {
         
         FinanceiroService.caculaDebitos();
         FinanceiroService.calculaFaturamento();
-        FinanceiroService.calculaReceita();
+        try {
+            FinanceiroService.calculaReceita();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         
         Integer faturamento = FinanceiroService.getFaturamento();
         request.setAttribute("faturamento", faturamento);

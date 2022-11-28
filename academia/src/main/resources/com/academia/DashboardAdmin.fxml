@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="inicio" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="681.0" prefWidth="1071.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.academia.dashboard.DashboardController">
    <children>
       <BorderPane fx:id="bordepane" prefHeight="683.0" prefWidth="1075.0">
@@ -74,12 +73,12 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <AreaChart layoutX="50.0" layoutY="286.0" prefHeight="372.0" prefWidth="722.0">
+                        <AreaChart fx:id="graficoFaturamento" layoutX="50.0" layoutY="286.0" prefHeight="372.0" prefWidth="722.0">
                           <xAxis>
-                            <CategoryAxis side="BOTTOM" />
+                            <CategoryAxis fx:id="X" side="BOTTOM" />
                           </xAxis>
                           <yAxis>
-                            <NumberAxis side="LEFT" />
+                            <NumberAxis fx:id="Y" side="LEFT" />
                           </yAxis>
                         </AreaChart>
                      </children>

@@ -1,5 +1,7 @@
 package com.academia.model.service;
 
+import java.text.ParseException;
+
 import com.academia.model.dao.FinanceiroDAO;
 import com.academia.model.dto.FinanceiroDTO;
 
@@ -12,7 +14,7 @@ public class FinanceiroService {
         return FinanceiroDAO.calculaFaturamento();
     }
 
-    public static void calculaReceita() {
+    public static void calculaReceita() throws ParseException {
         FinanceiroDAO.calculaReceita();
     }
 
