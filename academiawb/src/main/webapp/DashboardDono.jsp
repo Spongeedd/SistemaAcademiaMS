@@ -1,3 +1,11 @@
+<%-- Document   : Dashboard
+    JSP Created on : 29 de nov de 2022
+    Author     : Israel D. --%>
+<%@page import="academiawb.model.db.DBConnector"%>
+<%@page import="academiawb.model.service.CatracaService"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="en">
   <head>
@@ -150,14 +158,14 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="DashboardDonoFunc.html">
+            <a class="nav-link" href="Funcionario.jsp">
               <span data-feather="file" class="align-text-bottom">
                 Funcionários
               </span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="Matricula.html">
+            <a class="nav-link" href="Matricula.jsp">
               <span data-feather="shopping-cart" class="align-text-bottom">
                 Matrícula
               </span>
@@ -198,7 +206,7 @@
     <div id="ativos">
     <h2>Vendas do mês</h2>
       <div class="table-responsive">
-        <section>
+         <section>
           <div class="quadrado"> 
             <img class="imagens" src="https://imgur.com/qLGAraf.png" width=210 height=210>
             <h3>NÚMERO</h3>
