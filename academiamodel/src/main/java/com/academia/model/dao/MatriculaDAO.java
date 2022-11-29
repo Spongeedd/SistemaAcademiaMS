@@ -36,9 +36,7 @@ public class MatriculaDAO {
                 funcionario.setCodigo(id);
             }
             return funcionario;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -50,16 +48,14 @@ public class MatriculaDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, cdg);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
     public static void atualizaMatricula(Integer codigo, String nome, String cpf, Date datanascimento, String endereco, String telefone, String email, String plano, String pacote) {
         try (Connection connection = DBConnector.getConexao()) {
-            String sql = "UPDATE funcionario SET nome=?, cpf=?, nascimento=?, endereco=?, telefone=?, email=?, plano=?, pacote=? WHERE idmatricula=?";
+            String sql = "UPDATE funcionario SET nome=?, cpf=?, nascimento=?, endereco=?, telefone=?, email=?, plano=?, pacote=? WHERE idmatricula = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,nome);
@@ -73,9 +69,7 @@ public class MatriculaDAO {
             preparedStatement.setInt(9, codigo);
 
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -91,9 +85,7 @@ public class MatriculaDAO {
             else {
                 return null;
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -109,12 +101,11 @@ public class MatriculaDAO {
             else {
                 return null;
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
+
 
     public static String consultaPorCPF(String cpf) {
         try (Connection connection = DBConnector.getConexao()) {
@@ -127,9 +118,7 @@ public class MatriculaDAO {
             else {
                 return null;
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -145,9 +134,7 @@ public class MatriculaDAO {
             else {
                 return null;
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

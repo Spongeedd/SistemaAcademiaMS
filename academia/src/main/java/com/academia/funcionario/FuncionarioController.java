@@ -327,9 +327,9 @@ public class FuncionarioController implements Initializable {
     @FXML
     private void exerciciosBTN() throws IOException {
         Stage stage = new Stage();
-        Parent root = FXMLLoader.load(App.class.getResource("CatracaBase.fxml"));
+        Parent root = FXMLLoader.load(App.class.getResource("InterfaceExercícios.fxml"));
         stage.setScene(new Scene(root));
-        stage.setTitle("Catraca");
+        stage.setTitle("Cadastrar Exercícios");
         stage.setResizable(false);
         stage.getIcons().add(new Image(App.class.getResourceAsStream("icone.png")));
         stage.show();

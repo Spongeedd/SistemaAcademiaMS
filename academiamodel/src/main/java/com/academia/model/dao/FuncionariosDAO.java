@@ -39,9 +39,7 @@ public class FuncionariosDAO {
                 funcionario.setCodigo(id);
             }
             return funcionario;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -54,9 +52,7 @@ public class FuncionariosDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, cdg);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -79,9 +75,7 @@ public class FuncionariosDAO {
             preparedStatement.setInt(10, codigo);
 
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -97,9 +91,7 @@ public class FuncionariosDAO {
             else {
                 return null;
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -115,9 +107,7 @@ public class FuncionariosDAO {
             else {
                 return null;
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -133,9 +123,7 @@ public class FuncionariosDAO {
             else {
                 return null;
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -151,11 +139,8 @@ public class FuncionariosDAO {
             else {
                 return null;
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 }
-

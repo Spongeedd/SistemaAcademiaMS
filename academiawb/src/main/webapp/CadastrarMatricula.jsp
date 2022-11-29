@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cadastrar Funcionario</title>
+    <title>Cadastrar Matricula</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link href="/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <meta name="theme-color" content="#712cf9">
@@ -19,7 +19,7 @@
     <div class="row g-5">
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">Dados</h4>
-        <form class="needs-validation" action="cadastrarServlet" novalidate>
+        <form class="needs-validation" action="MatriculaServlet?op=a" method="POST" novalidate>
           <div class="row g-3">
             <div class="col-12">
               <label for="nome" class="form-label">Nome</label>
@@ -71,10 +71,10 @@
           <h4 class="mb-3">Pagamento</h4>
           <div class="col-md-5">
             <label for="plano" class="form-label">Plano</label>
-            <select class="form-select" id="plano" required>
-              <option value="">Básico</option>
-              <option>Intermediário</option>
-              <option>Premium</option>
+            <select class="form-select" name="plano" id="plano" required>
+              <option name="plano" value="Basico">Básico</option>
+              <option name="plano" value="Intermediario">Intermediário</option>
+              <option name="plano" value="Premium">Premium</option>
             </select>
             <div class="invalid-feedback">
               Selecione um plano válido
@@ -82,10 +82,10 @@
           </div>
           <div class="col-md-4">
             <label for="pacote" class="form-label">Pacote</label>
-            <select class="form-select" id="pacote" required>
-              <option value="">Mensal</option>
-              <option>Trimestral</option>
-              <option>Anual</option>
+            <select class="form-select" name="pacote" id="pacote" required>
+              <option name="pacote" value="Mensal">Mensal</option>
+              <option name="pacote" value="Trimestral">Trimestral</option>
+              <option name="pacote" value="Anual">Anual</option>
             </select>
             <div class="invalid-feedback">
               Selecione um pacote válido.
