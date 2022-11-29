@@ -1,8 +1,8 @@
 package com.academia.model.dto;
 
 public class ExerciciosDTO {
-    private Integer id;
-    private String plano, descricao, serie, repeticoes;
+    private Integer id, ficha;
+    private String plano, descricao, serie, repeticoes, cpf, nome;
     
     public ExerciciosDTO (Integer id, String descricao, String plano){
         this.id = id;
@@ -24,6 +24,15 @@ public class ExerciciosDTO {
         this.serie = serie;
         this.repeticoes = repeticoes;
     }
+    
+    public ExerciciosDTO(Integer id, String nome, String plano, Integer ficha) {
+        this.id = id;
+        this.nome = nome;
+        this.plano = plano;
+        this.ficha = ficha;
+    }
+
+    
 
     public Integer getId() {
         return id;
@@ -63,6 +72,30 @@ public class ExerciciosDTO {
 
     public void setRepeticoes(String repeticoes) {
         this.repeticoes = repeticoes;
+    }
+    
+    public Integer getFicha() {
+        return ficha;
+    }
+    
+    public void setFicha(Integer ficha) {
+        this.ficha = ficha;
+    }
+    
+    public String getNome() {
+        return nome;
+    }
+    
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    
+    public String getCpf() {
+        return cpf;
+    }
+    
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
 }
