@@ -73,15 +73,15 @@
                 </div>
                 <div class="col-lg-7 text-center py-5">
                     <h1>Bem-vindo</h1>
-                    <form>
+                    <form action="LoginAluno" method="POST">
                         <div class="form-row py-3 pt-5">
                             <div class="offset-1 col-lg-10">
-                                <input class="inp px-3" type="text" placeholder="Nome de usuário">
+                                <input class="inp px-3" name="login" type="text" placeholder="Nome de usuário">
                             </div>
                         </div>
                         <div class="form-row py-3">
                             <div class="offset-1 col-lg-10">
-                                <input class="inp px-3" type="password" placeholder="Senha">
+                                <input class="inp px-3" name="senha" type="password" placeholder="Senha">
                             </div>
                         </div>
                         <div class="form-row py-3">

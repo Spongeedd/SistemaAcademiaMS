@@ -14,8 +14,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "MatriculaServlet", urlPatterns = {"/MatriculaServlet"})
-public class MatriculaServlet extends HttpServlet {
+@WebServlet(name = "MatriculaFuncServlet", urlPatterns = {"/MatriculaFuncServlet"})
+public class MatriculaFuncServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
             String operacao = request.getParameter("op");
@@ -39,13 +39,13 @@ public class MatriculaServlet extends HttpServlet {
                     nascimento = Date.valueOf(datastr);
 
                     MatriculaService.adicionarMatricula(nome, cpf, nascimento, endereco, telefone, email, plano, pacote);
-                    response.sendRedirect("MatriculaDono.jsp");
+                    response.sendRedirect("DashboardFunc.jsp");
                     break;
                 case "d":
                     idstr = request.getParameter("id");
                     id = Integer.valueOf(idstr);
                     MatriculaService.removerMatricula(id);
-                    response.sendRedirect("MatriculaDono.jsp");
+                    response.sendRedirect("DashboardFunc.jsp");
                     break;
                 case "u":
                     idstr = request.getParameter("id");
@@ -62,10 +62,10 @@ public class MatriculaServlet extends HttpServlet {
                     nascimento = Date.valueOf(datastr);
                     
                     MatriculaService.editarMatricula(id, nome, cpf, nascimento, endereco, telefone, email, plano, pacote);
-                    response.sendRedirect("MatriculaDono.jsp");
+                    response.sendRedirect("DashboardFunc.jsp");
                     break;
                 default:
-                    response.sendRedirect("MatriculaDono.jsp");
+                    response.sendRedirect("DashboardFunc.jsp");
                     break;
     }
     }
@@ -85,7 +85,7 @@ public class MatriculaServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(MatriculaServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MatriculaFuncServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -103,7 +103,7 @@ public class MatriculaServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(MatriculaServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MatriculaFuncServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

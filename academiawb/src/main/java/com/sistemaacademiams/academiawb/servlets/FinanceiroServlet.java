@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "MatriculaServlet", urlPatterns = {"/MatriculaServlet"})
+@WebServlet(name = "FinanceiroServlet", urlPatterns = {"/FinanceiroServlet"})
 public class FinanceiroServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {

@@ -1,8 +1,8 @@
 <%-- Document   : Dashboard
     JSP Created on : 29 de nov de 2022
     Author     : Israel D. --%>
-<%@page import="academiawb.model.db.DBConnector"%>
-<%@page import="academiawb.model.service.CatracaService"%>
+<%@page import="com.academia.model.db.DBConnector"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -14,6 +14,7 @@
     <title>Dashboard Dono</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/dashboard/">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link href="/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
@@ -131,120 +132,170 @@
     <!-- Custom styles for this template -->
     <link href="dashboard.css" rel="stylesheet">
   </head>
-  <body>
+<body>
+  <sql:setDataSource var= "conexao" driver= "com.mysql.jdbc.Driver" url= "jdbc:mysql://us-cdbr-east-06.cleardb.net:3306/heroku_aa28e844ee07386?autoReconnect=true&useSSL=false" user= "b918cc3160b707"  password= "16d9b4b7" />
+  <sql:query dataSource="${conexao}" var="result" >
+    SELECT * FROM receita GROUP BY data
+  </sql:query>
+    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+      <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">Academia EliteFit</a>
+      <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-nav">
+        <div class="nav-item text-nowrap">
+          <a class="nav-link px-3" href="index.jsp">Sair</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+                <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                    <div class="position-sticky pt-3 sidebar-sticky">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="DashboardDono.jsp">
+                            <i class="bi bi-speedometer2"></i>
+                              <span data-feather="home" class="align-text-bottom">
+                                Dashboard
+                              </span>
+                            </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Funcionario.jsp">
+                                    <i class="bi bi-building"></i>
+                                    <span data-feather="file" class="align-text-bottom">
+                                    Funcionários
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="MatriculaDono.jsp">
+                                    <i class="bi bi-people-fill"></i>
+                                    <span data-feather="shopping-cart" class="align-text-bottom">
+                                      Matrícula
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>          
+                    </div>
+                </nav>
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div id="ativos">
+                    <h2>Relatório Financeiro</h2>
+                    <div class="table-responsive">
+                       <section>
+                          <div class="quadrado"> 
+                            <img class="imagens" src="https://imgur.com/qLGAraf.png" width=210 height=210>
+                            <h3><%=request.getAttribute("debitos")%></h3>
+                            <p>Debitos</p>
+                          </div>
+
+                          <div class="quadrado">
+                            <img class="imagens" src="https://imgur.com/12nmrDn.png" width=210 height=210>
+                            <h3><%=request.getAttribute("faturamento")%></h3>
+                            <p>Faturamento</p>
+                          </div>
+
+                          <div class="quadrado">
+                            <img class="imagens" src="https://imgur.com/dsP9UXo.png" width=210 height=210>
+                            <h3><%=request.getAttribute("receita")%></h3>
+                            <p>Receita</p>
+                          </div>
+                      </section>
+                    </div>
+                </div>
+               
+                <div onload="makeRequest()" style="position: relative; height:40vh; width:60vw">
+                  <canvas id="myChart"></canvas>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/docs/5.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script src="/docs/5.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
     
-<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">Academia EliteFit</a>
-  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="navbar-nav">
-    <div class="nav-item text-nowrap">
-      <a class="nav-link px-3" href="#">Sair</a>
-    </div>
-  </div>
-</header>
+      <script>
+        function getXMLHttpRequest() {
+          if (window.XMLHttpRequest) {
+              return new XMLHttpRequest();  
+          }else if (window.ActiveXObject) {
+              return new ActiveXObject("Microsoft.XMLHTTP"); 
+          }
+        }
 
-<div class="container-fluid">
-  <div class="row">
-    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-      <div class="position-sticky pt-3 sidebar-sticky">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="#">
-              <span data-feather="home" class="align-text-bottom">
-                Dashboard
-              </span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="Funcionario.jsp">
-              <span data-feather="file" class="align-text-bottom">
-                Funcionários
-              </span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="Matricula.jsp">
-              <span data-feather="shopping-cart" class="align-text-bottom">
-                Matrícula
-              </span>
-            </a>
-          </li>
-        </ul>
+        function makeRequest() {
+          var xmlHttpRequest = getXMLHttpRequest();
+          xmlHttpRequest.open("POST", "RequisicaoGrafico.java");  
+          xmlHttpRequest.onreadystatechange = getReadyStateHandler(xmlHttpRequest);
+          xmlHttpRequest.send(null);
+        }
+        
+        function getReadyStateHandler(xmlHttpRequest) {
+          return function() {
+              if (xmlHttpRequest.readyState === 4) {
+                  if (xmlHttpRequest.status === 200) {
+                      recebeConteudo(xmlHttpRequest.responseText);
+                  }else{
+                      alert("Http error " + xmlHttpRequest.status + ":" + xmlHttpRequest.statusText);
+                  }
+                }
+            };
+        } 
+        let valor = [];
+        let mes = [];
+        function recebeConteudo(cont){
+          
+          cont = cont.split("@");
+          var conteudo = new Array(cont.length-1);
+          for (var i = 0; i < cont.length-1; i++) {
+              conteudo[i] = cont[i].split(";");
+          }
+          for (let i = 0; i < conteudo.length; i++) {
+            mes.push(conteudo[i]);
+            for (let j = 0; j < conteudo.length; j++) {
+              valor.push(conteudo[j]);
+              console.log(valor[j]);
+            }
+          }
+        }
 
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
-          <span>Gráfico</span>
-          <a class="link-secondary" href="#" aria-label="Add a new report">
-            <span data-feather="plus-circle" class="align-text-bottom"></span>
-          </a>
-        </h6>
-        <ul class="nav flex-column mb-2">
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text" class="align-text-bottom"></span>
-              Mês Atual
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text" class="align-text-bottom"></span>
-              Mês Anterior
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text" class="align-text-bottom"></span>
-              Prévios 5 Meses
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <div id="ativos">
-    <h2>Vendas do mês</h2>
-      <div class="table-responsive">
-         <section>
-          <div class="quadrado"> 
-            <img class="imagens" src="https://imgur.com/qLGAraf.png" width=210 height=210>
-            <h3>NÚMERO</h3>
-            <p>Vendas</p>
-          </div>
-
-          <div class="quadrado">
-            <img class="imagens" src="https://imgur.com/12nmrDn.png" width=210 height=210>
-            <h3>NÚMERO</h3>
-            <p>Faturamento</p>
-          </div>
-
-          <div class="quadrado">
-            <img class="imagens" src="https://imgur.com/dsP9UXo.png" width=210 height=210>
-            <h3>NÚMERO</h3>
-            <p>Ticket Médio</p>
-          </div>
-      </div>
-    </section>
-    </div>
-
-   <div id="expirados">
-    <h2>Teste do dia</h2>
-          <div class="quadrado" id="CS"> 
-            <img class="imagens" src="Cart.png" width=210 height=210>
-            <h3>NÚMERO</h3>
-            <p>Vendas</p>
-          </div>
-   </div>
-   </div>
-  </main>
-</div>
-
-
-  <script src="/docs/5.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-  <script src="/docs/5.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
-  <script src="dashboard.js"> </script>
-  </body>
+        const ctx = document.getElementById('myChart');
+        
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            
+            labels: ["junho", "julho", "agosto", "setembro", "outubro", "novembro"],
+            datasets: [{
+              label: 'Faturamento p/Mês',
+              data: [3500, 2500, 0, -100, 800, 600],
+              borderWidth: 1,
+              fill: false,
+              borderColor: 'rgb(75, 192, 192)',
+              tension: 0.1
+            }]
+          },
+          options: {
+            layout: {
+              padding: {
+                  left: 100
+              }
+          },
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      </script>
+    
+    
+    
+</body>
 </html>

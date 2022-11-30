@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.academia.model.db.DBConnector;
-import com.academia.model.service.FinanceiroService;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -20,8 +19,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-@WebServlet(name = "IndexServlet", urlPatterns = {"/IndexServlet"})
-public class IndexServlet extends HttpServlet {
+@WebServlet(name = "LoginAluno", urlPatterns = {"/LoginAluno"})
+public class LoginAluno extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         
@@ -29,29 +28,17 @@ public class IndexServlet extends HttpServlet {
                 String senha = request.getParameter("senha");
                 String login = request.getParameter("login");
 
-                String sql = "SELECT * FROM funcionario WHERE nome=? and cpf=?";
+                String sql = "SELECT * FROM matricula WHERE nome=? and cpf=?";
                 PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 preparedStatement.setString(1, login);
                 preparedStatement.setString(2, senha);
 
                 ResultSet rs = preparedStatement.executeQuery();
-                if (login.equals("admin") && senha.equals("123")) {
-                    FinanceiroService.caculaDebitos();
-                    FinanceiroService.calculaFaturamento();
-                    try {
-                        FinanceiroService.calculaReceita();
-                    } catch (Exception e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                    request.setAttribute("debitos", FinanceiroService.getPagamentos());
-                    request.setAttribute("faturamento", FinanceiroService.getFaturamento());
-                    request.setAttribute("receita", FinanceiroService.getReceita());
-                    RequestDispatcher rd = request.getRequestDispatcher("DashboardDono.jsp");   
+                if (rs.next()) {
+                    request.setAttribute("id", rs.getInt("idmatricula"));
+                     request.setAttribute("idficha", rs.getInt("ficha"));
+                    RequestDispatcher rd = request.getRequestDispatcher("DashboardAluno.jsp");   
                     rd.forward(request, response);
-                }
-                else if (rs.next()) {
-                    response.sendRedirect("DashboardFunc.jsp");
                 }
                 else {
                     response.sendRedirect("index.jsp");

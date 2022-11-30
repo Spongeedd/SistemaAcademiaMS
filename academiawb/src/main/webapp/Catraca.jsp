@@ -1,23 +1,42 @@
-<%-- 
-    Document   : Catraca
-    Created on : 13 de nov de 2022, 19:53:29
-    Author     : david
---%>
-<%@page import="academiawb.model.db.DBConnector"%>
-<%@page import="academiawb.model.service.CatracaService"%>
+<%-- Document   : Dashboard
+    JSP Created on : 29 de nov de 2022
+    Author     : Israel D. --%>
+<%@page import="com.academia.model.db.DBConnector"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
-<html lang="pt-br">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Catraca</title>
+    <title>Dashboard Funcionario</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/dashboard/">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link href="/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <meta name="theme-color" content="#712cf9">
+
+    <!-- Favicons -->
+<link rel="apple-touch-icon" href="/docs/5.2/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+<link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+<link rel="manifest" href="/docs/5.2/assets/img/favicons/manifest.json">
+<link rel="mask-icon" href="/docs/5.2/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+<link rel="icon" href="/docs/5.2/assets/img/favicons/favicon.ico">
+<meta name="theme-color" content="#712cf9">
+
+
     <style>
+
+        .scrollable {
+            height: 400px;
+            width: fit-content;  
+            overflow: scroll;
+        }
+        
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -69,132 +88,151 @@
         -webkit-overflow-scrolling: touch;
       }
 
-      td, th {
-        padding: .7em;
-        margin: 0;
-        border: 1px solid #ccc;
-        text-align: center;
+      h2 {
+        margin-top: 12px;
       }
 
-     td {
-        font-weight:bold;
-        background-color: #EEE;
+      section {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+  	  }
+
+      .quadrado {
+        border: inset 2px #8611FD;
+        padding-top: 20px;
+        margin-right: 30px;
+        background-color: #eadef6;
+        border-radius: 22px;
+        margin-bottom: 12px;
+        max-width: 250px;
+        text-decoration: none;
+        color: #000000;
       }
-      table {
+
+      .imagens {
+        width: 55px;
+        height: auto;
         margin: auto;
-        width: 50%;
-        table-layout: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .quadrado p {
+        margin-left: 6px;
+        margin-right: 6px;
         text-align: center;
       }
-      table h1 {
+      .quadrado h3 {
+        font-size: 20px;
+        margin-left: 65px;
+        margin-right: 65px;
+        margin-bottom: 2px;
+        margin-top: 5px;
         text-align: center;
       }
 
-      #blocos ul li:hover,#blocos ul li:focus {
-        text-decoration: none;
-        background-color: #CEE5D0;
-        font-size: 20px;
-        transform: translateX(10px) scale(1.2);
+      #expirados {
+        visibility: hidden;
       }
-    
-      #blocos ul li a{
-        text-decoration: none;
-        font-size: 20px;
-        margin: 30px;
-        color: #1C6758;         
-      }
-    
-      #blocos ul li{
-        display: inline-block;
-        transition: transform 0.4s;
-        transform: translateX(0) scale(0.8);
-      }
-    
-      #blocos ul {
-        list-style-type: none;
-        background-color: #94B49F;
-        text-align: center ;
-        border: 0;
-      }
-      #blocos {
-        border: 0;
-        margin: 0;
-      }
-    </style>
-    <link href="form-validation.css" rel="stylesheet">
+</style>
+    <!-- Custom styles for this template -->
+    <link href="dashboard.css" rel="stylesheet">
   </head>
-  <body class="bg-light">
+<body>
     <sql:setDataSource var= "conexao" driver= "com.mysql.jdbc.Driver" url= "jdbc:mysql://us-cdbr-east-06.cleardb.net:3306/heroku_aa28e844ee07386?autoReconnect=true&useSSL=false" user= "b918cc3160b707"  password= "16d9b4b7" />
         <sql:query dataSource="${conexao}" var="result" >
             select * from acessoaluno
         </sql:query>
-            <div class="container shadow-lg p-3 mb-5 rounded">
-            <header class="d-flex flex-wrap justify-content-center mb-4 border-bottom p-3 text-bg-dark">
-              <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-light text-decoration-none">
-                <span class="fs-4">Sistema Academia</span>
-              </a>
-        
-              <ul class="nav nav-pills">
-                <li class="nav-item"><a href="index.jsp" class="nav-link active" aria-current="page">Home</a></li>
-                <li class="nav-item"><a href="Funcionario.jsp" class="nav-link">Funcionarios</a></li>
-                <li class="nav-item"><a href="Exercicios.jsp" class="nav-link">Exercicios</a></li>
-                <li class="nav-item"><a href="Matricula.jsp" class="nav-link">Matricula</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">...</a></li>
-              </ul>
-            </header>
+    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">Academia EliteFit</a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-nav">
+            <div class="nav-item text-nowrap">
+                <a class="nav-link px-3" href="index.jsp">Sair</a>
+            </div>
         </div>
-    <div class="container">
-      <main>
-        <div class="py-5 text-center">
-          <h2>Aluno</h2>
-          <h4>Plano</h3>
-        </div>
-
-        <div class="row g-5">
-          <div class="col-md-7 col-lg-8">
-            <h4 class="mb-3">Dados</h4>
-            <form class="needs-validation" action="CatracaServlet" method="POST" novalidate>
-              <div class="row g-3">
-                <div class="col-12">
-                  <label for="loginID" class="form-label">Login</label>
-                  <input type="text" name="login" class="form-control" id="loginID" placeholder="Seu Nome" value="" required>
+    </header>       
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="position-sticky pt-3 sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="DashboardFunc.jsp">
+                        <i class="bi bi-speedometer2"></i>
+                          <span data-feather="home" class="align-text-bottom">
+                            Dashboard
+                          </span>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-building"></i>
+                                <span data-feather="file" class="align-text-bottom">
+                                Catraca
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Exercicios.jsp">
+                                <i class="bi bi-journal"></i>
+                                <span data-feather="file" class="align-text-bottom">
+                                 Exercícios
+                                </span>
+                            </a>
+                        </li>
+                    </ul>          
                 </div>
-
-                <div class="col-12">
-                  <label for="senha" class="form-label">Senha</label>
-                  <input type="text" class="form-control" name="senha" id="senha" placeholder="Seu CPF">
+            </nav>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">    
+            <div class="row g-5">
+                <div class="col-md-7 col-lg-8">
+                  <h4 class="mb-3">Dados</h4>
+                    <form class="needs-validation" action="CatracaServlet" method="POST" novalidate>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label for="loginID" class="form-label">Login</label>
+                                <input type="text" name="login" class="form-control" id="loginID" value="" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="senha" class="form-label">Senha</label>
+                                <input type="text" class="form-control" name="senha" id="senha">
+                            </div>
+                            <button class="w-100 btn btn-primary btn-lg" type="submit">Entrar</button>
+                        </div>
+                    </form>                     
                 </div>
-
-              <button class="w-100 btn btn-primary btn-lg" type="submit">Entrar</button>
-            </form>
-          </div>
-        </div>
-      </h1>
-      <h3> Acessos do dia: 5</h3>
-      <h4>Filtros de acesso:</h4>
-      <div class="scrollable shadow-lg p-3 mb-5 rounded">
-        <table class="table table-bordered text-center">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Horário</th>
-                </tr>    
-            </thead>
-            <tbody>
-                <c:forEach var="row" items="${result.rows}">
+            </div>
+            <h4>Filtros de acesso:</h4>
+            <div class="scrollable shadow-lg p-3 mb-5 rounded">
+                <table class="table table-bordered text-center">
+                <thead class="thead-dark">
                     <tr>
-                        <td><c:out value="${row.idaluno}"/></td>
-                        <td><c:out value="${row.nome}"/></td>
-                        <td><c:out value="${row.data}"/></td> 
-                    </tr>
-                </c:forEach> 
-            </tbody>    
-        </table>
-      </main>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Horário</th>
+                    </tr>    
+                </thead>
+                <tbody>
+                    <c:forEach var="row" items="${result.rows}">
+                        <tr>
+                            <td><c:out value="${row.idaluno}"/></td>
+                            <td><c:out value="${row.nome}"/></td>
+                            <td><c:out value="${row.data}"/></td> 
+                        </tr>
+                    </c:forEach> 
+                    </tbody>    
+                </table>
+            </div>
+     </main>
     </div>
+</div>
     <script src="/docs/5.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
-  </body>
+</body>
 </html>

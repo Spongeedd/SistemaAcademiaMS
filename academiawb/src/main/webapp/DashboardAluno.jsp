@@ -3,7 +3,8 @@
     Created on : 29 de nov. de 2022, 17:46:46
     Author     : david
 --%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -91,10 +92,16 @@
 
 </head>
 <body>
-  
+  <sql:setDataSource var= "conexao" driver= "com.mysql.jdbc.Driver" url= "jdbc:mysql://us-cdbr-east-06.cleardb.net:3306/heroku_aa28e844ee07386?autoReconnect=true&useSSL=false" user= "b918cc3160b707"  password= "16d9b4b7" />
+        <sql:query dataSource="${conexao}" var="result" >
+            select * from matricula  WHERE idmatricula = <%=request.getAttribute("id")%>
+            
+        </sql:query>
+        <sql:query dataSource="${conexao}" var="ficha" >
+            SELECT * FROM exercicios WHERE idexercicios = <%=request.getAttribute("idficha")%>
+        </sql:query>
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-
-
+  
     <symbol id="home" viewBox="0 0 16 16">
       <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z"/>
     </symbol>
@@ -104,7 +111,7 @@
     </symbol>
 
   </svg>
-
+    <c:forEach var="row" items="${result.rows}">
   <main class="d-flex flex-nowrap">
   <h1 class="visually-hidden">Sidebars examples</h1>
 
@@ -117,13 +124,13 @@
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
-        <a href="DashboardAluno.jsp" class="nav-link active" aria-current="page">
+        <a href="#" class="nav-link active" aria-current="page">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
           Informações
         </a>
       </li>
       <li>
-        <a href="BoletoGerado.html" class="nav-link text-white">
+        <a href="DashboardAlunoBoleto.jsp?id=<c:out value="${row.idmatricula}"/>" class="nav-link text-white">
         <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
       Boleto
       </a>
@@ -132,8 +139,11 @@
     <hr>
     <div class="dropdown">
       <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-        <img src="https://github.com/Spongeedd.png" alt="" width="32" height="32" class="rounded-circle me-2">
-        <strong>Fulano</strong>
+        <img src="https://www.cambe.pr.leg.br/anonimo.jpg/image_preview" alt="" width="32" height="32" class="rounded-circle me-2">
+        
+
+                             
+        <strong><c:out value="${row.nome}"/></strong>
       </a>
       <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
         <li><a class="dropdown-item" href="index.jsp">Sair</a></li>
@@ -145,39 +155,44 @@
   <div>
 
     <div class="card" style="width: 18rem;">
-      <img src="https://github.com/Spongeedd.png" class="card-img-top" alt="imgAluno">
+      <img src="https://www.cambe.pr.leg.br/anonimo.jpg/image_preview" class="card-img-top" alt="imgAluno">
       <div class="card-body">
-        <h5 class="card-title">Fulano</h5>
-        <p class="card-text">#ID123456</p>
-        <p class="card-text">Plano Comum</p>
-        <p class="card-text">Dias presentes no mês: 22</p>
+        <h5 class="card-title"><strong><c:out value="${row.nome}"/></strong></h5>
+        <p class="card-text">ID: <strong><c:out value="${row.idmatricula}"/></strong></p>
+        <p class="card-text">Plano: <strong><c:out value="${row.plano}"/></strong></p>
+        <p class="card-text">Pacote: <strong><c:out value="${row.pacote}"/></strong></p>
       </div>
     </div>
     <br>   
     <br>
-    <h1 id="ficha">Ficha técnica</h1> 
-    <table class="table" border="1">
-      <thead>
-        <tr>
-          <th scope="col">Corpo</th>
-          <th scope="col">Exercício</th>
-          <th scope="col">Feito?</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-        <th scope="row">Superior</th>
-          <td>Triceps pulley</td>
-          <td>SIm</td>
-        </tr>
-        <tr>
-          <th scope="row">Inferior</th>
-          <td>Leg press</td>
-          <td>Não</td>
-        </tr>
-      </tbody>
-    </table>
+    <h1>Ficha Técnica</h1>
+    
+        <div class="scrollable shadow-lg p-3 mb-5 rounded">
+            <table class="table table-bordered text-center">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Plano</th>
+                        <th scope="col">Descrição</th>
+                        <th scope="col">Série</th>
+                        <th scope="col">Repetições</th>
+                    </tr>    
+                </thead>
+                <tbody>
+                    <c:forEach var="rowficha" items="${ficha.rows}">
+                        <tr>
+                            <td><c:out value="${rowficha.idexercicios}"/></td>
+                            <td><c:out value="${rowficha.plano}"/></td>
+                            <td><c:out value="${rowficha.descricao}"/></td>
+                            <td><c:out value="${rowficha.serie}"/></td>
+                            <td><c:out value="${rowficha.repeticoes}"/></td>  
+                        </tr>
+                    </c:forEach> 
+                </tbody>    
+            </table>
+        </div>
     </div>
+    </c:forEach>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
