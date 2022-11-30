@@ -8,8 +8,40 @@ import java.sql.Statement;
 
 import com.academia.model.db.DBConnector;
 import com.academia.model.dto.ExerciciosDTO;
+import java.sql.Types;
 
 public class ExerciciosDAO {
+    
+    public static void atribuirExercicios (Integer idmatricula, Integer idexercicios) {
+        try(Connection connection = DBConnector.getConexao()) {
+            
+            String sql = "UPDATE matricula SET ficha = (?) WHERE idmatricula = "+ idmatricula +"";
+ 
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, idexercicios);
+            preparedStatement.executeUpdate();
+            
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+        public static void desatribuirExercicios (Integer idmatricula) {
+        try(Connection connection = DBConnector.getConexao()) {
+            
+            String sql = "UPDATE matricula SET ficha = (?) WHERE idmatricula = "+ idmatricula +"";
+            
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            Integer p = null;
+            preparedStatement.setObject(1, p, Types.INTEGER);
+            preparedStatement.executeUpdate();
+            
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    
     public static ExerciciosDTO inserirExercicios(String plano, String descricao, String serie, String repeticoes) {
         try(Connection connection = DBConnector.getConexao()) {
         
@@ -30,9 +62,7 @@ public class ExerciciosDAO {
                 exercicios.setId(id);
             }
             return exercicios;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -44,9 +74,7 @@ public class ExerciciosDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, cdg);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

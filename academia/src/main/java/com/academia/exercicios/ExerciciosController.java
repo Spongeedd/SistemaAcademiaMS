@@ -72,6 +72,22 @@ public class ExerciciosController implements Initializable {
     private TableColumn<ExerciciosDTO, String> tabelaPlano;
 
     @FXML
+    private TableColumn<ExerciciosDTO, String> nomeAluno;
+
+    @FXML
+    private TableColumn<ExerciciosDTO, String> planoAluno;
+
+    @FXML
+    private TableColumn<ExerciciosDTO, Integer> fichaAluno;
+
+    @FXML
+    private TableColumn<ExerciciosDTO, Integer> idAluno;
+
+    @FXML
+    private TableView<ExerciciosDTO> tabelaAluno;
+
+
+    @FXML
     private Button addBTN;
 
     @FXML
@@ -96,15 +112,16 @@ public class ExerciciosController implements Initializable {
     private Label serieTXT;
 
 
-    private String[] planoStrings = {"Basico", "Intermediário", "Premium"};
+    private String[] planoStrings = {"Intermediário", "Premium"};
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
             carregarTabela();
+            carregaMatricula();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        planoID.setValue("Basico");
+        planoID.setValue("Intermediário");
         planoID.getItems().addAll(planoStrings);
     }
 
@@ -175,6 +192,12 @@ public class ExerciciosController implements Initializable {
         return codigo = dto.getId();
     }
 
+    Integer codigoaluno;
+    public Integer getRowAluno() {
+        ExerciciosDTO dto = tabelaAluno.getSelectionModel().getSelectedItem();
+        return codigo = dto.getId();
+    }
+
     ObservableList<ExerciciosDTO> oblist = FXCollections.observableArrayList();
     private void carregarTabela() throws ClassNotFoundException {
 
@@ -240,5 +263,47 @@ public class ExerciciosController implements Initializable {
         stage = (Stage) addBTN.getScene().getWindow();
         stage.close();
     }
+    
+    @FXML
+    private void atribuirExercicios() throws IOException, ClassNotFoundException {
+        Integer matricula = getRowAluno();
+        Integer exercicio = getRow();
+    
+        ExerciciosService.atribuirExercicio (exercicio, matricula);
+        carregaMatricula();
+    }
+    
+    @FXML
+    private void desatribuirExercicios() throws IOException, ClassNotFoundException {
+        Integer matricula = getRowAluno();
+        
+        ExerciciosService.desatribuirExercicios (matricula);
+        carregaMatricula();
+    }
+    
+    ObservableList<ExerciciosDTO> listaMatriculas = FXCollections.observableArrayList();
+    private void carregaMatricula() throws ClassNotFoundException {
+
+        listaMatriculas.clear();
+        
+        idAluno.setCellValueFactory(new PropertyValueFactory<>("id"));
+        nomeAluno.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        planoAluno.setCellValueFactory(new PropertyValueFactory<>("plano"));
+        fichaAluno.setCellValueFactory(new PropertyValueFactory<>("ficha"));
+        
+        
+        try(Connection connection = DBConnector.getConexao()) {
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM matricula");
+            while (rs.next()) {
+                listaMatriculas.add(new ExerciciosDTO(rs.getInt("idmatricula"), rs.getString("nome"),
+                 rs.getString("plano"), rs.getInt("ficha")));
+            }
+            tabelaAluno.setItems(listaMatriculas);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 
 }

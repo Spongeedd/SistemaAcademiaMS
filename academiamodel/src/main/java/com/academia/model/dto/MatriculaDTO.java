@@ -18,7 +18,7 @@ public class MatriculaDTO {
         this.plano = plano;
     }
 
-    public MatriculaDTO(Integer codigo, String nome, String cpf, Date datanascimento, String email, String telefone, String endereco, String plano, String pacote) {
+    public MatriculaDTO(Integer codigo, String nome, String cpf, Date datanascimento, String endereco, String telefone, String email, String plano, String pacote) {
         this.codigo = codigo;
         this.nome = nome;
         this.cpf = cpf;
