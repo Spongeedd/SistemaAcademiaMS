@@ -9,9 +9,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <modules> 
-        <module>academiaweb</module>
         <module>academia</module>
         <module>academiamodel</module>
-      <module>academiawb</module>
+        <module>academiawb</module>
   </modules>
 </project>
