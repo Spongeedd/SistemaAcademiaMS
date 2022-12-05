@@ -8,6 +8,8 @@ import java.sql.Statement;
 
 import com.academia.model.db.DBConnector;
 import com.academia.model.dto.ExerciciosDTO;
+import com.academia.model.service.EmailService;
+
 import java.sql.Types;
 
 public class ExerciciosDAO {
@@ -21,6 +23,13 @@ public class ExerciciosDAO {
             preparedStatement.setInt(1, idexercicios);
             preparedStatement.executeUpdate();
             
+            sql = "SELECT * FROM  matricula WHERE idmatricula = "+ idmatricula +"";
+            preparedStatement = connection.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                EmailService.enviarEmailExercicio(rs.getString("email"), rs.getString("nome"));
+            }
+
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

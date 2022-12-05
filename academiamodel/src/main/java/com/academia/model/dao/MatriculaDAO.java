@@ -9,11 +9,12 @@ import java.sql.Statement;
 
 import com.academia.model.db.DBConnector;
 import com.academia.model.dto.MatriculaDTO;
+import com.academia.model.service.EmailService;
 
 public class MatriculaDAO {
     public static MatriculaDTO inserirMatricula(String nome, String cpf, Date datanascimento, String endereco, String telefone, String email, String plano, String pacote) {
         try(Connection connection = DBConnector.getConexao()) {
-        
+            
             String sql = "INSERT INTO matricula (nome, cpf, nascimento, endereco, telefone, email, plano, pacote) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
             MatriculaDTO funcionario = new MatriculaDTO(nome, endereco, email, cpf, telefone, datanascimento, plano, pacote);
@@ -34,7 +35,9 @@ public class MatriculaDAO {
             if (resultSet.next()) {
                 Integer id = resultSet.getInt(1);
                 funcionario.setCodigo(id);
+               
             }
+            EmailService.enviarEmailMatricula(email, nome);
             return funcionario;
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);

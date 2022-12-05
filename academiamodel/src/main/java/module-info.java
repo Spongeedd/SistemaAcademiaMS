@@ -1,5 +1,7 @@
 module academiamodel {
+    
     requires java.sql;
+    requires java.mail;
     
     exports com.academia.model.dto;
     exports com.academia.model.dao;
