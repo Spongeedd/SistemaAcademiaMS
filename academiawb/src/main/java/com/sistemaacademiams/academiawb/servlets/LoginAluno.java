@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.academia.model.db.DBConnector;
+import com.academia.model.service.CobrancaService;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -35,8 +36,9 @@ public class LoginAluno extends HttpServlet {
 
                 ResultSet rs = preparedStatement.executeQuery();
                 if (rs.next()) {
+                    CobrancaService.setUsuario(rs.getInt("idmatricula"));
                     request.setAttribute("id", rs.getInt("idmatricula"));
-                     request.setAttribute("idficha", rs.getInt("ficha"));
+                    request.setAttribute("idficha", rs.getInt("ficha"));
                     RequestDispatcher rd = request.getRequestDispatcher("DashboardAluno.jsp");   
                     rd.forward(request, response);
                 }
