@@ -16,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,6 +27,7 @@ public class LoginAluno extends HttpServlet {
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         
             try(Connection connection = DBConnector.getConexao()) {
+                HttpSession session = request.getSession(true);
                 String senha = request.getParameter("senha");
                 String login = request.getParameter("login");
 
@@ -35,10 +37,10 @@ public class LoginAluno extends HttpServlet {
                 preparedStatement.setString(2, senha);
 
                 ResultSet rs = preparedStatement.executeQuery();
-                if (rs.next()) {
+                if (rs.next()) {                
                     CobrancaService.setUsuario(rs.getInt("idmatricula"));
-                    request.setAttribute("id", rs.getInt("idmatricula"));
-                    request.setAttribute("idficha", rs.getInt("ficha"));
+                    session.setAttribute("id", rs.getInt("idmatricula"));
+                    session.setAttribute("idficha", rs.getInt("ficha"));
                     RequestDispatcher rd = request.getRequestDispatcher("DashboardAluno.jsp");   
                     rd.forward(request, response);
                 }

@@ -31,7 +31,7 @@ public class CobrancaDAO {
                 PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 ResultSet rs = preparedStatement.executeQuery();
                 while (rs.next()){
-                    if (verificaStatus(rs.getInt("idmatricula")) == true) {
+                    if (verificaBoletos(rs.getInt("idmatricula")) == true) {
                         sql = "UPDATE matricula SET status = 1 WHERE idmatricula = "+ rs.getInt("idmatricula")+"";
                         preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                         preparedStatement.executeUpdate();
@@ -61,8 +61,8 @@ public class CobrancaDAO {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
 
-            if (verificaStatus(getUsuario()) == false) {
-                sql = "UPDATE matricula SET status = o WHERE idmatricula = "+ getUsuario() +"";
+            if (verificaBoletos(getUsuario()) == false) {
+                sql = "UPDATE matricula SET status = 0 WHERE idmatricula = "+ getUsuario() +"";
                 preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.executeUpdate();
             }
@@ -117,6 +117,22 @@ public class CobrancaDAO {
             throw new RuntimeException(e);
         }
         return valor;
+    }
+
+    public static Boolean verificaBoletos(Integer id) {
+        try (Connection connection = DBConnector.getConexao()) {
+            String sql = "SELECT * FROM boletos WHERE idaluno = "+ id +"";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+               return true;                          
+            }
+            else {
+                return false;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
     
     public static Boolean verificaStatus(Integer id) {

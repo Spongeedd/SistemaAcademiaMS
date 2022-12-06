@@ -7,7 +7,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Interface Matricula</title>
+        <title>Dashboard Dono</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
         <link rel="icon" href="resources/imgs/icone.ico">
@@ -65,6 +65,14 @@
                                     <i class="bi bi-people-fill"></i>
                                     <span data-feather="shopping-cart" class="align-text-bottom">
                                       Matrícula
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Log.jsp">
+                                     <i class="bi bi-list"></i>
+                                    <span data-feather="shopping-cart" class="align-text-bottom">
+                                      Logs
                                     </span>
                                 </a>
                             </li>

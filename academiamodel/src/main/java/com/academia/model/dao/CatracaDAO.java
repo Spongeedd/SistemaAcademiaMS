@@ -10,6 +10,7 @@ import java.util.Date;
 
 import com.academia.model.db.DBConnector;
 import com.academia.model.dto.CatracaDTO;
+import com.academia.model.service.CobrancaService;
 
 public class CatracaDAO {
 
@@ -50,7 +51,12 @@ public class CatracaDAO {
             preparedStatement.setString(2, CPF);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                return rs.getInt("idmatricula");
+                if (CobrancaService.verificaStatus(rs.getInt("idmatricula")) == false) {
+                    return rs.getInt("idmatricula");
+                }
+                else {
+                    return null;
+                }
             }
             else {
                 return null;

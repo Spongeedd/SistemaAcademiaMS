@@ -11,6 +11,7 @@ module com.academia {
     opens com.academia.catraca to javafx.fxml;
     opens com.academia.exercicios to javafx.fxml;
     opens com.academia.dashboard to javafx.fxml;
+    opens com.academia.log to javafx.fxml;
     opens com.academia.fatura to javafx.fxml;
 
     exports com.academia;
@@ -19,5 +20,6 @@ module com.academia {
     exports com.academia.catraca;
     exports com.academia.exercicios;
     exports com.academia.dashboard;
+    exports com.academia.log;
     exports com.academia.fatura;
 }

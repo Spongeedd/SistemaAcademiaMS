@@ -10,6 +10,7 @@ import java.sql.Statement;
 import com.academia.model.db.DBConnector;
 import com.academia.model.dto.MatriculaDTO;
 import com.academia.model.service.EmailService;
+import com.academia.model.service.LogService;
 
 public class MatriculaDAO {
     public static MatriculaDTO inserirMatricula(String nome, String cpf, Date datanascimento, String endereco, String telefone, String email, String plano, String pacote) {
@@ -35,6 +36,8 @@ public class MatriculaDAO {
             if (resultSet.next()) {
                 Integer id = resultSet.getInt(1);
                 funcionario.setCodigo(id);
+                String log = "Inseriu aluno " + resultSet.getInt(1);
+                LogService.inserirLog(log);
                
             }
             EmailService.enviarEmailMatricula(email, nome);
@@ -51,6 +54,8 @@ public class MatriculaDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, cdg);
             preparedStatement.executeUpdate();
+            String log = "Deletou aluno " + cdg;
+            LogService.inserirLog(log);
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -72,6 +77,8 @@ public class MatriculaDAO {
             preparedStatement.setInt(9, codigo);
 
             preparedStatement.executeUpdate();
+            String log = "Atualizou aluno " + codigo;
+            LogService.inserirLog(log);
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

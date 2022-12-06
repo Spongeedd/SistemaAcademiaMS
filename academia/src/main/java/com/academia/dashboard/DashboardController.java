@@ -114,6 +114,11 @@ public class DashboardController implements Initializable {
     private void cadastrarMatricula (MouseEvent event) {
         loadPage("InterfaceMatricula");
     }
+
+    @FXML
+    private void log(MouseEvent event) {
+        loadPage("InterfaceLog");
+    }
     @FXML
     private void signOut (MouseEvent event) throws IOException {
         Stage stage = new Stage();

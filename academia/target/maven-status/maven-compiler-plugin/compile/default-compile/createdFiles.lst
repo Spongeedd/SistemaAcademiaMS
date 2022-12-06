@@ -1,7 +1,12 @@
-com\academia\matricula\MatriculaDTO.class
 com\academia\Controller.class
-com\academia\matricula\MatriculaService.class
-com\academia\matricula\MatriculaDAO.class
+com\academia\catraca\CatracaController.class
 com\academia\matricula\MatriculaController.class
+com\academia\dashboard\DashboardController.class
 module-info.class
+com\academia\fatura\FaturaController.class
+com\academia\funcionario\FuncionarioController.class
+com\academia\exercicios\ExerciciosController.class
+com\academia\dashboard\DashboardControllerFunc.class
+com\academia\dashboard\DashboardControllerAluno.class
+com\academia\log\LogController.class
 com\academia\App.class

@@ -6,10 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 
 import com.academia.dashboard.DashboardControllerAluno;
 import com.academia.model.db.DBConnector;
 import com.academia.model.service.CobrancaService;
+import com.academia.model.service.LogService;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,8 +36,9 @@ public class Controller {
     private Button btnEntrar;
     
     @FXML
-    private void exibeInfo() throws IOException, ClassNotFoundException {
+    private void exibeInfo() throws IOException, ClassNotFoundException, ParseException {
         try(Connection connection = DBConnector.getConexao()) {
+            
             String senha = senhaInput.getText();
             String login = funcionarioInput.getText();
             String sql = "SELECT * FROM funcionario WHERE nome=? and cpf=?";
@@ -45,6 +48,8 @@ public class Controller {
             ResultSet rs = preparedStatement.executeQuery();
             Alert a = new Alert(AlertType.NONE);
             if (login.equals("admin") && senha.equals("123")) {
+                CobrancaService.adicionaCobranca();
+                LogService.setUsuario("admin");
                 Stage stage = new Stage();
                 Parent root = FXMLLoader.load(App.class.getResource("DashboardAdmin.fxml"));
                 stage.setScene(new Scene(root));
@@ -56,6 +61,7 @@ public class Controller {
                 stage.close();
             }
             else if (rs.next()) {
+                LogService.setUsuario(rs.getString("nome"));
                 Stage stage = new Stage();
                 Parent root = FXMLLoader.load(App.class.getResource("DashboardFuncionario.fxml"));
                 stage.setScene(new Scene(root));

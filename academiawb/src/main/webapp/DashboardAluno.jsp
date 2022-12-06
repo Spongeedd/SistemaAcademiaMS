@@ -94,11 +94,11 @@
 <body>
   <sql:setDataSource var= "conexao" driver= "com.mysql.jdbc.Driver" url= "jdbc:mysql://us-cdbr-east-06.cleardb.net:3306/heroku_aa28e844ee07386?autoReconnect=true&useSSL=false" user= "b918cc3160b707"  password= "16d9b4b7" />
         <sql:query dataSource="${conexao}" var="result" >
-            select * from matricula  WHERE idmatricula = <%=request.getAttribute("id")%>
+            select * from matricula  WHERE idmatricula = <%=session.getAttribute("id")%>
             
         </sql:query>
         <sql:query dataSource="${conexao}" var="ficha" >
-            SELECT * FROM exercicios WHERE idexercicios = <%=request.getAttribute("idficha")%>
+            SELECT * FROM exercicios WHERE idexercicios = <%=session.getAttribute("idficha")%>
         </sql:query>
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
   

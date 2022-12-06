@@ -178,6 +178,14 @@
                                     </span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Log.jsp">
+                                     <i class="bi bi-list"></i>
+                                    <span data-feather="shopping-cart" class="align-text-bottom">
+                                      Logs
+                                    </span>
+                                </a>
+                            </li>
                         </ul>          
                     </div>
                 </nav>
@@ -293,9 +301,6 @@
             }
           }
         });
-      </script>
-    
-    
-    
+      </script> 
 </body>
 </html>

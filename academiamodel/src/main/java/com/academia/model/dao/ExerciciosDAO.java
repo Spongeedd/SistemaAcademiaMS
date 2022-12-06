@@ -9,6 +9,7 @@ import java.sql.Statement;
 import com.academia.model.db.DBConnector;
 import com.academia.model.dto.ExerciciosDTO;
 import com.academia.model.service.EmailService;
+import com.academia.model.service.LogService;
 
 import java.sql.Types;
 
@@ -18,7 +19,7 @@ public class ExerciciosDAO {
         try(Connection connection = DBConnector.getConexao()) {
             
             String sql = "UPDATE matricula SET ficha = (?) WHERE idmatricula = "+ idmatricula +"";
- 
+            String log = "";
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, idexercicios);
             preparedStatement.executeUpdate();
@@ -28,8 +29,10 @@ public class ExerciciosDAO {
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
                 EmailService.enviarEmailExercicio(rs.getString("email"), rs.getString("nome"));
+                log = "Atribuiu ficha a " + rs.getString("nome");
             }
-
+            
+            LogService.inserirLog(log);
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -44,7 +47,16 @@ public class ExerciciosDAO {
             Integer p = null;
             preparedStatement.setObject(1, p, Types.INTEGER);
             preparedStatement.executeUpdate();
+
+            sql = "SELECT * FROM  matricula WHERE idmatricula = "+ idmatricula +"";
+            preparedStatement = connection.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+            String log = "";
+            if (rs.next()) {
+                log = "Removeu ficha de " + rs.getString("nome");
+            }
             
+            LogService.inserirLog(log);
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -66,10 +78,13 @@ public class ExerciciosDAO {
             preparedStatement.executeUpdate();
             
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            String log = "";
             if (resultSet.next()) {
                 Integer id = resultSet.getInt(1);
                 exercicios.setId(id);
+                log = "Criou ficha de id " + resultSet.getInt(1);
             }
+            LogService.inserirLog(log);
             return exercicios;
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -83,6 +98,8 @@ public class ExerciciosDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, cdg);
             preparedStatement.executeUpdate();
+            String log = "Criou ficha de id " + cdg;
+            LogService.inserirLog(log);
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

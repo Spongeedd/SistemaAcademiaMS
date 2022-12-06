@@ -100,6 +100,10 @@
         <sql:query dataSource="${conexao}" var="result" >
             select * from matricula  WHERE idmatricula = ${param.id}
         </sql:query>
+        <sql:query dataSource="${conexao}" var="boletos" >
+           SELECT * FROM boletos WHERE idaluno = ${param.id}
+        </sql:query>
+
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
 
     <symbol id="home" viewBox="0 0 16 16">
@@ -145,49 +149,35 @@
     </ul>
     </div>
   </div>
+  </c:forEach>
   <div class="b-example-divider b-example-vr"></div>
   <div class="wrap-center">
-  <div>
-
-    <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Boletos</th>
-            <th scope="col">ID</th>
-            <th scope="col">Vencimento</th>
-            <th scope="col">Pagamento efetuado</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>1234567890</td>
-            <td>28/01/2022</td>
-            <td>Sim</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>0987654321</td>
-            <td>28/02/2022</td>
-            <td>Sim</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>1357913579</td>
-            <td>28/03/2022</td>
-            <td>Sim</td>
-          </tr>
-          <tr>
-            <th scope="row">4</th>
-            <td>0987654321</td>
-            <td>28/04/2022</td>
-            <td>Não</td>
-          </tr>
-        </tbody>
-      </table>
+    
+    <div class="col-md-8">
+        <h1>Boletos</h1>
+        <div class="scrollable shadow-lg p-3 mb-5 rounded">
+            <table class="table table-bordered text-center">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Vencimento</th>
+                        <th scope="col">Valor</th>
+                        <th scope="col">ID</th>                      
+                    </tr>    
+                </thead>
+                <tbody>
+                    <c:forEach var="row" items="${boletos.rows}">
+                        <tr>             
+                            <td><c:out value="${row.vencimento}"/></td>
+                            <td>R$ <c:out value="${row.valor}"/></td>
+                            <td><c:out value="${row.idboletos}"/></td>                             
+                            <td><a href="BoletoServlet?idboleto=<c:out value="${row.idboletos}"/>"  class="btn btn-outline-primary" name="pagar" role="button">Pagar</a></td>                          
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
     </div>
-  </div>
-  </c:forEach>
+</div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
 </html>

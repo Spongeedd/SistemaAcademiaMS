@@ -9,6 +9,7 @@ import java.sql.Statement;
 
 import com.academia.model.db.DBConnector;
 import com.academia.model.dto.FuncionariosDTO;
+import com.academia.model.service.LogService;
 
 public class FuncionariosDAO {
     
@@ -37,6 +38,8 @@ public class FuncionariosDAO {
             if (resultSet.next()) {
                 Integer id = resultSet.getInt(1);
                 funcionario.setCodigo(id);
+                String log = "Inseriu funcionario " + resultSet.getInt(1);
+                LogService.inserirLog(log);
             }
             return funcionario;
         } catch (SQLException | ClassNotFoundException e) {
@@ -52,6 +55,8 @@ public class FuncionariosDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, cdg);
             preparedStatement.executeUpdate();
+            String log = "Removeu funcionario " + cdg;
+            LogService.inserirLog(log);
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -75,6 +80,8 @@ public class FuncionariosDAO {
             preparedStatement.setInt(10, codigo);
 
             preparedStatement.executeUpdate();
+            String log = "Atualizou funcionario " + codigo;
+            LogService.inserirLog(log);
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
