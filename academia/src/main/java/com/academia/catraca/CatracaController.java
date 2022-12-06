@@ -84,7 +84,7 @@ public class CatracaController implements Initializable {
         }
         else if (CatracaService.login(login, senha) == null) {
             a.setAlertType(AlertType.WARNING);
-            a.setContentText("Login não encontrado");
+            a.setContentText("Login não encontrado / Pagamento pendente");
             a.show();
         }
         else {

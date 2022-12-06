@@ -9,6 +9,7 @@ import java.sql.Statement;
 
 import com.academia.dashboard.DashboardControllerAluno;
 import com.academia.model.db.DBConnector;
+import com.academia.model.service.CobrancaService;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -76,7 +77,7 @@ public class Controller {
                     FXMLLoader loader = new FXMLLoader(App.class.getResource("DashboardAluno.fxml"));
                     Parent root = loader.load();
                     Integer id = rs.getInt("idmatricula");
-
+                    CobrancaService.setUsuario(id);
                     DashboardControllerAluno dashboardControllerAluno = loader.getController();
                     dashboardControllerAluno.mostraAluno(id);
 
