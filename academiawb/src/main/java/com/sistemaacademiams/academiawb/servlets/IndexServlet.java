@@ -8,7 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.academia.model.db.DBConnector;
+import com.academia.model.service.CobrancaService;
 import com.academia.model.service.FinanceiroService;
+import com.academia.model.service.LogService;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -16,6 +18,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,8 +27,8 @@ import java.util.logging.Logger;
 @WebServlet(name = "IndexServlet", urlPatterns = {"/IndexServlet"})
 public class IndexServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, ClassNotFoundException {
-        
+            throws ServletException, IOException, SQLException, ClassNotFoundException, ParseException {
+            HttpSession session = request.getSession(true);
             try(Connection connection = DBConnector.getConexao()) {
                 String senha = request.getParameter("senha");
                 String login = request.getParameter("login");
@@ -44,14 +48,17 @@ public class IndexServlet extends HttpServlet {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
-                    request.setAttribute("debitos", FinanceiroService.getPagamentos());
-                    request.setAttribute("faturamento", FinanceiroService.getFaturamento());
-                    request.setAttribute("receita", FinanceiroService.getReceita());
+                    CobrancaService.adicionaCobranca();
+                    LogService.setUsuario("admin");
+                    session.setAttribute("debitos", FinanceiroService.getPagamentos());
+                    session.setAttribute("faturamento", FinanceiroService.getFaturamento());
+                    session.setAttribute("receita", FinanceiroService.getReceita());
                     RequestDispatcher rd = request.getRequestDispatcher("DashboardDono.jsp");   
                     rd.forward(request, response);
                 }
                 else if (rs.next()) {
-                    response.sendRedirect("DashboardFunc.jsp");
+                    LogService.setUsuario(rs.getString("nome"));
+                    response.sendRedirect("DashboardFunc.jsp");      
                 }
                 else {
                     response.sendRedirect("index.jsp");
@@ -79,6 +86,8 @@ public class IndexServlet extends HttpServlet {
             processRequest(request, response);
         } catch (ClassNotFoundException | SQLException e) {
             Logger.getLogger(FinanceiroServlet.class.getName()).log(Level.SEVERE, null, e);
+        } catch (ParseException ex) {
+            Logger.getLogger(IndexServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -98,6 +107,8 @@ public class IndexServlet extends HttpServlet {
         } catch (ClassNotFoundException | SQLException e) {
             Logger.getLogger(FinanceiroServlet.class.getName()).log(Level.SEVERE, null, e);
 
+        } catch (ParseException ex) {
+            Logger.getLogger(IndexServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

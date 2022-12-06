@@ -196,19 +196,19 @@
                        <section>
                           <div class="quadrado"> 
                             <img class="imagens" src="https://imgur.com/qLGAraf.png" width=210 height=210>
-                            <h3><%=request.getAttribute("debitos")%></h3>
+                            <h3><%=session.getAttribute("debitos")%></h3>
                             <p>Debitos</p>
                           </div>
 
                           <div class="quadrado">
                             <img class="imagens" src="https://imgur.com/12nmrDn.png" width=210 height=210>
-                            <h3><%=request.getAttribute("faturamento")%></h3>
+                            <h3><%=session.getAttribute("faturamento")%></h3>
                             <p>Faturamento</p>
                           </div>
 
                           <div class="quadrado">
                             <img class="imagens" src="https://imgur.com/dsP9UXo.png" width=210 height=210>
-                            <h3><%=request.getAttribute("receita")%></h3>
+                            <h3><%=session.getAttribute("receita")%></h3>
                             <p>Receita</p>
                           </div>
                       </section>
